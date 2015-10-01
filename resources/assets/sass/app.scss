@@ -1,0 +1,17 @@
+@import "bootstrap";
+@import "components/flash";
+@import "components/footer";
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,700,200italic,400italic,700italic);
+
+body {
+  font-weight: 400;
+  padding-top: 70px;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  &:hover, &:active, &:focus {
+    text-decoration: none;
+  }
+}
