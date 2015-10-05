@@ -58,9 +58,9 @@ trait FollowableTrait
      */
     public function isFollowedBy($anotherUser)
     {
-        $ids = $anotherUser->following()->lists('id')->toArray();
-
-        return in_array($this->id, $ids);
+        return $this->passiveRelations()
+            ->where('follower_id', $anotherUser->id)
+            ->exists();
     }
 
     /**
@@ -71,8 +71,8 @@ trait FollowableTrait
      */
     public function isFollowing($anotherUser)
     {
-        $ids = $anotherUser->followers()->lists('id')->toArray();
-
-        return in_array($this->id, $ids);
+        return $this->activeRelations()
+            ->where('followed_id', $anotherUser->id)
+            ->exists();
     }
 }
