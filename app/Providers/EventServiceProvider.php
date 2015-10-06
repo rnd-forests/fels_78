@@ -17,9 +17,18 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     /**
+     * The subscriber classes to register.
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        \FELS\Listeners\UserEventListener::class,
+    ];
+
+    /**
      * Register any other events for your application.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
+     * @param  \Illuminate\Contracts\Events\Dispatcher $events
      * @return void
      */
     public function boot(DispatcherContract $events)

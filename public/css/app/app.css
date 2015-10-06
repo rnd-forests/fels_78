@@ -15,6 +15,10 @@
   clear: both;
   border-top: 1px solid #e5e5e5; }
 
+.form-error-text {
+  font-size: 11px;
+  color: #c7254e; }
+
 body {
   padding-top: 70px;
   position: relative;

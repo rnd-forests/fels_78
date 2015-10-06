@@ -36,7 +36,6 @@ class AppServiceProvider extends ServiceProvider
                 break;
             case 'local':
                 $this->logDatabaseQueries();
-                $this->configureMailtrap();
                 break;
             case 'testing':
                 config(['database.default' => 'sqlite']);
@@ -56,19 +55,7 @@ class AppServiceProvider extends ServiceProvider
             $logger->info($bindings);
         });
     }
-
-    /**
-     * Configure Mailtrap for testing emails sent from application.
-     */
-    protected function configureMailtrap()
-    {
-        config(['mail.driver' => 'smtp']);
-        config(['mail.host' => 'mailtrap.io']);
-        config(['mail.port' => '2525']);
-        config(['mail.username' => env('MAILTRAP_USERNAME')]);
-        config(['mail.password' => env('MAILTRAP_PASSWORD')]);
-    }
-
+    
     /**
      * Register mailer interfaces.
      */
