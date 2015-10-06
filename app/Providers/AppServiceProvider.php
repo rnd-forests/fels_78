@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerUserMailer();
     }
 
     /**
@@ -67,5 +67,16 @@ class AppServiceProvider extends ServiceProvider
         config(['mail.port' => '2525']);
         config(['mail.username' => env('MAILTRAP_USERNAME')]);
         config(['mail.password' => env('MAILTRAP_PASSWORD')]);
+    }
+
+    /**
+     * Register mailer interfaces.
+     */
+    protected function registerUserMailer()
+    {
+        $this->app->singleton(
+            \FELS\Core\Mailer\Contracts\UserMailerInterface::class,
+            \FELS\Core\Mailer\UserMailer::class
+        );
     }
 }
