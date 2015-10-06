@@ -2,24 +2,23 @@
 // Utility classes
 // --------------------------------------------------
 
+
 // Floats
 // -------------------------
 
 .clearfix {
   @include clearfix;
 }
-
 .center-block {
   @include center-block;
 }
-
 .pull-right {
   float: right !important;
 }
-
 .pull-left {
   float: left !important;
 }
+
 
 // Toggling content
 // -------------------------
@@ -28,18 +27,16 @@
 .hide {
   display: none !important;
 }
-
 .show {
   display: block !important;
 }
-
 .invisible {
   visibility: hidden;
 }
-
 .text-hide {
   @include text-hide;
 }
+
 
 // Hide from screenreaders and browsers
 //
@@ -48,6 +45,7 @@
 .hidden {
   display: none !important;
 }
+
 
 // For Affix plugin
 // -------------------------
