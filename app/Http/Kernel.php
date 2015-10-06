@@ -29,5 +29,7 @@ class Kernel extends HttpKernel
         'auth' => \FELS\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \FELS\Http\Middleware\RedirectIfAuthenticated::class,
+        'valid.user' => \FELS\Http\Middleware\RedirectIfNotCorrectUser::class,
+        'admin' => \FELS\Http\Middleware\VerifyAdminUser::class,
     ];
 }
