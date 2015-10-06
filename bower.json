@@ -1,0 +1,17 @@
+{
+  "name": "FELS",
+  "description": "Framgia E-learning System",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendor/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "fontawesome": "~4.4.0",
+    "sweetalert": "~1.1.0"
+  }
+}

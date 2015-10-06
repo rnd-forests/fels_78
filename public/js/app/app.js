@@ -40,7 +40,7 @@ var FELS = (function ($) {
      * @private
      */
     var _dismissibleAlerts = function () {
-        var $alerts = $('.alert').not('.alert-danger').not('.notification');
+        var $alerts = $('.alert').not('.alert-danger');
         $alerts.delay(2500).fadeOut();
     };
 
