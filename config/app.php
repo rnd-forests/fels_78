@@ -144,6 +144,7 @@ return [
         FELS\Providers\AuthServiceProvider::class,
         FELS\Providers\EventServiceProvider::class,
         FELS\Providers\RouteServiceProvider::class,
+        FELS\Providers\RepositoryServiceProvider::class,
 
         /**
          * Third-party service providers...
