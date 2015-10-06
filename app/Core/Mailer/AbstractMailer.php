@@ -4,7 +4,7 @@ namespace FELS\Core\Mailer;
 
 use Illuminate\Mail\Mailer;
 
-class AbstractMailer
+abstract class AbstractMailer
 {
     /**
      * A generic method to send email throughout application.
