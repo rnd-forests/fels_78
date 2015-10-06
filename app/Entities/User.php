@@ -5,12 +5,15 @@ namespace FELS\Entities;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use FELS\Entities\Traits\FollowableTrait;
+use FELS\Entities\Presenters\UserPresenter;
 use FELS\Exceptions\MethodNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use FELS\Entities\Presenters\Traits\PresentableTrait;
+use FELS\Entities\Presenters\Contracts\PresentableInterface;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -18,6 +21,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 class User extends Model implements
     SluggableInterface,
     AuthorizableContract,
+    PresentableInterface,
     AuthenticatableContract,
     CanResetPasswordContract
 {
@@ -26,9 +30,11 @@ class User extends Model implements
         SluggableTrait,
         FollowableTrait,
         Authenticatable,
-        CanResetPassword;
+        CanResetPassword,
+        PresentableTrait;
 
     protected $dates = ['deleted_at'];
+    protected $presenter = UserPresenter::class;
     protected $casts = ['admin' => 'boolean', 'confirmed' => 'boolean'];
     protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
     protected $fillable = [
