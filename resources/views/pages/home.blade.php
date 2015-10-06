@@ -1,4 +1,5 @@
 @extends('layouts.default')
+@section('title', 'Homepage')
 @section('content')
     <div class="jumbotron">
         <h1>Framgia E-learning System</h1>
