@@ -52,5 +52,8 @@ elixir(function (mix) {
         'app/app.js'
     ], null, 'public/js');
 
-    mix.version(['public/css/all.css', 'public/js/all.js']);
+    mix.version([
+        'public/css/all.css',
+        'public/js/all.js'
+    ]);
 });
