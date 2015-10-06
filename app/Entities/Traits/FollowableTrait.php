@@ -23,9 +23,7 @@ trait FollowableTrait
      */
     public function following()
     {
-        $ids = $this->activeRelations()->lists('followed_id')->toArray();
-
-        return static::whereIn('id', $ids);
+        return $this->belongsToMany(static::class, 'follows', 'follower_id', 'followed_id');
     }
 
     /**
@@ -45,9 +43,7 @@ trait FollowableTrait
      */
     public function followers()
     {
-        $ids = $this->passiveRelations()->lists('follower_id')->toArray();
-
-        return static::whereIn('id', $ids);
+        return $this->belongsToMany(static::class, 'follows', 'followed_id', 'follower_id');
     }
 
     /**
