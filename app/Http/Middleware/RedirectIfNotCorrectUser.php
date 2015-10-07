@@ -3,8 +3,8 @@
 namespace FELS\Http\Middleware;
 
 use Closure;
-use FELS\Exceptions\InvalidUserException;
 use Illuminate\Contracts\Auth\Guard;
+use FELS\Exceptions\InvalidUserException;
 use FELS\Core\Repository\Contracts\UserRepository;
 
 class RedirectIfNotCorrectUser
@@ -34,12 +34,30 @@ class RedirectIfNotCorrectUser
      */
     public function handle($request, Closure $next)
     {
-        if ($request->route('users')) {
-            $user = $this->users->findBySlug($request->route('users'));
-            if (($user->id != $this->auth->user()->id) && !$this->auth->user()->isAdmin()) {
+        if ($this->auth->guest()) {
+            return redirect()->guest('auth/login');
+        }
+
+        $routeKey = $request->route('users');
+        if ($routeKey) {
+            $user = $this->users->findBySlug($routeKey);
+            if (!$user || !$this->isCurrentAuthenticatedUser($user)) {
                 throw new InvalidUserException;
             }
         }
+
         return $next($request);
+    }
+
+    /**
+     * Check if the user in the current request is the
+     * authenticated user or not.
+     *
+     * @param $user
+     * @return bool
+     */
+    protected function isCurrentAuthenticatedUser($user)
+    {
+        return $user->id === $this->auth->user()->id;
     }
 }

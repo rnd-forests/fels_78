@@ -3,8 +3,8 @@
 namespace FELS\Http\Middleware;
 
 use Closure;
-use FELS\Exceptions\InvalidUserException;
 use Illuminate\Contracts\Auth\Guard;
+use FELS\Exceptions\InvalidUserException;
 
 class VerifyAdminUser
 {
@@ -30,6 +30,10 @@ class VerifyAdminUser
      */
     public function handle($request, Closure $next)
     {
+        if ($this->auth->guest()) {
+            return redirect()->guest('auth/login');
+        }
+
         if (!$this->auth->user()->isAdmin()) {
             throw new InvalidUserException;
         }
