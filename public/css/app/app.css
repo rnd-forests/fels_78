@@ -14,6 +14,16 @@
   text-align: center;
   clear: both;
   border-top: 1px solid #e5e5e5; }
+  .footer .footer-links {
+    padding-left: 0;
+    margin-top: 20px; }
+    .footer .footer-links li {
+      display: inline;
+      padding: 0 2px; }
+    .footer .footer-links a {
+      color: #8c989e; }
+      .footer .footer-links a:hover, .footer .footer-links a:active, .footer .footer-links a:focus {
+        color: #4bc970; }
 
 .form-error-text {
   font-size: 11px;

@@ -2,6 +2,9 @@
 
 Route::group(['namespace' => 'Pages'], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@home']);
+    Route::get('about', ['as' => 'pages.about', 'uses' => 'StaticPagesController@about']);
+    Route::get('help', ['as' => 'pages.help', 'uses' => 'StaticPagesController@help']);
+    Route::get('faq', ['as' => 'pages.faq', 'uses' => 'StaticPagesController@faq']);
 });
 
 Route::group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], function () {
