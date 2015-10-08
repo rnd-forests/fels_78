@@ -28,6 +28,9 @@
                         </ul>
                     </li>
                 @endif
+                <li><a href="{{ route('pages.about') }}">About</a></li>
+                <li><a href="{{ route('pages.help') }}">Help</a></li>
+                <li><a href="{{ route('pages.faq') }}">FAQ</a></li>
             </ul>
             @if(auth()->guest())
                 <ul class="nav navbar-nav navbar-right">

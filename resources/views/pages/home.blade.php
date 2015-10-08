@@ -3,7 +3,6 @@
 @section('content')
     <div class="jumbotron">
         <h1>Framgia E-learning System</h1>
-
         <p>Welcome to FELS</p>
         @if(auth()->guest())
             <p>
