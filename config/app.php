@@ -145,7 +145,7 @@ return [
         FELS\Providers\EventServiceProvider::class,
         FELS\Providers\RouteServiceProvider::class,
         FELS\Providers\RepositoryServiceProvider::class,
-        FELS\Providers\ComposerServiceProvider::class,
+        FELS\Providers\ValidatorServiceProvider::class,
 
         /**
          * Third-party service providers...

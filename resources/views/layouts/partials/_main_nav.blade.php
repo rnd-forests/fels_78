@@ -24,16 +24,15 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">Profile</a></li>
-                            <li><a href="#">Account</a></li>
-                            <li><a href="#">Sign Out</a></li>
+                            <li><a href="{{ route('auth.logout') }}">Sign Out</a></li>
                         </ul>
                     </li>
                 @endif
             </ul>
             @if(auth()->guest())
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Sign In</a></li>
-                    <li><a href="#">Sign Up</a></li>
+                    <li><a href="{{ route('auth.login') }}">Sign In</a></li>
+                    <li><a href="{{ route('auth.register') }}">Sign Up</a></li>
                 </ul>
             @endif
         </div>
