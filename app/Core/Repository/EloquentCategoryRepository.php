@@ -34,10 +34,7 @@ class EloquentCategoryRepository implements
      */
     public function create(array $data)
     {
-        return $this->model->create([
-            'name' => $data['name'],
-            'description' => $data['description'],
-        ]);
+        return $this->model->create($data);
     }
 
     /**
