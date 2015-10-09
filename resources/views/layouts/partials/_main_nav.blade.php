@@ -20,10 +20,10 @@
                         <a href="#"
                            class="dropdown-toggle"
                            data-toggle="dropdown">
-                            Personal <span class="caret"></span>
+                            {{ $currentUser->name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Profile</a></li>
+                            <li><a href="{{ route('user.profile.edit', $currentUser) }}">Edit Profile</a></li>
                             <li><a href="{{ route('auth.logout') }}">Sign Out</a></li>
                         </ul>
                     </li>

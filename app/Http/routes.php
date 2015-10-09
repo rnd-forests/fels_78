@@ -35,3 +35,10 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], funct
     Route::get('password/reset/{token}', 'PasswordController@getReset');
     Route::post('password/reset', 'PasswordController@postReset');
 });
+
+Route::group(['prefix' => '{users}', 'as' => 'user.', 'namespace' => 'User'], function () {
+    Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'ProfilesController@edit']);
+    Route::delete('', ['as' => 'profile.destroy', 'uses' => 'ProfilesController@destroy']);
+    Route::patch('name', ['as' => 'profile.name', 'uses' => 'ProfilesController@changeName']);
+    Route::patch('password', ['as' => 'profile.password', 'uses' => 'ProfilesController@changePassword']);
+});
