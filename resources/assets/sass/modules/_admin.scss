@@ -1,0 +1,17 @@
+.admin-wrapper {
+  .table {
+    th {
+      text-align: center;
+    }
+
+    td {
+      font-size: 15px;
+      vertical-align: middle;
+      text-align: center;
+
+      form {
+        display: inline-block;
+      }
+    }
+  }
+}

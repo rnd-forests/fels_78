@@ -111,6 +111,17 @@ class User extends Model implements
     }
 
     /**
+     * Scope for fetching normal users.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeNormal($query)
+    {
+        return $query->where('admin', '<>', 1);
+    }
+
+    /**
      * Set the route key.
      *
      * @return string
