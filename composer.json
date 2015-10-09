@@ -1,7 +1,10 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -36,7 +39,13 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php"
+            "tests/Unit",
+            "tests/Functional",
+            "tests/Integration",
+            "tests/TestCase.php",
+            "tests/UnitTestCase.php",
+            "tests/ExtraHelpersTrait.php",
+            "tests/ExtraAssertionsTrait.php"
         ]
     },
     "scripts": {
