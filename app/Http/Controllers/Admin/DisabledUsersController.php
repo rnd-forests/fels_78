@@ -12,7 +12,6 @@ class DisabledUsersController extends Controller
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
-        $this->middleware('auth');
         $this->middleware('admin');
     }
 
