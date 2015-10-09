@@ -42,7 +42,7 @@ class RedirectIfNotCorrectUser
         if ($routeKey) {
             $user = $this->users->findBySlug($routeKey);
             if (!$user || !$this->isCurrentAuthenticatedUser($user)) {
-                throw new InvalidUserException;
+                throw new InvalidUserException(trans('exceptions.invalid_user'));
             }
         }
 

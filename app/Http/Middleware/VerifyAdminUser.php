@@ -35,7 +35,7 @@ class VerifyAdminUser
         }
 
         if (!$this->auth->user()->isAdmin()) {
-            throw new InvalidUserException;
+            throw new InvalidUserException(trans('exceptions.invalid_admin'));
         }
 
         return $next($request);
