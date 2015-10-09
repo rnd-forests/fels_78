@@ -24,6 +24,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('admin.users') }}">Current</a></li>
                         <li><a href="{{ route('admin.users.disabled') }}">Disabled</a></li>
+                        <li><a href="{{ route('admin.users.create') }}">Add New Account</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ route('admin.categories') }}">Categories</a></li>

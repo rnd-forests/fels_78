@@ -13,6 +13,14 @@ interface UserRepository
     public function disabled($limit);
 
     /**
+     * Add new user by administrator.
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function adminCreate(array $data);
+
+    /**
      * Finding a user or creating a new user if the user does not exist.
      *
      * @param array $userData
