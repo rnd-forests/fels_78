@@ -14,3 +14,10 @@ $factory->defineAs(FELS\Entities\User::class, 'admin', function () use ($factory
 
     return array_merge($user, ['admin' => true]);
 });
+
+$factory->define(FELS\Entities\Category::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->sentence(5),
+        'description' => $faker->paragraph(2),
+    ];
+});
