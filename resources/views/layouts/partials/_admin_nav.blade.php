@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('home') }}"><strong>FELS</strong></a>
+            <a class="navbar-brand" href="{{ route('admin.users') }}"><strong>FELS</strong></a>
         </div>
 
         <div class="collapse navbar-collapse" id="keep-nav">
@@ -26,6 +26,7 @@
                         <li><a href="{{ route('admin.users.disabled') }}">Disabled</a></li>
                     </ul>
                 </li>
+                <li><a href="{{ route('admin.categories') }}">Categories</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

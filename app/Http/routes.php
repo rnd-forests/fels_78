@@ -13,6 +13,17 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], fu
             'destroy' => 'users.delete'
         ]
     ]);
+
+    Route::resource('categories', 'CategoriesController', [
+        'except' => ['create', 'show'],
+        'names' => [
+            'index' => 'categories',
+            'store' => 'categories.store',
+            'edit' => 'categories.edit',
+            'update' => 'categories.update',
+            'destroy' => 'categories.delete'
+        ]
+    ]);
 });
 
 Route::group(['namespace' => 'Pages'], function () {

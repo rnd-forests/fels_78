@@ -32,6 +32,11 @@ class RepositoryServiceProvider extends ServiceProvider
             \FELS\Core\Repository\Contracts\UserRepository::class,
             \FELS\Core\Repository\EloquentUserRepository::class
         );
+
+        $this->app->singleton(
+            \FELS\Core\Repository\Contracts\CategoryRepository::class,
+            \FELS\Core\Repository\EloquentCategoryRepository::class
+        );
     }
 
     /**
@@ -43,6 +48,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         return [
             \FELS\Core\Repository\Contracts\UserRepository::class,
+            \FELS\Core\Repository\Contracts\CategoryRepository::class,
         ];
     }
 }
