@@ -1,5 +1,20 @@
 <?php
 
+Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::group(['prefix' => 'users/disabled', 'as' => 'users.'], function () {
+        Route::get('', ['as' => 'disabled', 'uses' => 'DisabledUsersController@index']);
+        Route::put('{users}', ['as' => 'disabled.restore', 'uses' => 'DisabledUsersController@restore']);
+        Route::delete('{users}', ['as' => 'disabled.delete', 'uses' => 'DisabledUsersController@destroy']);
+    });
+    Route::resource('users', 'UsersController', [
+        'only' => ['index', 'destroy'],
+        'names' => [
+            'index' => 'users',
+            'destroy' => 'users.delete'
+        ]
+    ]);
+});
+
 Route::group(['namespace' => 'Pages'], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@home']);
     Route::get('about', ['as' => 'pages.about', 'uses' => 'StaticPagesController@about']);

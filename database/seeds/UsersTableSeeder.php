@@ -16,6 +16,6 @@ class UsersTableSeeder extends Seeder
             'email' => 'administrator@fels.com',
         ]);
 
-        factory(FELS\Entities\User::class, 50)->create();
+        factory(FELS\Entities\User::class, 150)->create();
     }
 }

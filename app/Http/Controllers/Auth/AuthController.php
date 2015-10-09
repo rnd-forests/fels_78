@@ -79,6 +79,10 @@ class AuthController extends Controller
         if ($this->auth->attempt($credentials, $request->has('remember'))) {
             session()->flash('app_status', 'login_success');
 
+            if ($this->auth->user()->isAdmin()) {
+                return redirect()->route('admin.users');
+            }
+
             return redirect()->intended('/');
         }
         session()->flash('login_error', trans('auth.login_error'));

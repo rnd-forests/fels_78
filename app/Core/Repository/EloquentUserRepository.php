@@ -11,6 +11,7 @@ use FELS\Core\Repository\Contracts\Activity\CanBeRemoved;
 use FELS\Core\Repository\Contracts\Activity\CanBeCreated;
 use FELS\Core\Repository\Contracts\Activity\CanBeUpdated;
 use FELS\Core\Repository\Contracts\Activity\ShouldBeFound;
+use FELS\Core\Repository\Contracts\Activity\ShouldBePaginated;
 
 class EloquentUserRepository implements
     Globally,
@@ -18,7 +19,8 @@ class EloquentUserRepository implements
     CanBeCreated,
     CanBeUpdated,
     ShouldBeFound,
-    UserRepository
+    UserRepository,
+    ShouldBePaginated
 {
     use GloballyTrait,
         ShouldBeFoundTrait;
@@ -28,6 +30,21 @@ class EloquentUserRepository implements
     public function __construct(User $user)
     {
         $this->model = $user;
+    }
+
+    /**
+     * Fetch paginated list of disabled users.
+     *
+     * @param $limit
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function disabled($limit)
+    {
+        return $this->model
+            ->normal()
+            ->onlyTrashed()
+            ->latest('deleted_at')
+            ->paginate($limit);
     }
 
     /**
@@ -136,5 +153,19 @@ class EloquentUserRepository implements
             ->onlyTrashed()
             ->where('slug', $slug)
             ->firstOrFail();
+    }
+
+    /**
+     * Paginate a collection of models.
+     *
+     * @param $limit
+     * @param array|null $params
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function paginate($limit, array $params = null)
+    {
+        return $this->model
+            ->normal()
+            ->paginate($limit);
     }
 }
