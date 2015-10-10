@@ -28,6 +28,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], fu
 
 Route::group(['namespace' => 'Pages'], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@home']);
+    Route::get('members', ['as' => 'pages.members', 'uses' => 'MembersController@index']);
     Route::get('about', ['as' => 'pages.about', 'uses' => 'StaticPagesController@about']);
     Route::get('help', ['as' => 'pages.help', 'uses' => 'StaticPagesController@help']);
     Route::get('faq', ['as' => 'pages.faq', 'uses' => 'StaticPagesController@faq']);
@@ -48,8 +49,14 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], funct
 });
 
 Route::group(['prefix' => '{users}', 'as' => 'user.', 'namespace' => 'User'], function () {
+    Route::get('profile', ['as' => 'profile.show', 'uses' => 'ProfilesController@show']);
     Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'ProfilesController@edit']);
+    Route::get('following', ['as' => 'following.show', 'uses' => 'RelationshipsController@following']);
+    Route::get('followers', ['as' => 'followers.show', 'uses' => 'RelationshipsController@followers']);
     Route::delete('', ['as' => 'profile.destroy', 'uses' => 'ProfilesController@destroy']);
     Route::patch('name', ['as' => 'profile.name', 'uses' => 'ProfilesController@changeName']);
     Route::patch('password', ['as' => 'profile.password', 'uses' => 'ProfilesController@changePassword']);
 });
+
+Route::post('follows', ['as' => 'follows.path', 'uses' => 'User\RelationshipsController@store']);
+Route::delete('follows/{users}', ['as' => 'follow.path', 'uses' => 'User\RelationshipsController@destroy']);

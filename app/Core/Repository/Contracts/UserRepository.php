@@ -28,4 +28,22 @@ interface UserRepository
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function findByActivationCode($code, $confirmed = false);
+
+    /**
+     * Follow a user.
+     *
+     * @param $followedId
+     * @param $user
+     * @return mixed
+     */
+    public function createRelationship($followedId, $user);
+
+    /**
+     * Unfollow a user.
+     *
+     * @param $followedId
+     * @param $user
+     * @return mixed
+     */
+    public function destroyRelationship($followedId, $user);
 }

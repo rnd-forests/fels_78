@@ -16,6 +16,7 @@
         <div class="collapse navbar-collapse" id="keep-nav">
             <ul class="nav navbar-nav">
                 @if(auth()->check())
+                    <li><a href="{{ route('pages.members') }}">Members</a></li>
                     <li class="dropdown">
                         <a href="#"
                            class="dropdown-toggle"
@@ -23,7 +24,10 @@
                             {{ $currentUser->name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('user.profile.show', $currentUser) }}">Profile</a></li>
                             <li><a href="{{ route('user.profile.edit', $currentUser) }}">Edit Profile</a></li>
+                            <li><a href="{{ route('user.following.show', $currentUser) }}">Followings</a></li>
+                            <li><a href="{{ route('user.followers.show', $currentUser) }}">Followers</a></li>
                             <li><a href="{{ route('auth.logout') }}">Sign Out</a></li>
                         </ul>
                     </li>

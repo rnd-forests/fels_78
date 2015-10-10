@@ -122,6 +122,17 @@ class User extends Model implements
     }
 
     /**
+     * Check the identity of two users.
+     *
+     * @param $user
+     * @return bool
+     */
+    public function is($user)
+    {
+        return $user->id === $this->id;
+    }
+
+    /**
      * Set the route key.
      *
      * @return string
