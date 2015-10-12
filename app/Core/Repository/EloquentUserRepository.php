@@ -179,12 +179,8 @@ class EloquentUserRepository implements
      */
     public function createRelationship($followedId, $user)
     {
-        $relation = Relationship::create([
-            'follower_id' => $user->id,
-            'followed_id' => $followedId
-        ]);
-
-        return $user->activeRelations()->save($relation);
+        return $user->activeRelations()
+            ->create(['followed_id' => $followedId]);
     }
 
     /**
