@@ -1,0 +1,36 @@
+.user-sidebar {
+  .thumbnail {
+    text-align: center;
+
+    ul {
+      margin-top: 15px;
+      padding-left: 0;
+    }
+
+    li {
+      list-style: none;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.user-list {
+  text-align: center;
+
+  .user-block {
+    margin-bottom: 25px;
+    padding-top: 10px;
+
+    img {
+      margin-bottom: 5px;
+      display: inline-block;
+      max-width: 100%;
+      height: auto;
+      padding: 4px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+  }
+}

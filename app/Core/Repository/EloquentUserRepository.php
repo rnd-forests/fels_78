@@ -3,6 +3,7 @@
 namespace FELS\Core\Repository;
 
 use FELS\Entities\User;
+use FELS\Entities\Relationship;
 use FELS\Core\Repository\Traits\GloballyTrait;
 use FELS\Core\Repository\Contracts\UserRepository;
 use FELS\Core\Repository\Traits\ShouldBeFoundTrait;
@@ -183,5 +184,34 @@ class EloquentUserRepository implements
         return $this->model
             ->normal()
             ->paginate($limit);
+    }
+
+    /**
+     * Follow a user.
+     *
+     * @param $followedId
+     * @param $user
+     * @return mixed
+     */
+    public function createRelationship($followedId, $user)
+    {
+        return $user->activeRelations()
+            ->create(['followed_id' => $followedId]);
+    }
+
+    /**
+     * Unfollow a user.
+     *
+     * @param $followedId
+     * @param $user
+     * @return mixed
+     */
+    public function destroyRelationship($followedId, $user)
+    {
+        $relation = $user->activeRelations()
+            ->where('followed_id', $followedId)
+            ->firstOrFail();
+
+        return $relation->delete();
     }
 }

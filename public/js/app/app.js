@@ -1,3 +1,33 @@
+/**
+ * AJAX call for follow / unfollow forms.
+ *
+ * @param form
+ * @param submit
+ * @param inverse
+ * @param stat
+ */
+function applyRelationship(form, submit, inverse, stat) {
+    var promise = $.Deferred();
+    $.ajax({
+        data: form.serialize(),
+        url: form.prop('action'),
+        type: form.find('input[name="_method"]').val() || 'POST',
+        beforeSend: function () {
+            submit.attr('disabled', 'disabled');
+            form.find('.fa').removeClass('hidden');
+        },
+        success: function () {
+            promise.resolve(parseInt(stat.text().match(/\d+/).shift()));
+            submit.removeAttr('disabled');
+            form.find('.fa').addClass('hidden');
+            form.wrap('<div class="hidden"></div>');
+            inverse.unwrap();
+        }
+    });
+
+    return promise;
+}
+
 var FELS = (function ($) {
     /**
      * Initialize all handlers/listeners/plugins.
@@ -7,6 +37,8 @@ var FELS = (function ($) {
         _setupAjaxHeader();
         _storeTabPosition();
         _dismissibleAlerts();
+        _followForm();
+        _unfollowForm();
     };
 
     /**
@@ -57,6 +89,50 @@ var FELS = (function ($) {
         if ($last) {
             $('[href=' + $last + ']').tab('show');
         }
+    };
+
+    /**
+     * Following user form.
+     *
+     * @private
+     */
+    var _followForm = function () {
+        var $form = $('.follow-form'),
+            $button = $form.find('.follow-button'),
+            $inverse = $('.unfollow-form'),
+            $stat = $('#followers');
+        $form.on('submit', function (event) {
+            event.preventDefault();
+            var $promise = applyRelationship($(this), $button, $inverse, $stat);
+            $promise.done(function (response) {
+                var result = (response === 0)
+                    ? (response + 1) + ' follower'
+                    : (response + 1) + ' followers';
+                $stat.html(result);
+            });
+        });
+    };
+
+    /**
+     * Unfollow user form.
+     *
+     * @private
+     */
+    var _unfollowForm = function () {
+        var $form = $('.unfollow-form'),
+            $button = $form.find('.unfollow-button'),
+            $inverse = $('.follow-form'),
+            $stat = $('#followers');
+        $form.on('submit', function (event) {
+            event.preventDefault();
+            var $promise = applyRelationship($(this), $button, $inverse, $stat);
+            $promise.done(function (response) {
+                var result = (response === 2)
+                    ? (response - 1) + ' follower'
+                    : (response - 1) + ' followers';
+                $stat.html(result);
+            });
+        });
     };
 
     return {

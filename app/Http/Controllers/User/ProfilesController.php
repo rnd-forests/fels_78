@@ -14,7 +14,20 @@ class ProfilesController extends Controller
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
-        $this->middleware('auth.user');
+        $this->middleware('auth.user', ['except' => ['show']]);
+    }
+
+    /**
+     * Show profile of a user.
+     *
+     * @param $slug
+     * @return \Illuminate\View\View
+     */
+    public function show($slug)
+    {
+        $user = $this->users->findBySlug($slug);
+
+        return view('users.profile.show', compact('user'));
     }
 
     /**
