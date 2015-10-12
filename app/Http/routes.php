@@ -7,9 +7,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], fu
         Route::delete('{users}', ['as' => 'disabled.delete', 'uses' => 'DisabledUsersController@destroy']);
     });
     Route::resource('users', 'UsersController', [
-        'only' => ['index', 'destroy'],
+        'only' => ['index', 'create', 'store', 'destroy'],
         'names' => [
             'index' => 'users',
+            'create' => 'users.create',
+            'store' => 'users.store',
             'destroy' => 'users.delete'
         ]
     ]);

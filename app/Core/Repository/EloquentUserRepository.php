@@ -48,6 +48,22 @@ class EloquentUserRepository implements
     }
 
     /**
+     * Add new user by administrator.
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function adminCreate(array $data)
+    {
+        return $this->model->create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'confirmed' => true,
+        ]);
+    }
+
+    /**
      * Finding a user or creating a new user if the user does not exist.
      *
      * @param array $userData
