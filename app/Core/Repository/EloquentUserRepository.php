@@ -197,7 +197,6 @@ class EloquentUserRepository implements
     public function destroyRelationship($followedId, $user)
     {
         $relation = $user->activeRelations()
-            ->where('follower_id', $user->id)
             ->where('followed_id', $followedId)
             ->firstOrFail();
 
