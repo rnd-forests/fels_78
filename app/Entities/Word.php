@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Word extends Model
 {
+    protected $table = 'words';
     protected $fillable = ['category_id', 'content'];
 
     /**
@@ -15,9 +16,9 @@ class Word extends Model
      */
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
-    
+
     /**
      * A word may have many answers.
      *
@@ -25,6 +26,26 @@ class Word extends Model
      */
     public function answers()
     {
-        return $this->hasMany(Answer::class);
+        return $this->hasMany(Answer::class, 'word_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function lessonWord()
+    {
+        return $this->hasMany(LessonWord::class, 'word_id');
+    }
+
+    /**
+     * Lessons that contain this word.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lessons()
+    {
+        return $this->belongsToMany(Lesson::class, 'lesson_word', 'word_id', 'lesson_id')
+            ->withPivot('answer_id', 'point')
+            ->withTimestamps();
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
+    protected $table = 'activities';
     protected $fillable = [
         'user_id', 'target_id', 'subject_id', 'subject_type', 'action'
     ];
@@ -17,7 +18,7 @@ class Activity extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

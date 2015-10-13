@@ -10,6 +10,7 @@ class Category extends Model implements SluggableInterface
 {
     use SluggableTrait;
 
+    protected $table = 'categories';
     protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
     protected $fillable = ['name', 'slug', 'description'];
 
@@ -20,7 +21,7 @@ class Category extends Model implements SluggableInterface
      */
     public function lessons()
     {
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Lesson::class, 'category_id');
     }
 
     /**
@@ -30,7 +31,7 @@ class Category extends Model implements SluggableInterface
      */
     public function words()
     {
-        return $this->hasMany(Word::class);
+        return $this->hasMany(Word::class, 'category_id');
     }
 
     /**

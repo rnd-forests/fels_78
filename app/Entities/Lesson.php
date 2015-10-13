@@ -10,6 +10,7 @@ class Lesson extends Model implements SluggableInterface
 {
     use SluggableTrait;
 
+    protected $table = 'lessons';
     protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
     protected $fillable = ['user_id', 'category_id', 'name', 'slug', 'description'];
 
@@ -20,7 +21,7 @@ class Lesson extends Model implements SluggableInterface
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
@@ -30,15 +31,15 @@ class Lesson extends Model implements SluggableInterface
      */
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function lessonWords()
+    public function lessonWord()
     {
-        return $this->hasMany(LessonWord::class);
+        return $this->hasMany(LessonWord::class, 'lesson_id');
     }
 
     /**
@@ -48,9 +49,9 @@ class Lesson extends Model implements SluggableInterface
      */
     public function words()
     {
-        $ids = $this->lessonWords()->lists('word_id')->toArray();
-        
-        return Word::whereIn('id', $ids);
+        $this->belongsToMany(Word::class, 'lesson_word', 'lesson_id', 'word_id')
+            ->withPivot('answer_id', 'point')
+            ->withTimestamps();
     }
 
     /**

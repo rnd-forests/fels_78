@@ -9,7 +9,6 @@ class Relationship extends Model
 {
     use CapturesActivity;
 
-    public $timestamps = false;
     protected $table = 'follows';
     protected $fillable = ['follower_id', 'followed_id'];
     protected static $activityUserId = 'follower_id';

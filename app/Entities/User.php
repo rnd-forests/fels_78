@@ -33,6 +33,7 @@ class User extends Model implements
         CanResetPassword,
         PresentableTrait;
 
+    protected $table = 'users';
     protected $dates = ['deleted_at'];
     protected $presenter = UserPresenter::class;
     protected $casts = ['admin' => 'boolean', 'confirmed' => 'boolean'];
@@ -50,7 +51,7 @@ class User extends Model implements
      */
     public function lessons()
     {
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Lesson::class, 'user_id');
     }
 
     /**
@@ -60,7 +61,7 @@ class User extends Model implements
      */
     public function activities()
     {
-        return $this->hasMany(Activity::class);
+        return $this->hasMany(Activity::class, 'user_id');
     }
 
     /**
@@ -95,7 +96,7 @@ class User extends Model implements
      *
      * @return mixed
      */
-    public function isActive()
+    public function isConfirmed()
     {
         return $this->confirmed;
     }
@@ -118,7 +119,7 @@ class User extends Model implements
      */
     public function scopeNormal($query)
     {
-        return $query->where('admin', '<>', 1);
+        return $query->where('admin', 0);
     }
 
     /**

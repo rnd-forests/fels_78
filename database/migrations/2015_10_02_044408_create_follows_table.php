@@ -16,6 +16,7 @@ class CreateFollowsTable extends Migration
             $table->increments('id');
             $table->integer('follower_id')->unsigned();
             $table->integer('followed_id')->unsigned();
+            $table->timestamps();
 
             $table->index('follower_id');
             $table->index('followed_id');
