@@ -1,10 +1,10 @@
 @extends('layouts.default')
 @section('title', 'All Members')
 @section('content')
-    <div class="row user-list">
+    <div class="row user-list auto-pagination">
         @foreach($members->chunk(6) as $userList)
             @foreach($userList as $user)
-                <div class="col-md-2 user-block">
+                <div class="col-md-2 user-block item">
                     <a href="{{ route('user.profile.show', $user) }}">
                         <img class="user-avatar-picture"
                              src="{{ $user->present()->gravatar(isset($size) ? $size : 120) }}"
@@ -15,6 +15,7 @@
                 </div>
             @endforeach
         @endforeach
-        {!! paginate($members) !!}
     </div>
+    @include('layouts.partials._loader')
+    {!! paginate($members) !!}
 @stop

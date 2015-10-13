@@ -14,8 +14,57 @@ d.trigger("activate.bs.scrollspy")},b.prototype.clear=function(){a(this.selector
 //# sourceMappingURL=vendor.js.map
 
 /**
+ * Auto pagination using AJAX.
+ * @param options
+ */
+$.fn.autoPagination = function (options) {
+    var opts = $.extend({}, $.fn.autoPagination.defaults, options);
+    var w = $(window),
+        container = $(this),
+        next = $(opts.nextAnchor),
+        loader = $(opts.loader);
+    w.on('scroll', function () {
+        $(opts.paginator).addClass('hidden');
+        if (next.attr('href') && w.scrollTop() + w.height() > next.offset().top - opts.buffer) {
+            var url = next.attr('href');
+            next.attr('href', '');
+            loader.removeClass('hidden');
+            $.get(url, function (data) {
+                $(data).find(opts.item).each(function (index, element) {
+                    $(element).insertAfter(container.find(opts.item).last());
+                });
+                loader.addClass('hidden');
+                next.attr('href', $(data).find(opts.nextAnchor).attr('href'));
+            });
+        }
+    });
+};
+
+$.fn.autoPagination.defaults = {
+    buffer: 800,
+    item: '.item',
+    loader: '.loading',
+    paginator: '.pagination',
+    nextAnchor: '.pagination a[rel="next"]'
+};
+
+/**
+ * Get Html of element included its container.
+ * Source: https://css-tricks.com/snippets/jquery/outerhtml-jquery-plugin/
+ * @returns {*}
+ */
+$.fn.outerHTML = function () {
+    return (!this.length) ? this : (this[0].outerHTML || (function (el) {
+        var div = document.createElement('div');
+        div.appendChild(el.cloneNode(true));
+        var contents = div.innerHTML;
+        div = null;
+        return contents;
+    })(this[0]));
+};
+
+/**
  * AJAX call for follow / unfollow forms.
- *
  * @param form
  * @param submit
  * @param inverse
@@ -43,27 +92,31 @@ function applyRelationship(form, submit, inverse, stat) {
     return promise;
 }
 
+/**
+ * Application scripts.
+ * @type {{init}}
+ */
 var FELS = (function ($) {
     /**
      * Initialize all handlers/listeners/plugins.
      */
     var init = function () {
         _tooltips();
+        _scrollTop();
+        _followForm();
+        _unfollowForm();
         _setupAjaxHeader();
         _storeTabPosition();
         _dismissibleAlerts();
-        _followForm();
-        _unfollowForm();
+        _autoPaginatedContent();
     };
 
     /**
      * Setup the AJAX.
-     *
      * @private
      */
     var _setupAjaxHeader = function () {
         var $csrf = $('meta[name=csrf-token]');
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $csrf.attr('content')
@@ -73,7 +126,6 @@ var FELS = (function ($) {
 
     /**
      * Activate tooltips.
-     *
      * @private
      */
     var _tooltips = function () {
@@ -83,17 +135,15 @@ var FELS = (function ($) {
 
     /**
      * Fade out alerts.
-     *
      * @private
      */
     var _dismissibleAlerts = function () {
-        var $alerts = $('.alert').not('.alert-danger');
+        var $alerts = $('.alert').not('.alert-danger').not('.form-helper');
         $alerts.delay(2500).fadeOut();
     };
 
     /**
      * Store current position of tab in Bootstrap.
-     *
      * @private
      */
     var _storeTabPosition = function () {
@@ -107,8 +157,7 @@ var FELS = (function ($) {
     };
 
     /**
-     * Following user form.
-     *
+     * Follow user form.
      * @private
      */
     var _followForm = function () {
@@ -130,7 +179,6 @@ var FELS = (function ($) {
 
     /**
      * Unfollow user form.
-     *
      * @private
      */
     var _unfollowForm = function () {
@@ -147,6 +195,26 @@ var FELS = (function ($) {
                     : (response - 1) + ' followers';
                 $stat.html(result);
             });
+        });
+    };
+
+    /**
+     * Auto-loading table content using AJAX.
+     * @private
+     */
+    var _autoPaginatedContent = function () {
+        $('.auto-pagination').autoPagination();
+    };
+
+    /**
+     * Trigger scroll top button.
+     * @private
+     */
+    var _scrollTop = function () {
+        var $button = $('#scroll-top');
+        $button.on("click", function (event) {
+            event.preventDefault();
+            $('body, html').animate({scrollTop: 0}, 800);
         });
     };
 

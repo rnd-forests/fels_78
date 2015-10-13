@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'ngocvinh.nnv@gmail.com',
         ]);
 
-        factory(FELS\Entities\User::class, 150)->create();
+        factory(FELS\Entities\User::class, 300)->create();
         foreach (range(3, 11) as $id) {
             $me->activeRelations()->save(Relationship::create([
                 'follower_id' => $me->id,

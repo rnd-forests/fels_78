@@ -11,20 +11,20 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-hover auto-pagination">
                     <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Disabled at</th>
-                        <th>Actions</th>
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Disabled at</th>
+                            <th>Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($users->chunk(10) as $userList)
                         @foreach($userList as $user)
-                            <tr>
+                            <tr class="item">
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
@@ -40,6 +40,7 @@
                 </table>
             </div>
         @endif
+        @include('layouts.partials._loader')
         {!! paginate($users) !!}
     </div>
 @stop
