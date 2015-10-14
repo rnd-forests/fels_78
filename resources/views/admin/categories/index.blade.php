@@ -10,7 +10,6 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <strong class="text-info">{{ plural('CATEGORY', counting($categories)) }}</strong>
-
                             <div class="pull-right">
                                 <button type="button"
                                         class="btn btn-primary btn-xs"
@@ -22,20 +21,20 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-hover auto-pagination">
                             <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Published</th>
-                                <th>Actions</th>
-                            </tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Published</th>
+                                    <th>Actions</th>
+                                </tr>
                             </thead>
                             <tbody>
                             @foreach($categories->chunk(25) as $categoryList)
                                 @foreach($categoryList as $category)
-                                    <tr>
+                                    <tr class="item">
                                         <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->description }}</td>
@@ -57,6 +56,7 @@
                         </table>
                     </div>
                 </div>
+                @include('layouts.partials._loader')
                 {!! paginate($categories) !!}
             @endif
         </div>

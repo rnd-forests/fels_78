@@ -1,4 +1,5 @@
 <footer class="footer">
+    <a href="#" id="scroll-top"></a>
     <h4>Framgia E-learning System - Training Project</h4>
     <ul class="footer-links text-muted">
         <li><a href="{{ route('home') }}">Home</a></li>
