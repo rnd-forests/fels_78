@@ -13,9 +13,12 @@ class CreateLessonWordTable extends Migration
     public function up()
     {
         Schema::create('lesson_word', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('lesson_id')->unsigned();
             $table->integer('word_id')->unsigned();
             $table->integer('answer_id')->unsigned();
+            $table->integer('point')->unsigned();
+            $table->timestamps();
             
             $table->index('lesson_id');
             $table->index('word_id');

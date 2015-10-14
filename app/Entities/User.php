@@ -33,6 +33,7 @@ class User extends Model implements
         CanResetPassword,
         PresentableTrait;
 
+    protected $table = 'users';
     protected $dates = ['deleted_at'];
     protected $presenter = UserPresenter::class;
     protected $casts = ['admin' => 'boolean', 'confirmed' => 'boolean'];
@@ -95,7 +96,7 @@ class User extends Model implements
      *
      * @return mixed
      */
-    public function isActive()
+    public function isConfirmed()
     {
         return $this->confirmed;
     }
@@ -111,6 +112,16 @@ class User extends Model implements
     }
 
     /**
+     * Convert email to lowercase before saving into the database.
+     *
+     * @param $email
+     */
+    public function setEmailAttribute($email)
+    {
+        $this->attributes['email'] = strtolower($email);
+    }
+
+    /**
      * Scope for fetching normal users.
      *
      * @param $query
@@ -118,7 +129,7 @@ class User extends Model implements
      */
     public function scopeNormal($query)
     {
-        return $query->where('admin', '<>', 1);
+        return $query->where('admin', 0);
     }
 
     /**

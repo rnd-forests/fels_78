@@ -10,6 +10,7 @@ class Category extends Model implements SluggableInterface
 {
     use SluggableTrait;
 
+    protected $table = 'categories';
     protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
     protected $fillable = ['name', 'slug', 'description'];
 

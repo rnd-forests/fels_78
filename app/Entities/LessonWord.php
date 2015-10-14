@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class LessonWord extends Model
 {
     protected $table = 'lesson_word';
-    protected $fillable = ['point', 'lesson_id', 'word_id', 'answer_id'];
+    protected $fillable = ['lesson_id', 'word_id', 'answer_id', 'point'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -23,13 +23,5 @@ class LessonWord extends Model
     public function word()
     {
         return $this->belongsTo(Word::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function answer()
-    {
-        return $this->belongsTo(Answer::class);
     }
 }

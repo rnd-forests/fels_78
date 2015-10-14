@@ -23,7 +23,8 @@ trait FollowableTrait
      */
     public function following()
     {
-        return $this->belongsToMany(static::class, 'follows', 'follower_id', 'followed_id');
+        return $this->belongsToMany(static::class, 'follows', 'follower_id', 'followed_id')
+            ->withTimestamps();
     }
 
     /**
@@ -43,7 +44,8 @@ trait FollowableTrait
      */
     public function followers()
     {
-        return $this->belongsToMany(static::class, 'follows', 'followed_id', 'follower_id');
+        return $this->belongsToMany(static::class, 'follows', 'followed_id', 'follower_id')
+            ->withTimestamps();
     }
 
     /**
