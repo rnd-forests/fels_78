@@ -21,7 +21,7 @@ class Lesson extends Model implements SluggableInterface
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -31,7 +31,7 @@ class Lesson extends Model implements SluggableInterface
      */
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class);
     }
 
     /**
@@ -39,7 +39,7 @@ class Lesson extends Model implements SluggableInterface
      */
     public function lessonWord()
     {
-        return $this->hasMany(LessonWord::class, 'lesson_id');
+        return $this->hasMany(LessonWord::class);
     }
 
     /**
@@ -49,7 +49,7 @@ class Lesson extends Model implements SluggableInterface
      */
     public function words()
     {
-        $this->belongsToMany(Word::class, 'lesson_word', 'lesson_id', 'word_id')
+        $this->belongsToMany(Word::class)
             ->withPivot('answer_id', 'point')
             ->withTimestamps();
     }

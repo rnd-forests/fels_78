@@ -21,7 +21,7 @@ class Category extends Model implements SluggableInterface
      */
     public function lessons()
     {
-        return $this->hasMany(Lesson::class, 'category_id');
+        return $this->hasMany(Lesson::class);
     }
 
     /**
@@ -31,7 +31,7 @@ class Category extends Model implements SluggableInterface
      */
     public function words()
     {
-        return $this->hasMany(Word::class, 'category_id');
+        return $this->hasMany(Word::class);
     }
 
     /**

@@ -17,6 +17,6 @@ class Answer extends Model
      */
     public function word()
     {
-        return $this->belongsTo(Word::class, 'word_id');
+        return $this->belongsTo(Word::class);
     }
 }

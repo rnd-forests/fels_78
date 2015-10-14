@@ -16,7 +16,7 @@ class Word extends Model
      */
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class);
     }
 
     /**
@@ -26,7 +26,7 @@ class Word extends Model
      */
     public function answers()
     {
-        return $this->hasMany(Answer::class, 'word_id');
+        return $this->hasMany(Answer::class);
     }
 
     /**
@@ -34,7 +34,7 @@ class Word extends Model
      */
     public function lessonWord()
     {
-        return $this->hasMany(LessonWord::class, 'word_id');
+        return $this->hasMany(LessonWord::class);
     }
 
     /**
@@ -44,7 +44,7 @@ class Word extends Model
      */
     public function lessons()
     {
-        return $this->belongsToMany(Lesson::class, 'lesson_word', 'word_id', 'lesson_id')
+        return $this->belongsToMany(Lesson::class)
             ->withPivot('answer_id', 'point')
             ->withTimestamps();
     }

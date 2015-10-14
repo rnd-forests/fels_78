@@ -14,7 +14,7 @@ class LessonWord extends Model
      */
     public function lesson()
     {
-        return $this->belongsTo(Lesson::class, 'lesson_id');
+        return $this->belongsTo(Lesson::class);
     }
 
     /**
@@ -22,6 +22,6 @@ class LessonWord extends Model
      */
     public function word()
     {
-        return $this->belongsTo(Word::class, 'word_id');
+        return $this->belongsTo(Word::class);
     }
 }

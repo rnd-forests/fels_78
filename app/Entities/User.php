@@ -51,7 +51,7 @@ class User extends Model implements
      */
     public function lessons()
     {
-        return $this->hasMany(Lesson::class, 'user_id');
+        return $this->hasMany(Lesson::class);
     }
 
     /**
@@ -61,7 +61,7 @@ class User extends Model implements
      */
     public function activities()
     {
-        return $this->hasMany(Activity::class, 'user_id');
+        return $this->hasMany(Activity::class);
     }
 
     /**
@@ -109,6 +109,16 @@ class User extends Model implements
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
+     * Convert email to lowercase before saving into the database.
+     *
+     * @param $email
+     */
+    public function setEmailAttribute($email)
+    {
+        $this->attributes['email'] = strtolower($email);
     }
 
     /**
