@@ -32,7 +32,7 @@ class Word extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function lessonWord()
+    public function lessonWords()
     {
         return $this->hasMany(LessonWord::class);
     }
