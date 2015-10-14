@@ -28,6 +28,7 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('admin.categories') }}">Categories</a></li>
+                <li><a href="{{ route('admin.words') }}">Words</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

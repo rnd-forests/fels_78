@@ -37,6 +37,16 @@ class RepositoryServiceProvider extends ServiceProvider
             \FELS\Core\Repository\Contracts\CategoryRepository::class,
             \FELS\Core\Repository\EloquentCategoryRepository::class
         );
+
+        $this->app->singleton(
+            \FELS\Core\Repository\Contracts\WordRepository::class,
+            \FELS\Core\Repository\EloquentWordRepository::class
+        );
+
+        $this->app->singleton(
+            \FELS\Core\Repository\Contracts\AnswerRepository::class,
+            \FELS\Core\Repository\EloquentAnswerRepository::class
+        );
     }
 
     /**
@@ -49,6 +59,8 @@ class RepositoryServiceProvider extends ServiceProvider
         return [
             \FELS\Core\Repository\Contracts\UserRepository::class,
             \FELS\Core\Repository\Contracts\CategoryRepository::class,
+            \FELS\Core\Repository\Contracts\WordRepository::class,
+            \FELS\Core\Repository\Contracts\AnswerRepository::class,
         ];
     }
 }

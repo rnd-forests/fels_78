@@ -14,6 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->composeAllViews();
+        $this->composeWordFormView();
     }
 
     /**
@@ -35,5 +36,16 @@ class ComposerServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             return $view->with('currentUser', auth()->user());
         });
+    }
+
+    /**
+     * Word forms will receive a list of categories.
+     */
+    protected function composeWordFormView()
+    {
+        view()->composer(
+            'admin.words.partials._main_form',
+            \FELS\Core\Composers\WordForm::class
+        );
     }
 }

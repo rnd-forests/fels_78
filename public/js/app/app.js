@@ -1,7 +1,4 @@
-/**
- * Auto pagination using AJAX.
- * @param options
- */
+// Auto pagination using AJAX.
 $.fn.autoPagination = function (options) {
     var opts = $.extend({}, $.fn.autoPagination.defaults, options);
     var w = $(window),
@@ -24,7 +21,6 @@ $.fn.autoPagination = function (options) {
         }
     });
 };
-
 $.fn.autoPagination.defaults = {
     buffer: 800,
     item: '.item',
@@ -33,11 +29,8 @@ $.fn.autoPagination.defaults = {
     nextAnchor: '.pagination a[rel="next"]'
 };
 
-/**
- * Get Html of element included its container.
- * Source: https://css-tricks.com/snippets/jquery/outerhtml-jquery-plugin/
- * @returns {*}
- */
+// Get Html of element included its container.
+// Source: https://css-tricks.com/snippets/jquery/outerhtml-jquery-plugin/
 $.fn.outerHTML = function () {
     return (!this.length) ? this : (this[0].outerHTML || (function (el) {
         var div = document.createElement('div');
@@ -48,13 +41,7 @@ $.fn.outerHTML = function () {
     })(this[0]));
 };
 
-/**
- * AJAX call for follow / unfollow forms.
- * @param form
- * @param submit
- * @param inverse
- * @param stat
- */
+// AJAX call for follow / unfollow forms.
 function applyRelationship(form, submit, inverse, stat) {
     var promise = $.Deferred();
     $.ajax({
@@ -77,60 +64,62 @@ function applyRelationship(form, submit, inverse, stat) {
     return promise;
 }
 
-/**
- * Application scripts.
- * @type {{init}}
- */
+// Generate a random UUID.
+// Source: http://jsfiddle.net/briguy37/2mvfd/
+function generateUUID() {
+    var date = (new Date).getTime();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (date + Math.random() * 16) % 16 | 0;
+        date = Math.floor(date / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
+
 var FELS = (function ($) {
-    /**
-     * Initialize all handlers/listeners/plugins.
-     */
     var init = function () {
-        _tooltips();
-        _scrollTop();
+        _global();
+        _wordForm();
         _followForm();
         _unfollowForm();
-        _setupAjaxHeader();
+        _updateWordForm();
+        _deleteWordForm();
         _storeTabPosition();
-        _dismissibleAlerts();
-        _autoPaginatedContent();
+        _deleteAnswerFrom();
+        _updateAnswerForm();
     };
 
-    /**
-     * Setup the AJAX.
-     * @private
-     */
-    var _setupAjaxHeader = function () {
-        var $csrf = $('meta[name=csrf-token]');
+    // Global configurations.
+    var _global = function () {
+        // Set AJAX header.
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $csrf.attr('content')
+                'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
             }
         });
+
+        // Scroll-top button.
+        $('#scroll-top').on('click', function (event) {
+            event.preventDefault();
+            $('body, html').animate({scrollTop: 0}, 800);
+        });
+
+        // Toggle content button.
+        $('.content-toggle').on('click', function () {
+            $(this).toggleClass('fa-arrow-circle-up fa-arrow-circle-down');
+        });
+
+        // Select2 plugin.
+        var $selector = $('.select2-selection');
+        $selector.select2({
+            placeholder: $selector.data('description')
+        });
+
+        $('[data-toggle=tooltip]').tooltip();
+        $('.auto-pagination').autoPagination();
+        $('.alert').not('.alert-danger').not('.form-helper').delay(2500).fadeOut();
     };
 
-    /**
-     * Activate tooltips.
-     * @private
-     */
-    var _tooltips = function () {
-        var $tooltips = $('[data-toggle=tooltip]');
-        $tooltips.tooltip();
-    };
-
-    /**
-     * Fade out alerts.
-     * @private
-     */
-    var _dismissibleAlerts = function () {
-        var $alerts = $('.alert').not('.alert-danger').not('.form-helper');
-        $alerts.delay(2500).fadeOut();
-    };
-
-    /**
-     * Store current position of tab in Bootstrap.
-     * @private
-     */
+    // Store current position of tab in Bootstrap.
     var _storeTabPosition = function () {
         $('a[data-toggle=tab]').on('shown.bs.tab', function () {
             localStorage.setItem('lastTab', $(this).attr('href'));
@@ -141,10 +130,7 @@ var FELS = (function ($) {
         }
     };
 
-    /**
-     * Follow user form.
-     * @private
-     */
+    // Follow user form.
     var _followForm = function () {
         var $form = $('.follow-form'),
             $button = $form.find('.follow-button'),
@@ -162,10 +148,7 @@ var FELS = (function ($) {
         });
     };
 
-    /**
-     * Unfollow user form.
-     * @private
-     */
+    // Unfollow user form.
     var _unfollowForm = function () {
         var $form = $('.unfollow-form'),
             $button = $form.find('.unfollow-button'),
@@ -183,23 +166,128 @@ var FELS = (function ($) {
         });
     };
 
-    /**
-     * Auto-loading table content using AJAX.
-     * @private
-     */
-    var _autoPaginatedContent = function () {
-        $('.auto-pagination').autoPagination();
+    // Word creation form.
+    var _wordForm = function () {
+        var $minField = 4,
+            $maxField = 10,
+            $container = $('.word-answers'),
+            $form = $container.closest('form'),
+            $field = $container.find('.answer'),
+            $fieldHtml = $field.outerHTML() + '';
+
+        $field.remove();
+        var replaceFieldHtml = function () {
+            var $uuid = generateUUID();
+            return $fieldHtml.replace(/word\[answers]\[\d+]/g, 'word[answers][' + $uuid + ']');
+        };
+        for (var i = 0; i < $minField; i++) {
+            $container.append(replaceFieldHtml());
+        }
+        $container.on('click', '.add-button', function (event) {
+            event.preventDefault();
+            if ($minField < $maxField) {
+                $container.append(replaceFieldHtml());
+                $minField++;
+            }
+        });
+        $container.on('click', '.remove-button', function (event) {
+            event.preventDefault();
+            if ($minField > 4) {
+                $(this).closest('.answer').remove();
+                $minField--;
+            }
+        });
+        $container.on('change', '.correct input', function () {
+            var $checkboxes = $container.find('.correct input'),
+                $currentCheckbox = $(this);
+            $checkboxes.not($currentCheckbox).prop('checked', false);
+            $checkboxes.filter(':checked').prev().remove();
+
+            var $formGroup = $currentCheckbox.closest('.form-group');
+            $formGroup.addClass('has-success');
+
+            var a = $checkboxes.not($currentCheckbox).closest('.form-group');
+            a.removeClass('has-success');
+        });
+        $form.on('submit', function (event) {
+            if ($container.find('.correct input').filter(':checked').length === 0) {
+                event.preventDefault();
+                swal({
+                    title: "Opps!",
+                    text: "You need to mark one answer as correct",
+                    type: 'warning',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        });
     };
 
-    /**
-     * Trigger scroll top button.
-     * @private
-     */
-    var _scrollTop = function () {
-        var $button = $('#scroll-top');
-        $button.on("click", function (event) {
+    // Delete answer form.
+    var _deleteAnswerFrom = function () {
+        $('.delete-answer-form').on('submit', function (event) {
             event.preventDefault();
-            $('body, html').animate({scrollTop: 0}, 800);
+            var form = $(this);
+            $.ajax({
+                data: form.serialize(),
+                url: form.prop('action'),
+                type: form.find('input[name="_method"]').val() || 'POST',
+                success: function () {
+                    form.closest('.list-group-item').remove();
+                }
+            });
+        });
+    };
+
+    // Update answer form.
+    var _updateAnswerForm = function () {
+        $('.answer-update-form').on('submit', function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                data: form.serialize(),
+                url: form.prop('action'),
+                type: form.find('input[name="_method"]').val() || 'POST',
+                success: function () {
+                    form.closest('.list-group-item')
+                        .find('.solution')
+                        .text(form.find('input[name=solution]').val());
+                }
+            });
+        });
+    };
+
+    // Update word form.
+    var _updateWordForm = function () {
+        $('.word-update-form').on('submit', function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                data: form.serialize(),
+                url: form.prop('action'),
+                type: form.find('input[name="_method"]').val() || 'POST',
+                success: function () {
+                    form.closest('.list-group-item')
+                        .find('.word-content')
+                        .text(form.find('input[name=content]').val());
+                }
+            });
+        });
+    };
+
+    // Delete word form.
+    var _deleteWordForm = function () {
+        $('.delete-word-form').on('submit', function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                data: form.serialize(),
+                url: form.prop('action'),
+                type: form.find('input[name="_method"]').val() || 'POST',
+                success: function () {
+                    form.closest('.word').slideUp();
+                }
+            });
         });
     };
 

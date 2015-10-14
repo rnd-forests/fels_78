@@ -95,6 +95,17 @@
       border: 1px solid #ddd;
       border-radius: 4px; }
 
+.word-list .word .word-info {
+  margin: 0;
+  padding: 5px 10px;
+  background-color: #5fcf80;
+  border-radius: 3px;
+  color: #ffffff; }
+
+.word-list .word .delete-word-form,
+.word-list .word .delete-answer-form {
+  display: inline-block; }
+
 @font-face {
   font-family: 'FontAwesome';
   src: url("../../fonts/font-awesome/fontawesome-webfont.eot?v=4.4.0");

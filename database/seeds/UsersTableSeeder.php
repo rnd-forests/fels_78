@@ -1,6 +1,6 @@
 <?php
 
-use FELS\Entities\Relationship;
+use FELS\Entities\User;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -12,29 +12,23 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(FELS\Entities\User::class, 'admin')->create([
+        factory(User::class, 'admin')->create([
             'name' => 'FELS Administrator',
             'email' => 'administrator@fels.com',
         ]);
 
-        $me = factory(FELS\Entities\User::class)->create([
+        $me = factory(User::class)->create([
             'name' => 'Vinh Nguyen',
             'email' => 'ngocvinh.nnv@gmail.com',
         ]);
 
-        factory(FELS\Entities\User::class, 300)->create();
+        factory(User::class, 300)->create();
         foreach (range(3, 11) as $id) {
-            $me->activeRelations()->save(Relationship::create([
-                'follower_id' => $me->id,
-                'followed_id' => $id,
-            ]));
+            $me->activeRelations()->create(['followed_id' => $id]);
         }
-        factory(FELS\Entities\User::class, 10)->create()
+        factory(User::class, 10)->create()
             ->each(function ($user) use ($me) {
-                $user->activeRelations()->save(Relationship::create([
-                    'follower_id' => $user->id,
-                    'followed_id' => $me->id,
-                ]));
+                $user->activeRelations()->create(['followed_id' => $me->id]);
             });
     }
 }
