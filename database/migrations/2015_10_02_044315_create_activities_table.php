@@ -15,16 +15,13 @@ class CreateActivitiesTable extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('target_id')->unsigned();
-            $table->integer('subject_id')->unsigned();
-            $table->string('subject_type');
+            $table->morphs('targetable');
             $table->string('action');
             $table->timestamps();
 
             $table->index('user_id');
-            $table->index('target_id');
-            $table->index('subject_id');
-            $table->index('subject_type');
+            $table->index('targetable_id');
+            $table->index('targetable_type');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

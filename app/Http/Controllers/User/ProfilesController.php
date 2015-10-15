@@ -26,8 +26,11 @@ class ProfilesController extends Controller
     public function show($slug)
     {
         $user = $this->users->findBySlug($slug);
+        $activityList = $user->activities()
+            ->latest()
+            ->paginate(20);
 
-        return view('users.profile.show', compact('user'));
+        return view('users.profile.show', compact('user', 'activityList'));
     }
 
     /**

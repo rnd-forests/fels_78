@@ -29,17 +29,13 @@ trait CapturesActivity
      */
     public function captureActivity($event)
     {
-        $userId = isset(static::$activityUserId)
-            ? static::$activityUserId
-            : 'user_id';
-        $targetId = isset(static::$activityTargetId)
-            ? static::$activityTargetId
-            : 'id';
+        $userId = pick_option(static::$activityUserId, 'user_id');
+        $targetId = pick_option(static::$activityTargetId, 'id');
+        $targetType = pick_option(static::$activityTargetType, static::class);
         Activity::create([
             'user_id' => $this->$userId,
-            'target_id' => $this->$targetId,
-            'subject_id' => $this->id,
-            'subject_type' => get_class($this),
+            'targetable_id' => $this->$targetId,
+            'targetable_type' => $targetType,
             'action' => $this->getActivityName($this, $event)
         ]);
     }

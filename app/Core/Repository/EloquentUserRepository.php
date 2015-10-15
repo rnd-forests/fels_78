@@ -4,6 +4,7 @@ namespace FELS\Core\Repository;
 
 use FELS\Entities\User;
 use FELS\Entities\Relationship;
+use FELS\Entities\Activity;
 use FELS\Core\Repository\Traits\GloballyTrait;
 use FELS\Core\Repository\Contracts\UserRepository;
 use FELS\Core\Repository\Traits\ShouldBeFoundTrait;
@@ -213,5 +214,21 @@ class EloquentUserRepository implements
             ->firstOrFail();
 
         return $relation->delete();
+    }
+
+    /**
+     * Get activity feed for a user.
+     *
+     * @param $user
+     * @return mixed
+     */
+    public function getActivityFeedFor($user)
+    {
+        $ids = array_merge(
+            $user->following()->lists('followed_id')->toArray(),
+            [$user->id]
+        );
+
+        return Activity::whereIn('user_id', $ids)->latest()->paginate(20);
     }
 }

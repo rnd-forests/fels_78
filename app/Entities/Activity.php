@@ -8,7 +8,7 @@ class Activity extends Model
 {
     protected $table = 'activities';
     protected $fillable = [
-        'user_id', 'target_id', 'subject_id', 'subject_type', 'action'
+        'user_id', 'targetable_id', 'targetable_type', 'action'
     ];
 
     /**
@@ -20,13 +20,13 @@ class Activity extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    
     /**
-     * Get the subject associated with the activity.
+     * Get the target associated with the activity.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function subject()
+    public function targetable()
     {
         return $this->morphTo();
     }
