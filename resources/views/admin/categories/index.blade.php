@@ -24,9 +24,9 @@
                         <table class="table table-bordered table-hover auto-pagination">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Name</th>
                                     <th>Description</th>
+                                    <th>Word Count</th>
                                     <th>Published</th>
                                     <th>Actions</th>
                                 </tr>
@@ -35,9 +35,9 @@
                             @foreach($categories->chunk(25) as $categoryList)
                                 @foreach($categoryList as $category)
                                     <tr class="item">
-                                        <td>{{ $category->id }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->description }}</td>
+                                        <td>{{ counting($category->words) }}</td>
                                         <td>{{ short_time($category->created_at) }}</td>
                                         <td>
                                             <a href="{{ route('admin.categories.edit', $category) }}"

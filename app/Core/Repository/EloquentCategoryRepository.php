@@ -65,6 +65,16 @@ class EloquentCategoryRepository implements
     }
 
     /**
+     * Lists all categories by name and id.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function lists()
+    {
+        return $this->model->oldest('name')->lists('name', 'id');
+    }
+
+    /**
      * Paginate a collection of models.
      *
      * @param $limit
@@ -73,6 +83,9 @@ class EloquentCategoryRepository implements
      */
     public function paginate($limit, array $params = null)
     {
-        return $this->model->latest()->paginate($limit);
+        return $this->model
+            ->with('words')
+            ->latest()
+            ->paginate($limit);
     }
 }

@@ -18,6 +18,19 @@ $factory->defineAs(FELS\Entities\User::class, 'admin', function () use ($factory
 $factory->define(FELS\Entities\Category::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->sentence(5),
-        'description' => $faker->paragraph(2),
+        'description' => $faker->sentences(2, true),
+    ];
+});
+
+$factory->define(FELS\Entities\Word::class, function (Faker\Generator $faker) {
+    return [
+        'content' => $faker->word,
+    ];
+});
+
+$factory->define(FELS\Entities\Answer::class, function (Faker\Generator $faker) {
+    return [
+        'solution' => $faker->sentence(6),
+        'correct' => false,
     ];
 });

@@ -7,6 +7,7 @@ elixir(function (mix) {
         'bootstrap/dist/css/bootstrap.min.css',
         'fontawesome/css/font-awesome.min.css',
         'sweetalert/dist/sweetalert.css',
+        'select2/dist/css/select2.min.css'
     ], 'public/css/vendor.css', 'vendor/bower-components');
 
     mix.styles([
@@ -18,6 +19,7 @@ elixir(function (mix) {
         'jquery/dist/jquery.min.js',
         'bootstrap/dist/js/bootstrap.min.js',
         'sweetalert/dist/sweetalert.min.js',
+        'select2/dist/js/select2.min.js'
     ], 'public/js/vendor.js', 'vendor/bower-components');
 
     mix.scripts([

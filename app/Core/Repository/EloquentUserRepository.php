@@ -3,7 +3,6 @@
 namespace FELS\Core\Repository;
 
 use FELS\Entities\User;
-use FELS\Entities\Relationship;
 use FELS\Entities\Activity;
 use FELS\Core\Repository\Traits\GloballyTrait;
 use FELS\Core\Repository\Contracts\UserRepository;

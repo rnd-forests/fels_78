@@ -227,3 +227,16 @@ if (!function_exists('pick_option')) {
         return isset($option) ? $option : $default;
     }
 }
+
+if (!function_exists('array_random_val')) {
+    /**
+     * Generate random values from a given array.
+     *
+     * @param array $arr
+     * @return mixed
+     */
+    function array_random_val(array $arr)
+    {
+        return $arr[array_rand($arr)];
+    }
+}

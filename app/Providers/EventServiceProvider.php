@@ -2,6 +2,8 @@
 
 namespace FELS\Providers;
 
+use FELS\Entities\Observers\WordObserver;
+use FELS\Entities\Observers\CategoryObserver;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -35,6 +37,7 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot($events);
 
-        //
+        \FELS\Entities\Word::observe(new WordObserver);
+        \FELS\Entities\Category::observe(new CategoryObserver);
     }
 }

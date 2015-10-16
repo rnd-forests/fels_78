@@ -26,6 +26,25 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], fu
             'destroy' => 'categories.delete'
         ]
     ]);
+
+    Route::resource('words', 'WordsController', [
+        'except' => ['show', 'edit'],
+        'names' => [
+            'index' => 'words',
+            'create' => 'words.create',
+            'store' => 'words.store',
+            'update' => 'words.update',
+            'destroy' => 'words.delete'
+        ]
+    ]);
+
+    Route::resource('answers', 'AnswersController', [
+        'only' => ['update', 'destroy'],
+        'names' => [
+            'update' => 'answers.update',
+            'destroy' => 'answers.delete'
+        ]
+    ]);
 });
 
 Route::group(['namespace' => 'Pages'], function () {
