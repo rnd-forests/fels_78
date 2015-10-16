@@ -13,10 +13,12 @@
                 <div class="panel-heading">
                     <strong>Activities</strong>
                 </div>
-                <div class="panel-body">
-                    ...
+                <div class="list-group auto-pagination">
+                    @include('users.activity.activity_list')
                 </div>
             </div>
+            @include('layouts.partials._loader')
+            {!! paginate($activityList) !!}
         </div>
     </div>
 @stop

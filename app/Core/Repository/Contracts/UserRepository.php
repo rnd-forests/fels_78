@@ -54,4 +54,12 @@ interface UserRepository
      * @return mixed
      */
     public function destroyRelationship($followedId, $user);
+
+    /**
+     * Get activity feed for a user.
+     *
+     * @param $user
+     * @return mixed
+     */
+    public function getActivityFeedFor($user);
 }

@@ -214,3 +214,16 @@ if (!function_exists('verify_session_key')) {
         return false;
     }
 }
+
+if (!function_exists('pick_option')) {
+    /**
+     * Pick on of two options.
+     *
+     * @param $option
+     * @param $default
+     */
+    function pick_option($option, $default)
+    {
+        return isset($option) ? $option : $default;
+    }
+}
