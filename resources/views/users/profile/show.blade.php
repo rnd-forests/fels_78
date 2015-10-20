@@ -9,9 +9,9 @@
             @endunless
         </div>
         <div class="col-md-9">
-            <div class="panel panel-success">
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>Activities</strong>
+                    <strong>Recent Activities</strong>
                 </div>
                 <div class="list-group auto-pagination">
                     @include('users.activity.activity_list')

@@ -18,7 +18,7 @@
         {!! Form::label('new_pass_confirmation', 'Confirm new password', ['class' => 'control-label']) !!}
         {!! Form::password('new_pass_confirmation', ['class' => 'form-control']) !!}
     </div>
-    <div class="form-group form-submit">
-        <button type="submit" class="btn btn-primary">Change your password</button>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Update <i class="fa fa-arrow-right"></i></button>
     </div>
 {!! Form::close() !!}

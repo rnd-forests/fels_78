@@ -1,5 +1,8 @@
-<h6 class="text-muted">{{ $parser->timeAgo($activity) }}</h6>
+<div class="pull-right">
+    <span class="activity-time text-muted">{{ $parser->timeAgo($activity) }}</span>
+</div>
 <strong>
+    <i class="fa fa-2x fa-plus-square text-success"></i>
     <a href="{{ route('user.profile.show', $parser->owner($activity)) }}">
         {{ $parser->owner($activity)->name }}
     </a>

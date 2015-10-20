@@ -4,7 +4,7 @@
         <h3>{{ $user->name }}</h3>
         <ul>
             <li>{{ $user->email }}</li>
-            <li>Joined at {{ short_time($user->created_at) }}</li>
+            <li>Joined on {{ short_time($user->created_at) }}</li>
         </ul>
         <ul>
             <li>
