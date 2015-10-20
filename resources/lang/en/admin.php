@@ -9,4 +9,5 @@ return [
     'category_updated' => 'The category has been updated.',
     'category_created' => 'New category has been added.',
     'word_created' => 'New word has been saved.',
+    'word_deleted' => 'Word deleted.',
 ];

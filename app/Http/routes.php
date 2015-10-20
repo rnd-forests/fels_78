@@ -28,10 +28,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], fu
     ]);
 
     Route::resource('words', 'WordsController', [
-        'except' => ['show', 'edit'],
+        'except' => ['edit'],
         'names' => [
             'index' => 'words',
             'create' => 'words.create',
+            'show' => 'words.show',
             'store' => 'words.store',
             'update' => 'words.update',
             'destroy' => 'words.delete'
