@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             @if(blank($words))
-                <div class="text-center text-warning">No word available.</div>
+                @include('layouts.partials._empty')
             @else
                 <div class="admin-wrapper">
                     <div class="panel panel-default">
@@ -22,10 +22,12 @@
                         </div>
                     </div>
                     <div class="panel panel-default">
-                        <div class="list-group auto-pagination word-list">
+                        <div class="list-group auto-pagination">
                             @foreach($words->chunk(50) as $wordList)
                                 @foreach($wordList as $word)
-                                    @include('admin.words.partials._word')
+                                    <div class="list-group-item item word">
+                                        @include('admin.words.partials._word')
+                                    </div>
                                 @endforeach
                             @endforeach
                         </div>
