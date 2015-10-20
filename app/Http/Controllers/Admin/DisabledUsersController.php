@@ -22,7 +22,7 @@ class DisabledUsersController extends Controller
      */
     public function index()
     {
-        $users = $this->users->disabled(50);
+        $users = $this->users->disabled(15);
 
         return view('admin.users.disabled', compact('users'));
     }

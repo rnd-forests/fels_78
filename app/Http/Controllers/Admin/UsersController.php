@@ -23,7 +23,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = $this->users->paginate(50);
+        $users = $this->users->paginate(15);
 
         return view('admin.users.current', compact('users'));
     }

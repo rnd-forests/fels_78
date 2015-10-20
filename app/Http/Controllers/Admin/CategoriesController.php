@@ -23,7 +23,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = $this->categories->paginate(25);
+        $categories = $this->categories->paginate(15);
 
         return view('admin.categories.index', compact('categories'));
     }

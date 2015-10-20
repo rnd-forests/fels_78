@@ -182,6 +182,7 @@ class EloquentUserRepository implements
     public function paginate($limit, array $params = null)
     {
         return $this->model
+            ->with('following', 'followers')
             ->normal()
             ->paginate($limit);
     }

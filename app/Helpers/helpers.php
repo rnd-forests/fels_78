@@ -14,7 +14,7 @@ if (!function_exists('short_time')) {
      */
     function short_time($timestamp)
     {
-        return Carbon::parse($timestamp)->format('Y-m-d');
+        return Carbon::parse($timestamp)->format('Y/m/d');
     }
 }
 
@@ -27,7 +27,7 @@ if (!function_exists('full_time')) {
      */
     function full_time($timestamp)
     {
-        return Carbon::parse($timestamp)->format('Y-m-d, H:i:s');
+        return Carbon::parse($timestamp)->format('Y/m/d, H:i:s');
     }
 }
 
