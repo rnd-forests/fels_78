@@ -38,11 +38,11 @@ class User extends Model implements
     protected $presenter = UserPresenter::class;
     protected $casts = ['admin' => 'boolean', 'confirmed' => 'boolean'];
     protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
+    protected $hidden = ['password', 'remember_token', 'confirmation_code'];
     protected $fillable = [
         'name', 'slug', 'email', 'password',
         'admin', 'confirmed', 'confirmation_code',
     ];
-    protected $hidden = ['password', 'remember_token', 'confirmation_code'];
 
     /**
      * Associated lessons of a user.

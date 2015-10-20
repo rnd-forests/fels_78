@@ -31,7 +31,8 @@ class EloquentWordRepository implements
      */
     public function paginate($limit, array $params = null)
     {
-        return $this->model->with('category', 'answers')
+        return $this->model
+            ->with('category', 'answers')
             ->oldest('content')
             ->paginate($limit);
     }

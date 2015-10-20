@@ -215,14 +215,14 @@ if (!function_exists('verify_session_key')) {
     }
 }
 
-if (!function_exists('pick_option')) {
+if (!function_exists('option')) {
     /**
      * Pick on of two options.
      *
      * @param $option
      * @param $default
      */
-    function pick_option($option, $default)
+    function option($option, $default)
     {
         return isset($option) ? $option : $default;
     }

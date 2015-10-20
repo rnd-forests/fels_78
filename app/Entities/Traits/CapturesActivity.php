@@ -29,9 +29,9 @@ trait CapturesActivity
      */
     public function captureActivity($event)
     {
-        $userId = pick_option(static::$activityUserId, 'user_id');
-        $targetId = pick_option(static::$activityTargetId, 'id');
-        $targetType = pick_option(static::$activityTargetType, static::class);
+        $userId = option(static::$activityUserId, 'user_id');
+        $targetId = option(static::$activityTargetId, 'id');
+        $targetType = option(static::$activityTargetType, static::class);
         Activity::create([
             'user_id' => $this->$userId,
             'targetable_id' => $this->$targetId,

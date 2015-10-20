@@ -8,6 +8,8 @@ class StaticPagesController extends Controller
 {
     /**
      * About page.
+     *
+     * @return \Illuminate\View\View
      */
     public function about()
     {
@@ -16,6 +18,8 @@ class StaticPagesController extends Controller
 
     /**
      * Helper page.
+     *
+     * @return \Illuminate\View\View
      */
     public function help()
     {
@@ -24,6 +28,8 @@ class StaticPagesController extends Controller
 
     /**
      * Frequently asked questions page.
+     *
+     * @return \Illuminate\View\View
      */
     public function faq()
     {

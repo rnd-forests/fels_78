@@ -11,12 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PasswordController extends Controller
 {
     protected $broker;
-
-    /**
-     * Constructor.
-     *
-     * @param PasswordBroker $broker
-     */
+    
     public function __construct(PasswordBroker $broker)
     {
         $this->broker = $broker;
