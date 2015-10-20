@@ -5,6 +5,7 @@ namespace FELS\Entities;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use FELS\Entities\Traits\FollowableTrait;
+use FELS\Entities\Traits\SearchableTrait;
 use FELS\Entities\Presenters\UserPresenter;
 use FELS\Exceptions\MethodNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,6 +31,7 @@ class User extends Model implements
         SluggableTrait,
         FollowableTrait,
         Authenticatable,
+        SearchableTrait,
         CanResetPassword,
         PresentableTrait;
 

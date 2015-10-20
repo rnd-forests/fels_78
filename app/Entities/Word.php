@@ -3,9 +3,12 @@
 namespace FELS\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use FELS\Entities\Traits\SearchableTrait;
 
 class Word extends Model
 {
+    use SearchableTrait;
+
     protected $table = 'words';
     protected $fillable = ['category_id', 'content'];
 

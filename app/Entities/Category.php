@@ -3,12 +3,14 @@
 namespace FELS\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use FELS\Entities\Traits\SearchableTrait;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 
 class Category extends Model implements SluggableInterface
 {
-    use SluggableTrait;
+    use SluggableTrait,
+        SearchableTrait;
 
     protected $table = 'categories';
     protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];

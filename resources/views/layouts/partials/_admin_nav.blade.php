@@ -31,6 +31,13 @@
                 <li><a href="{{ route('admin.words') }}">Words</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#"
+                       data-toggle="collapse"
+                       data-target="#admin-search-form">
+                        <i class="fa fa-search"></i> Search...
+                    </a>
+                </li>
                 <li class="dropdown">
                     <a href="#"
                        class="dropdown-toggle"

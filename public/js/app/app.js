@@ -79,6 +79,7 @@ var FELS = (function ($) {
     var init = function () {
         _global();
         _wordForm();
+        _searchForm();
         _followForm();
         _unfollowForm();
         _updateWordForm();
@@ -267,7 +268,7 @@ var FELS = (function ($) {
                 url: form.prop('action'),
                 type: form.find('input[name="_method"]').val() || 'POST',
                 success: function () {
-                    form.closest('.list-group-item')
+                    form.closest('.word')
                         .find('.word-content')
                         .text(form.find('input[name=content]').val());
                 }
@@ -288,6 +289,30 @@ var FELS = (function ($) {
                     form.closest('.word').slideUp();
                 }
             });
+        });
+    };
+
+    /**
+     * Search form.
+     *
+     * @private
+     */
+    var _searchForm = function () {
+        $('#search-form').on('input', '#keyword', function () {
+            var $keyword = $.trim($(this).val());
+            if (!$keyword || $keyword.length == 0) {
+                $(this).popover('toggle');
+            } else {
+                $(this).popover('hide');
+            }
+        }).on('submit', function () {
+            var $box = $('#keyword'),
+                $keyword = $.trim($box.val());
+            if (!$keyword || $keyword.length == 0) {
+                $('#search-keyword-modal').modal('show');
+                $box.popover('hide');
+                return false;
+            }
         });
     };
 
