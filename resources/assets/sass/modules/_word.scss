@@ -1,16 +1,14 @@
-.word-list {
-  .word {
-    .word-info {
-      margin: 0;
-      padding: 5px 10px;
-      background-color: #5fcf80;
-      border-radius: 3px;
-      color: #ffffff;
-    }
+.word {
+  .word-info {
+    margin: 0;
+    padding: 5px 10px;
+    background-color: #5fcf80;
+    border-radius: 3px;
+    color: #ffffff;
+  }
 
-    .delete-word-form,
-    .delete-answer-form {
-      display: inline-block;
-    }
+  .delete-word-form,
+  .delete-answer-form {
+    display: inline-block;
   }
 }

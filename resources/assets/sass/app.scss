@@ -3,6 +3,8 @@
 @import "components/form";
 @import "components/loading";
 @import "components/scroll_top";
+@import "components/button";
+@import "components/well";
 @import "modules/admin";
 @import "modules/user";
 @import "modules/word";
@@ -29,4 +31,8 @@ a {
   &:hover, &:active, &:focus {
     text-decoration: none;
   }
+}
+
+.table {
+  background-color: #ffffff;
 }

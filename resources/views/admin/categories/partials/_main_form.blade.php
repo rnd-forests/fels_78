@@ -7,6 +7,6 @@
     {!! Form::label('description', 'Category Description', ['class' => 'control-label']) !!}
     {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 6]) !!}
 </div>
-<div class="form-group form-submit">
-    {!! Form::submit($categorySubmit, ['class' => 'btn btn-primary']) !!}
+<div class="form-group">
+    <button type="submit" class="btn btn-primary">@yield('categorySubmit') <i class="fa fa-arrow-right"></i></button>
 </div>

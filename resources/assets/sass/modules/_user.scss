@@ -16,21 +16,35 @@
 }
 
 .user-list {
-  text-align: center;
-
   .user-block {
-    margin-bottom: 25px;
-    padding-top: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    padding: 15px 20px;
 
     img {
-      margin-bottom: 5px;
-      display: inline-block;
-      max-width: 100%;
-      height: auto;
       padding: 4px;
       background-color: #fff;
       border: 1px solid #ddd;
       border-radius: 4px;
     }
+
+    .label {
+      display: inline-block;
+      font-size: 12px;
+    }
+  }
+}
+
+.activity {
+  .activity-time {
+    vertical-align: middle;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .fa {
+    vertical-align: middle;
+    margin-right: 5px;
   }
 }
