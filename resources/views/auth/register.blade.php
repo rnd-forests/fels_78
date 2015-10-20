@@ -3,10 +3,8 @@
 @section('content')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default form-wrapper">
-                <div class="panel-heading">Account registration</div>
-                <div class="panel-body">
-                    {!! Form::open() !!}
+            <div class="well-w">
+                {!! Form::open() !!}
                     <div class="form-group">
                         {!! Form::label('name', 'Name', ['class' => 'control-label']) !!}
                         {!! Form::text('name', null, ['class' => 'form-control']) !!}
@@ -18,31 +16,27 @@
                             'placeholder' => 'username@example.com']) !!}
                         {!! error_text($errors, 'email') !!}
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {!! Form::label('password', 'Password', ['class' => 'control-label']) !!}
-                                {!! Form::password('password', ['class' => 'form-control']) !!}
-                                {!! error_text($errors, 'password') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {!! Form::label('password_confirmation', 'Password Confirmation', ['class' => 'control-label']) !!}
-                                {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        {!! Form::label('password', 'Password', ['class' => 'control-label']) !!}
+                        {!! Form::password('password', ['class' => 'form-control']) !!}
+                        {!! error_text($errors, 'password') !!}
                     </div>
-                    <div class="form-group form-submit">
-                        {!! Form::submit('Sign Up', ['class' => 'btn btn-primary']) !!}
+                    <div class="form-group">
+                        {!! Form::label('password_confirmation', 'Password Confirmation', ['class' => 'control-label']) !!}
+                        {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                     </div>
-                    {!! Form::close() !!}
-                </div>
-                <div class="panel-footer">
-                    <ul class="list-inline">
-                        <li><a href="{{ route('auth.login') }}">Sign In</a></li>
-                    </ul>
-                </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Sign Up <i class="fa fa-arrow-right"></i></button>
+                    </div>
+                {!! Form::close() !!}
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <i class="fa fa-cog"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ route('auth.login') }}">Sign In</a></li>
+                </ul>
             </div>
         </div>
     </div>

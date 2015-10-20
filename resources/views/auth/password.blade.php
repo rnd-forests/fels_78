@@ -3,27 +3,27 @@
 @section('content')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default form-wrapper">
-                <div class="panel-heading">Get password reset link</div>
-                <div class="panel-body">
-                    {!! Form::open() !!}
+            <div class="well-w">
+                {!! Form::open() !!}
                     <div class="form-group">
                         {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
                         {!! Form::email('email', null, ['class' => 'form-control',
                             'placeholder' => 'username@example.com']) !!}
                         {!! error_text($errors, 'email') !!}
                     </div>
-                    <div class="form-group form-submit">
-                        {!! Form::submit('Send Password Reset Link', ['class' => 'btn btn-primary']) !!}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Send Password Reset Link <i class="fa fa-arrow-right"></i></button>
                     </div>
-                    {!! Form::close() !!}
-                </div>
-                <div class="panel-footer">
-                    <ol class="list-inline">
-                        <li><a href="{{ route('auth.login') }}">Sign In</a></li>
-                        <li><a href="{{ route('auth.register') }}">Sign Up</a></li>
-                    </ol>
-                </div>
+                {!! Form::close() !!}
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <i class="fa fa-cog"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ route('auth.login') }}">Sign In</a></li>
+                    <li><a href="{{ route('auth.register') }}">Sign Up</a></li>
+                </ul>
             </div>
         </div>
     </div>
