@@ -22,7 +22,7 @@ class MembersController extends Controller
      */
     public function index()
     {
-        $members = $this->repository->paginate(30);
+        $members = $this->repository->paginate(15);
 
         return view('pages.members', compact('members'));
     }
