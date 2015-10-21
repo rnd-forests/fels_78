@@ -18,33 +18,24 @@
         <div class="col-md-8">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="update-name">
-                    <div class="form-wrapper">
-                        <div class="panel panel-default form-wrapper">
-                            <div class="panel-body">
-                                @include('users.profile.partials._update_name_form')
-                            </div>
-                        </div>
+                    <div class="well-w">
+                        @include('users.profile.partials._update_name_form')
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="update-password">
-                    <div class="panel panel-default form-wrapper">
-                        <div class="panel-body">
-                            @include('users.profile.partials._update_password_form')
-                        </div>
+                    <div class="well-w">
+                        @include('users.profile.partials._update_password_form')
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="cancel-account">
-                    <div class="panel panel-danger text-center">
-                        <div class="panel-heading">Cancel your account</div>
-                        <div class="panel-body">
-                            <div class="alert alert-danger" role="alert">
-                                Once your account is deleted, the system will
-                                immediately delete all things related to your account.
-                            </div>
-                            {!! Form::open(['route' => ['user.profile.destroy', $user], 'method' => 'DELETE']) !!}
-                                {!! Form::submit('Confirm &amp; Cancel', ['class' => 'btn btn-danger']) !!}
-                            {!! Form::close() !!}
+                    <div class="well-w">
+                        <div class="alert alert-danger" role="alert">
+                            Once your account is deleted, the system will
+                            immediately delete everything related to your account.
                         </div>
+                        {!! Form::open(['route' => ['user.profile.destroy', $user], 'method' => 'DELETE']) !!}
+                        <button type="submit" class="btn btn-danger">Confirm <i class="fa fa-arrow-right"></i></button>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
