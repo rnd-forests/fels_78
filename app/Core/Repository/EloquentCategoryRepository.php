@@ -42,10 +42,9 @@ class EloquentCategoryRepository implements
      *
      * @param array $data
      * @param $identifier
-     * @param null $optionalIdentifier
      * @return bool|int
      */
-    public function update(array $data, $identifier, $optionalIdentifier = null)
+    public function update(array $data, $identifier)
     {
         $category = $this->findBySlug($identifier);
 
@@ -71,7 +70,9 @@ class EloquentCategoryRepository implements
      */
     public function lists()
     {
-        return $this->model->oldest('name')->lists('name', 'id');
+        return $this->model
+            ->oldest('name')
+            ->lists('name', 'id');
     }
 
     /**

@@ -111,10 +111,9 @@ class EloquentUserRepository implements
      *
      * @param array $data
      * @param $identifier
-     * @param null $optionalIdentifier
      * @return bool|int
      */
-    public function update(array $data, $identifier, $optionalIdentifier = null)
+    public function update(array $data, $identifier)
     {
         $user = $this->findBySlug($identifier);
 
@@ -223,11 +222,9 @@ class EloquentUserRepository implements
      */
     public function getActivityFeedFor($user)
     {
-        $ids = array_merge(
+        return Activity::whereIn('user_id', array_merge(
             $user->following()->lists('followed_id')->toArray(),
             [$user->id]
-        );
-
-        return Activity::whereIn('user_id', $ids)->latest()->paginate(20);
+        ))->latest()->paginate(20);
     }
 }

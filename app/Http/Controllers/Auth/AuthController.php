@@ -12,13 +12,7 @@ use FELS\Core\Repository\Contracts\UserRepository;
 class AuthController extends Controller
 {
     protected $users, $auth;
-
-    /**
-     * Constructor.
-     *
-     * @param Guard $auth
-     * @param UserRepository $users
-     */
+    
     public function __construct(Guard $auth, UserRepository $users)
     {
         $this->auth = $auth;

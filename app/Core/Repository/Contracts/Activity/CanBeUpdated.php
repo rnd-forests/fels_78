@@ -9,8 +9,7 @@ interface CanBeUpdated
      *
      * @param array $data
      * @param $identifier
-     * @param null $optionalIdentifier
      * @return bool|int
      */
-    public function update(array $data, $identifier, $optionalIdentifier = null);
+    public function update(array $data, $identifier);
 }
