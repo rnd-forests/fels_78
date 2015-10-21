@@ -40,6 +40,19 @@ class WordsController extends Controller
     }
 
     /**
+     * Display individual word.
+     *
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function show($id)
+    {
+        $word = $this->words->findById($id);
+
+        return view('admin.words.show', compact('word'));
+    }
+
+    /**
      * Store new word.
      *
      * @param Request $request
@@ -72,11 +85,19 @@ class WordsController extends Controller
     /**
      * Delete a word.
      *
+     * @param Request $request
      * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $word = $this->words->findById($id);
         $word->delete();
+
+        if (!$request->ajax()) {
+            flash()->success(trans('admin.word_deleted'));
+
+            return redirect()->route('admin.words');
+        }
     }
 }
