@@ -4,15 +4,17 @@ namespace FELS\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use FELS\Entities\Traits\FlushRelatedActivities;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 
 class Lesson extends Model implements SluggableInterface
 {
-    use SluggableTrait;
+    use SluggableTrait,
+        FlushRelatedActivities;
 
     protected $table = 'lessons';
+    protected $fillable = ['user_id', 'category_id', 'name', 'slug'];
     protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
-    protected $fillable = ['user_id', 'category_id', 'name', 'slug', 'description'];
 
     /**
      * A lesson belongs to a specific user.
@@ -49,7 +51,7 @@ class Lesson extends Model implements SluggableInterface
      */
     public function words()
     {
-        $this->belongsToMany(Word::class)
+        return $this->belongsToMany(Word::class)
             ->withPivot('answer_id', 'point')
             ->withTimestamps();
     }

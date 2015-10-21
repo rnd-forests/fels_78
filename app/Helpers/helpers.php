@@ -217,7 +217,7 @@ if (!function_exists('verify_session_key')) {
 
 if (!function_exists('option')) {
     /**
-     * Pick on of two options.
+     * Pick one of two options.
      *
      * @param $option
      * @param $default

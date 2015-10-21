@@ -11,6 +11,7 @@ use FELS\Exceptions\MethodNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Cviebrock\EloquentSluggable\SluggableTrait;
+use FELS\Entities\Traits\FlushRelatedActivities;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use FELS\Entities\Presenters\Traits\PresentableTrait;
@@ -33,7 +34,8 @@ class User extends Model implements
         Authenticatable,
         SearchableTrait,
         CanResetPassword,
-        PresentableTrait;
+        PresentableTrait,
+        FlushRelatedActivities;
 
     protected $table = 'users';
     protected $dates = ['deleted_at'];

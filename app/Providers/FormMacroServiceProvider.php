@@ -2,6 +2,7 @@
 
 namespace FELS\Providers;
 
+use Form;
 use Illuminate\Support\ServiceProvider;
 
 class FormMacroServiceProvider extends ServiceProvider
