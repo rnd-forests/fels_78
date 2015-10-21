@@ -45,6 +45,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], fu
             'destroy' => 'answers.delete'
         ]
     ]);
+
+    Route::get('search', ['as' => 'search', 'uses' => 'SearchController@search']);
 });
 
 Route::group(['namespace' => 'Pages'], function () {

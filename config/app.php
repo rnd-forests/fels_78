@@ -147,6 +147,7 @@ return [
         FELS\Providers\RepositoryServiceProvider::class,
         FELS\Providers\ValidatorServiceProvider::class,
         FELS\Providers\ComposerServiceProvider::class,
+        FELS\Providers\SearchServiceProvider::class,
 
         /**
          * Third-party service providers...
@@ -207,6 +208,7 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
+        'Search'    => FELS\Core\Search\Facades\SearchFacade::class,
 
     ],
 
