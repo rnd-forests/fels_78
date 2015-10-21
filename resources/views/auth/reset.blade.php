@@ -3,10 +3,8 @@
 @section('content')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default form-wrapper">
-                <div class="panel-heading">Reset your password</div>
-                <div class="panel-body">
-                    {!! Form::open(['url' => url('auth/password/reset')]) !!}
+            <div class="well-w">
+                {!! Form::open(['url' => url('auth/password/reset')]) !!}
                     {!! Form::hidden('token', $token) !!}
                     <div class="form-group">
                         {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
@@ -23,11 +21,10 @@
                         {!! Form::label('password_confirmation', 'Password Confirmation', ['class' => 'control-label']) !!}
                         {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                     </div>
-                    <div class="form-group form-submit">
-                        {!! Form::submit('Reset Password', ['class' => 'btn btn-primary']) !!}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Reset Password <i class="fa fa-arrow-right"></i></button>
                     </div>
-                    {!! Form::close() !!}
-                </div>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>

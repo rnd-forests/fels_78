@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('admin.users') }}"><strong>FELS</strong></a>
+            <a class="navbar-brand" href="{{ route('admin.users') }}">FELS</a>
         </div>
 
         <div class="collapse navbar-collapse" id="keep-nav">

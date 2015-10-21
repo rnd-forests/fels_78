@@ -3,15 +3,13 @@
 @section('content')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default form-wrapper">
-                <div class="panel-heading">Sign in with your account</div>
-                <div class="panel-body">
-                    @if(session('login_error'))
-                        <div class="alert alert-danger text-center">
-                            {!! session('login_error') !!}
-                        </div>
-                    @endif
-                    {!! Form::open() !!}
+            <div class="well-w">
+                @if(session('login_error'))
+                    <div class="alert alert-danger text-center">
+                        {!! session('login_error') !!}
+                    </div>
+                @endif
+                {!! Form::open() !!}
                     <div class="form-group">
                         {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
                         {!! Form::email('email', null, ['class' => 'form-control']) !!}
@@ -27,17 +25,19 @@
                             <label><input type="checkbox" name="remember"> Remember me</label>
                         </div>
                     </div>
-                    <div class="form-group form-submit">
-                        {!! Form::submit('Sign In', ['class' => 'btn btn-primary']) !!}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Sign In <i class="fa fa-arrow-right"></i></button>
                     </div>
-                    {!! Form::close() !!}
-                </div>
-                <div class="panel-footer">
-                    <ol class="list-inline">
-                        <li><a href="{{ url('auth/password/email') }}">Reset your Password</a></li>
-                        <li><a href="{{ route('auth.register') }}">Sign Up</a></li>
-                    </ol>
-                </div>
+                {!! Form::close() !!}
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <i class="fa fa-cog"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ route('auth.register') }}">Sign Up</a></li>
+                    <li><a href="{{ url('auth/password/email') }}">Reset your Password</a></li>
+                </ul>
             </div>
         </div>
     </div>
