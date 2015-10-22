@@ -18,7 +18,6 @@ class CreateLessonsTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->string('name');
             $table->string('slug');
-            $table->text('description');
             $table->boolean('learned')->default(false);
             $table->timestamps();
 

@@ -2,6 +2,8 @@
 
 namespace FELS\Entities\Observers;
 
+use FELS\Entities\User;
+
 class UserObserver
 {
     /**

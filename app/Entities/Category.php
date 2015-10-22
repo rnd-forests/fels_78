@@ -13,8 +13,8 @@ class Category extends Model implements SluggableInterface
         SearchableTrait;
 
     protected $table = 'categories';
-    protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
     protected $fillable = ['name', 'slug', 'description'];
+    protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
 
     /**
      * A category may contain many lessons.
