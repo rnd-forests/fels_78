@@ -48,7 +48,7 @@ class Word extends Model
     public function lessons()
     {
         return $this->belongsToMany(Lesson::class)
-            ->withPivot('answer_id', 'point')
+            ->withPivot('answer_id')
             ->withTimestamps();
     }
 }

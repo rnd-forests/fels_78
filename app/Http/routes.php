@@ -88,5 +88,14 @@ Route::group(['prefix' => '{users}', 'as' => 'user.', 'namespace' => 'User'], fu
     Route::patch('password', ['as' => 'profile.password', 'uses' => 'ProfilesController@changePassword']);
 });
 
+Route::group(['namespace' => 'Category'], function () {
+    Route::resource('categories', 'CategoriesController', [
+        'only' => ['index', 'show']
+    ]);
+    Route::resource('categories.lessons', 'LessonsController', [
+        'only' => ['store', 'show', 'destroy']
+    ]);
+});
+
 Route::post('follows', ['as' => 'follows.path', 'uses' => 'User\RelationshipsController@store']);
 Route::delete('follows/{users}', ['as' => 'follow.path', 'uses' => 'User\RelationshipsController@destroy']);

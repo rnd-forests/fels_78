@@ -17,7 +17,6 @@ class CreateLessonWordTable extends Migration
             $table->integer('lesson_id')->unsigned();
             $table->integer('word_id')->unsigned();
             $table->integer('answer_id')->unsigned();
-            $table->integer('point')->unsigned();
             $table->timestamps();
             
             $table->index('lesson_id');
@@ -25,7 +24,6 @@ class CreateLessonWordTable extends Migration
             $table->index('answer_id');
             $table->foreign('lesson_id')->references('id')->on('lessons');
             $table->foreign('word_id')->references('id')->on('words');
-            $table->foreign('answer_id')->references('id')->on('answers');
         });
     }
 

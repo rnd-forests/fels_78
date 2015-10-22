@@ -16,6 +16,7 @@
         <div class="collapse navbar-collapse" id="keep-nav">
             <ul class="nav navbar-nav">
                 @if(auth()->check())
+                    <li><a href="{{ route('categories.index') }}">Categories</a></li>
                     <li><a href="{{ route('pages.members') }}">Members</a></li>
                 @endif
                 <li><a href="{{ route('pages.about') }}">About</a></li>
