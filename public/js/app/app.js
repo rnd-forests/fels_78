@@ -292,11 +292,7 @@ var FELS = (function ($) {
         });
     };
 
-    /**
-     * Search form.
-     *
-     * @private
-     */
+    // Search form
     var _searchForm = function () {
         $('#search-form').on('input', '#keyword', function () {
             var $keyword = $.trim($(this).val());

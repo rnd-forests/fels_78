@@ -23,7 +23,7 @@
                         <a href="#" class="btn btn-home btn-lg">Words</a>
                     </div>
                     <div class="col-xs-6 text-center">
-                        <a href="#" class="btn btn-home btn-lg">Lessons</a>
+                        <a href="{{ route('categories.index') }}" class="btn btn-home btn-lg">Lessons</a>
                     </div>
                 </div>
                 <div class="panel panel-default">
