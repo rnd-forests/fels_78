@@ -1,15 +1,13 @@
 <div class="pull-right">
-    <span class="activity-time text-muted">{{ $parser->timeAgo($activity) }}</span>
+    <span class="activity-time text-muted">
+        {{ $parser->timeAgo($activity) }}
+    </span>
 </div>
-<strong>
-    <i class="fa fa-2x fa-minus-square text-danger"></i>
-    <a href="{{ route('user.profile.show', $parser->owner($activity)) }}">
-        {{ $parser->owner($activity)->name }}
-    </a>
-</strong>
-<span class="text-muted">unfollowed</span>
-<strong>
-    <a href="{{ route('user.profile.show', $parser->target($activity)) }}">
-        {{ $parser->target($activity)->name }}
-    </a>
-</strong>
+<i class="fa fa-2x fa-minus-square text-danger"></i>
+<a href="{{ route('user.profile.show', $parser->owner($activity)) }}">
+    <strong>{{ $parser->owner($activity)->name }}</strong>
+</a>
+unfollowed
+<a href="{{ route('user.profile.show', $parser->target($activity)) }}">
+    <strong>{{ $parser->target($activity)->name }}</strong>
+</a>
