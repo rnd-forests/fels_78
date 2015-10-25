@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $table = 'activities';
-    protected $fillable = [
-        'user_id', 'targetable_id', 'targetable_type', 'action'
-    ];
+    protected $fillable = ['user_id', 'targetable_id', 'targetable_type', 'action'];
 
     /**
      * The user who generated the activity.
@@ -20,9 +18,9 @@ class Activity extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     /**
-     * Get the target associated with the activity.
+     * Get the target object associated with the activity.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */

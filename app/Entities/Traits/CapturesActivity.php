@@ -7,9 +7,8 @@ use FELS\Entities\Activity;
 trait CapturesActivity
 {
     /**
-     * Listen for events on model and capture the appropriate activities.
-     * When booting model, the framework also boots included traits in
-     * the model.
+     * Listen for events on model and capture the
+     * appropriate activities.
      *
      * @return void
      */
@@ -29,9 +28,10 @@ trait CapturesActivity
      */
     public function captureActivity($event)
     {
-        $userId = option(static::$activityUserId, 'user_id');
-        $targetId = option(static::$activityTargetId, 'id');
-        $targetType = option(static::$activityTargetType, static::class);
+        $class = static::class;
+        $userId = getStatic($class, 'activityUserId') ?: 'user_id';
+        $targetId = getStatic($class, 'activityTargetId') ?: 'id';
+        $targetType = getStatic($class, 'activityTargetType') ?: $class;
         Activity::create([
             'user_id' => $this->$userId,
             'targetable_id' => $this->$targetId,
@@ -56,6 +56,7 @@ trait CapturesActivity
 
     /**
      * Which events on the model should be captured?
+     * Default events are: created, updated, and deleted.
      *
      * @return array
      */
@@ -65,6 +66,6 @@ trait CapturesActivity
             return static::$capturedEvents;
         }
 
-        return ['created', 'deleted', 'updated'];
+        return ['created', 'updated', 'deleted'];
     }
 }

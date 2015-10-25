@@ -4,19 +4,18 @@ namespace FELS\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LessonWord extends Model
+class UserWord extends Model
 {
-    protected $table = 'lesson_word';
-    protected $touches = ['lesson', 'word'];
-    protected $casts = ['valid' => 'boolean'];
-    protected $fillable = ['lesson_id', 'word_id', 'answer_id', 'valid'];
+    protected $table = 'user_word';
+    protected $touches = ['user', 'word'];
+    protected $fillable = ['user_id', 'word_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function lesson()
+    public function user()
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

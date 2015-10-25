@@ -10,7 +10,9 @@ class Relationship extends Model
     use CapturesActivity;
 
     protected $table = 'follows';
+    protected $touches = ['followed', 'follower'];
     protected $fillable = ['follower_id', 'followed_id'];
+
     protected static $activityUserId = 'follower_id';
     protected static $activityTargetId = 'followed_id';
     protected static $activityTargetType = User::class;
