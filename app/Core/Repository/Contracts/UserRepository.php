@@ -62,4 +62,14 @@ interface UserRepository
      * @return mixed
      */
     public function getActivityFeedFor($user);
+
+    /**
+     * Finding a user or creating a new user if the user does not exist.
+     * Use for open authentication.
+     *
+     * @param array $userData
+     * @param $authProvider
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function oauthCreate(array $userData, $authProvider);
 }

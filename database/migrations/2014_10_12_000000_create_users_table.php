@@ -21,12 +21,18 @@ class CreateUsersTable extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('confirmed')->default(false);
             $table->string('confirmation_code', 100)->nullable();
+            $table->string('auth_provider')->default('eloquent');
+            $table->string('auth_provider_id')->nullable();
+            $table->string('facebook_name')->nullable();
+            $table->string('github_name')->nullable();
+            $table->string('google_name')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
 
             $table->index('slug');
             $table->unique('email');
+            $table->unique('auth_provider_id');
         });
     }
 

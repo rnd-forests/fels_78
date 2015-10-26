@@ -4,6 +4,15 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="well-w">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <i class="fa fa-cog"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('auth.login') }}">Sign In</a></li>
+                    </ul>
+                </div>
+                @include('auth.partials._social_auth')
                 {!! Form::open() !!}
                     <div class="form-group">
                         {!! Form::label('name', 'Name', ['class' => 'control-label']) !!}
@@ -29,14 +38,6 @@
                         <button type="submit" class="btn btn-primary">Sign Up <i class="fa fa-arrow-right"></i></button>
                     </div>
                 {!! Form::close() !!}
-            </div>
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                    <i class="fa fa-cog"></i>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ route('auth.login') }}">Sign In</a></li>
-                </ul>
             </div>
         </div>
     </div>

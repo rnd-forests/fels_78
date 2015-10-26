@@ -5,6 +5,7 @@ elixir(function (mix) {
 
     mix.styles([
         'bootstrap/dist/css/bootstrap.min.css',
+        'bootstrap-social/bootstrap-social.css',
         'fontawesome/css/font-awesome.min.css',
         'sweetalert/dist/sweetalert.css',
         'select2/dist/css/select2.min.css'
