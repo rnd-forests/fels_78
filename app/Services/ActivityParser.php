@@ -36,4 +36,15 @@ class ActivityParser
     {
         return $activity->targetable;
     }
+
+    /**
+     * Get the url to target object.
+     *
+     * @param $activity
+     * @return string
+     */
+    public function url($activity)
+    {
+        return $this->target($activity)->url();
+    }
 }

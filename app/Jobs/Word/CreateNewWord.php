@@ -1,7 +1,8 @@
 <?php
 
-namespace FELS\Jobs;
+namespace FELS\Jobs\Word;
 
+use FELS\Jobs\Job;
 use FELS\Entities\Word;
 use FELS\Entities\Answer;
 use Illuminate\Http\Request;

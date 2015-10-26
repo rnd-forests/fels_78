@@ -7,6 +7,12 @@
             <li>Joined on {{ short_time($user->created_at) }}</li>
         </ul>
         <ul>
+            <li>Learned <strong>{{ plural('word', counting($user->words)) }}</strong></li>
+            @unless(blank($user->words))
+                <li>Ranking <strong>{{ $user->ranking }}</strong></li>
+            @endunless
+        </ul>
+        <ul>
             <li>
                 <a href="{{ route('user.following.show', $user) }}"
                    class="btn btn-primary">

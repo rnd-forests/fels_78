@@ -2,16 +2,27 @@
 
 namespace FELS\Http\Controllers\Category;
 
+use Illuminate\Contracts\Auth\Guard;
 use FELS\Http\Controllers\Controller;
+use FELS\Core\Repository\Contracts\WordRepository;
+use FELS\Core\Repository\Contracts\LessonRepository;
 use FELS\Core\Repository\Contracts\CategoryRepository;
 
 class CategoriesController extends Controller
 {
+    protected $words;
+    protected $lessons;
     protected $categories;
+    protected static $user;
 
-    public function __construct(CategoryRepository $categories)
+    public function __construct(WordRepository $words,
+                                LessonRepository $lessons,
+                                CategoryRepository $categories)
     {
+        $this->words = $words;
+        $this->lessons = $lessons;
         $this->categories = $categories;
+        self::$user = app(Guard::class)->user();
         $this->middleware('auth');
     }
 
@@ -28,7 +39,7 @@ class CategoriesController extends Controller
     }
 
     /**
-     * Display a specific category.
+     * Display a single category.
      *
      * @param $slug
      * @return \Illuminate\View\View
@@ -36,8 +47,9 @@ class CategoriesController extends Controller
     public function show($slug)
     {
         $category = $this->categories->findBySlug($slug);
-        $words = $category->words()->paginate(15);
+        $lessons = $this->lessons->fetchLessons(self::$user, $category);
+        $words = $this->words->fetchLearnedWords(self::$user, $category);
 
-        return view('categories.show', compact('category', 'words'));
+        return view('categories.show', compact('category', 'words', 'lessons'));
     }
 }
