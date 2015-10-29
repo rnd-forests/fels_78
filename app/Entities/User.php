@@ -46,6 +46,8 @@ class User extends Model implements
     protected $fillable = [
         'name', 'slug', 'email', 'password', 'learned_words',
         'admin', 'confirmed', 'confirmation_code',
+        'auth_provider', 'auth_provider_id',
+        'facebook_name', 'github_name', 'google_name',
     ];
 
     /**

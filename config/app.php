@@ -156,6 +156,7 @@ return [
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         FELS\Providers\FormMacroServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
     ],
 
@@ -209,6 +210,7 @@ return [
         'Html'      => Collective\Html\HtmlFacade::class,
         'Flash'     => Laracasts\Flash\Flash::class,
         'Search'    => FELS\Core\Search\Facades\SearchFacade::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

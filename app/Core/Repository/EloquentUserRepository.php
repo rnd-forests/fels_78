@@ -228,4 +228,24 @@ class EloquentUserRepository implements
             [$user->id]
         ))->latest()->paginate(20);
     }
+
+    /**
+     * Finding a user or creating a new user if the user does not exist.
+     * Use for open authentication.
+     *
+     * @param array $userData
+     * @param $authProvider
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function oauthCreate(array $userData, $authProvider)
+    {
+        $user = $this->model->firstOrCreate($userData);
+        $user->update([
+            'auth_provider' => $authProvider,
+            'confirmed' => true,
+            'confirmation_code' => '',
+        ]);
+
+        return $user;
+    }
 }

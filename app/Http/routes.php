@@ -99,3 +99,9 @@ Route::group(['namespace' => 'Category'], function () {
 
 Route::post('follows', ['as' => 'follows.path', 'uses' => 'User\RelationshipsController@store']);
 Route::delete('follows/{users}', ['as' => 'follow.path', 'uses' => 'User\RelationshipsController@destroy']);
+
+Route::group(['prefix' => 'oauth', 'as' => 'oauth.', 'namespace' => 'Auth'], function () {
+    Route::get('github', ['as' => 'github', 'uses' => 'OAuthController@authenticateWithGithub']);
+    Route::get('facebook', ['as' => 'facebook', 'uses' => 'OAuthController@authenticateWithFacebook']);
+    Route::get('google', ['as' => 'google', 'uses' => 'OAuthController@authenticateWithGoogle']);
+});
