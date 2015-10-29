@@ -44,7 +44,7 @@ class User extends Model implements
     protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
     protected $hidden = ['password', 'remember_token', 'confirmation_code'];
     protected $fillable = [
-        'name', 'slug', 'email', 'password',
+        'name', 'slug', 'email', 'password', 'learned_words',
         'admin', 'confirmed', 'confirmation_code',
     ];
 
@@ -66,6 +66,30 @@ class User extends Model implements
     public function activities()
     {
         return $this->hasMany(Activity::class);
+    }
+
+    /**
+     * All learned words from lessons of a user.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function words()
+    {
+        return $this->belongsToMany(Word::class)->withTimestamps();
+    }
+
+    /**
+     * User ranking attribute accessor.
+     *
+     * @return string
+     */
+    public function getRankingAttribute()
+    {
+        $rank = $this->newQuery()
+            ->where('learned_words', '>=', counting($this->words))
+            ->count();
+
+        return "{$rank} over {$this->count()}";
     }
 
     /**
