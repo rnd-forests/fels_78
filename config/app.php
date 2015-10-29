@@ -157,6 +157,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         FELS\Providers\FormMacroServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
 
     ],
 
@@ -211,6 +213,8 @@ return [
         'Flash'     => Laracasts\Flash\Flash::class,
         'Search'    => FELS\Core\Search\Facades\SearchFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
+        'Bugsnag'   => Bugsnag\BugsnagLaravel\BugsnagFacade::class,
 
     ],
 
