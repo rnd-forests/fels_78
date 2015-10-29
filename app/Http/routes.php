@@ -92,8 +92,12 @@ Route::group(['namespace' => 'Category'], function () {
     Route::resource('categories', 'CategoriesController', [
         'only' => ['index', 'show']
     ]);
+    Route::get('categories/{categories}/lessons/{lessons}/results', [
+        'as' => 'categories.lessons.results',
+        'uses' => 'LessonsController@results'
+    ]);
     Route::resource('categories.lessons', 'LessonsController', [
-        'only' => ['store', 'show', 'destroy']
+        'only' => ['store', 'show', 'update']
     ]);
 });
 

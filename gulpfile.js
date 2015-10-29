@@ -20,7 +20,8 @@ elixir(function (mix) {
         'jquery/dist/jquery.min.js',
         'bootstrap/dist/js/bootstrap.min.js',
         'sweetalert/dist/sweetalert.min.js',
-        'select2/dist/js/select2.min.js'
+        'select2/dist/js/select2.min.js',
+        'jquery.countdown/dist/jquery.countdown.min.js'
     ], 'public/js/vendor.js', 'vendor/bower-components');
 
     mix.scripts([

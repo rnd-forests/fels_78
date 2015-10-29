@@ -2,7 +2,7 @@
 @section('title', 'Categories')
 @section('content')
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">All Categories</div>
                 <div class="list-group auto-pagination">
@@ -12,7 +12,7 @@
                                 <i class="fa fa-folder"></i> <strong>{{ $category->name }}</strong>
                                 <p>{{ $category->description }}</p>
                                 <a href="{{ route('categories.show', $category) }}" class="btn btn-primary">
-                                    Start <i class="fa fa-arrow-right"></i>
+                                    Details <i class="fa fa-arrow-right"></i>
                                 </a>
                             </div>
                         @endforeach

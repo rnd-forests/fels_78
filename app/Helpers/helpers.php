@@ -215,16 +215,26 @@ if (!function_exists('verify_session_key')) {
     }
 }
 
-if (!function_exists('option')) {
+if (!function_exists('getStatic')) {
     /**
-     * Pick one of two options.
+     * Get the static property of a class if it exists.
      *
-     * @param $option
-     * @param $default
+     * @param $class
+     * @param $name
+     * @return bool|mixed
      */
-    function option($option, $default)
+    function getStatic($class, $name)
     {
-        return isset($option) ? $option : $default;
+        $reflection = new ReflectionClass($class);
+        if ($reflection->hasProperty($name)) {
+            $property = $reflection->getProperty($name);
+            $property->setAccessible(true);
+            if ($property && $property->isStatic()) {
+                return $property->getValue();
+            }
+        }
+
+        return false;
     }
 }
 

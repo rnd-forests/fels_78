@@ -34,6 +34,22 @@ class EloquentUserRepository implements
     }
 
     /**
+     * Find a user by slug with eager loaded relationships.
+     *
+     * @param $slug
+     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Model
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function findBySlugWithRelations($slug)
+    {
+        return $this->model
+            ->with('words', 'following', 'followers')
+            ->where('slug', $slug)
+            ->firstOrFail();
+    }
+
+    /**
      * Fetch paginated list of disabled users.
      *
      * @param $limit

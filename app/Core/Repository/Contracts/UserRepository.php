@@ -5,6 +5,16 @@ namespace FELS\Core\Repository\Contracts;
 interface UserRepository
 {
     /**
+     * Find a user by slug with eager loaded relationships.
+     *
+     * @param $slug
+     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Model
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function findBySlugWithRelations($slug);
+
+    /**
      * Fetch paginated list of disabled users.
      *
      * @param $limit

@@ -78,6 +78,7 @@ function generateUUID() {
 var FELS = (function ($) {
     var init = function () {
         _global();
+        _lesson();
         _wordForm();
         _searchForm();
         _followForm();
@@ -309,6 +310,41 @@ var FELS = (function ($) {
                 $box.popover('hide');
                 return false;
             }
+        });
+    };
+
+    // Lesson processing
+    var _lesson = function () {
+        var $form = $('.lesson-form'),
+            $button = $('.lesson-start'),
+            $timer = $('#lesson-timer');
+        $form.find('.choice').prop('disabled', true);
+        $form.find('.choice').closest('label').addClass('blurry-text');
+        $button.on('click', function () {
+            $(this).addClass('disabled');
+            $form.find('.choice').prop('disabled', false);
+            $form.find('.choice').closest('label').removeClass('blurry-text');
+            $form.find('.choice').on('change', function () {
+                var progress = $('.lesson-progress span');
+                if (!$(this).hasClass('chosen')) {
+                    $(this).addClass('chosen');
+                    $(this).closest('.list-group-item').find('.choice').not('.choice:checked').addClass('chosen');
+                    var $current = parseInt(progress.text().match(/\d+/).shift());
+                    progress.html($current + 1);
+                }
+            });
+
+            var time = (new Date).getTime() + 60000;
+            $timer.countdown(time).on('update.countdown', function (event) {
+                $(this).html('<i class="fa fa-clock-o"></i> ' + event.strftime('%H:%M:%S'));
+            }).on('finish.countdown', function () {
+                $(this).parent().addClass('disabled');
+                $('.lesson-completed').removeClass('hidden');
+                $form.find('.choice').not('.choice:checked').prop('disabled', true);
+                setTimeout(function () {
+                    $form.submit();
+                }, 1500)
+            });
         });
     };
 

@@ -15,7 +15,7 @@ class CategoriesTableSeeder extends Seeder
     {
         factory(Category::class, 50)->create()
             ->each(function ($category) {
-                $category->words()->saveMany(factory(Word::class, 10)->make());
+                $category->words()->saveMany(factory(Word::class, 30)->make());
             });
 
         Word::all()->each(function ($word) {

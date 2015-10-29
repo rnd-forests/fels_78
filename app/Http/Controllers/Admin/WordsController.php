@@ -2,8 +2,8 @@
 
 namespace FELS\Http\Controllers\Admin;
 
-use FELS\Jobs\CreateNewWord;
 use Illuminate\Http\Request;
+use FELS\Jobs\Word\CreateNewWord;
 use FELS\Http\Controllers\Controller;
 use FELS\Core\Repository\Contracts\WordRepository;
 

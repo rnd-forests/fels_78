@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('slug');
             $table->string('email');
             $table->string('password', 60);
+            $table->integer('learned_words')->default(0);
             $table->boolean('admin')->default(false);
             $table->boolean('confirmed')->default(false);
             $table->string('confirmation_code', 100)->nullable();
