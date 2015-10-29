@@ -1,0 +1,16 @@
+.blurry-text {
+  color: transparent;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.lesson-helper {
+  font-size: 20px;
+  position: fixed;
+  width: 150px;
+  top: 72px;
+  left: 15px;
+
+  .alert {
+    font-size: 14px;
+  }
+}
