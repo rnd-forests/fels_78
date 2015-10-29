@@ -316,12 +316,15 @@ var FELS = (function ($) {
     // Lesson processing
     var _lesson = function () {
         var $form = $('.lesson-form'),
-            $button = $('.lesson-start'),
+            $start = $('.lesson-start'),
+            $submit = $('.lesson-submit'),
             $timer = $('#lesson-timer');
+        $submit.prop('disabled', true);
         $form.find('.choice').prop('disabled', true);
         $form.find('.choice').closest('label').addClass('blurry-text');
-        $button.on('click', function () {
+        $start.on('click', function () {
             $(this).addClass('disabled');
+            $submit.prop('disabled', false);
             $form.find('.choice').prop('disabled', false);
             $form.find('.choice').closest('label').removeClass('blurry-text');
             $form.find('.choice').on('change', function () {
@@ -341,9 +344,7 @@ var FELS = (function ($) {
                 $(this).parent().addClass('disabled');
                 $('.lesson-completed').removeClass('hidden');
                 $form.find('.choice').not('.choice:checked').prop('disabled', true);
-                setTimeout(function () {
-                    $form.submit();
-                }, 1500)
+                $form.submit();
             });
         });
     };

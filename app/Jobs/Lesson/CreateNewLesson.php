@@ -9,13 +9,12 @@ use FELS\Core\Repository\Contracts\CategoryRepository;
 
 class CreateNewLesson extends Job implements SelfHandling
 {
-    const MINIMUM_NUMBER_OF_WORDS = 5;
-    const MAXIMUM_NUMBER_OF_WORDS = 20;
-
+    protected $user;
     protected $category;
 
-    public function __construct($categoryId)
+    public function __construct($user, $categoryId)
     {
+        $this->user = $user;
         $this->category = app(CategoryRepository::class)->findById($categoryId);
     }
 
@@ -52,9 +51,7 @@ class CreateNewLesson extends Job implements SelfHandling
     protected function buildLessonRelations()
     {
         $lesson = $this->buildLesson();
-        $lesson->user()->associate(auth()->user());
-        $lesson->category()->associate($this->category);
-        $lesson->save();
+        $this->associateMany($lesson, ['user', 'category']);
         $lesson->words()->attach($this->randomizeWords());
         $this->recordActivity($lesson);
 
@@ -71,7 +68,7 @@ class CreateNewLesson extends Job implements SelfHandling
         return $this->category
             ->words()
             ->unlearned()
-            ->count() >= static::MINIMUM_NUMBER_OF_WORDS;
+            ->count() >= config('lesson.min_words');
     }
 
     /**
@@ -81,25 +78,39 @@ class CreateNewLesson extends Job implements SelfHandling
      */
     protected function randomizeWords()
     {
-        return array_values(
-            $this->category
-                ->words()
-                ->unlearned()
-                ->lists('id')
-                ->shuffle()
-                ->take(static::MAXIMUM_NUMBER_OF_WORDS)
-                ->all()
-        );
+        return $this->category
+            ->words()
+            ->unlearned()
+            ->lists('id')
+            ->shuffle()
+            ->take(config('lesson.max_words'))
+            ->toArray();
     }
 
     /**
-     * Capture 'start lesson' activity of the user.
+     * Record started-lesson activity of the user.
      *
      * @param $lesson
      * @return void
      */
     protected function recordActivity($lesson)
     {
-        return auth()->user()->pushActivity('started', $lesson);
+        return $this->user->pushActivity('started', $lesson);
+    }
+
+    /**
+     * A helper method to associate a lesson with its parents.
+     *
+     * @param $lesson
+     * @param array $parents
+     * @return bool
+     */
+    protected function associateMany($lesson, array $parents)
+    {
+        foreach ($parents as $parent) {
+            $lesson->$parent()->associate($this->$parent);
+        }
+
+        return $lesson->save();
     }
 }

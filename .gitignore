@@ -4,3 +4,7 @@
 Homestead.yaml
 Homestead.json
 .env
+.env.behat
+public/build
+public/css
+public/js

@@ -14,7 +14,6 @@ class Lesson extends Model
     protected $table = 'lessons';
     protected static $capturedEvents = [];
     protected $casts = ['finished' => 'boolean'];
-    protected $touches = ['user', 'category', 'words'];
     protected $fillable = ['user_id', 'category_id', 'name', 'finished'];
 
     /**

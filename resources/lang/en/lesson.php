@@ -6,6 +6,7 @@ return [
                 will automatically be submitted when time is over. Be awesome!',
     'completed' => 'Your ran out of time. Processing your answers...',
     'start' => 'Ready? Go',
+    'submit' => 'Don\'t want to wait. Submit now!',
     'not_enough_words' => 'This category does not have enough words. Check back later.',
     'created' => 'Lesson created.',
     'deleted' => 'Lesson deleted.',
