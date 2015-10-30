@@ -86,6 +86,17 @@ class Word extends Model
     }
 
     /**
+     * Sort words.
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeAlphabetical($query)
+    {
+        return $query->orderBy('content', 'asc');
+    }
+
+    /**
      * Check if a word is learned by user in a specific lesson.
      *
      * @param $lesson

@@ -18,4 +18,21 @@ interface CategoryRepository
      * @return \Illuminate\Support\Collection
      */
     public function lists();
+
+    /**
+     * Get the first match category.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function first();
+
+    /**
+     * Filter words in a category.
+     *
+     * @param $user
+     * @param $category
+     * @param $type
+     * @return mixed
+     */
+    public function filterWords($user, $category, $type);
 }
