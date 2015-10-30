@@ -1,7 +1,7 @@
 var elixir = require('laravel-elixir');
 
 elixir(function (mix) {
-    mix.sass('app.scss', 'public/css/app');
+    mix.sass('app.scss', 'public/css');
 
     mix.styles([
         'bootstrap/dist/css/bootstrap.min.css',
@@ -13,8 +13,10 @@ elixir(function (mix) {
 
     mix.styles([
         'vendor.css',
-        'app/app.css'
+        'app.css'
     ], null, 'public/css');
+
+    mix.coffee('app.coffee', 'public/js');
 
     mix.scripts([
         'jquery/dist/jquery.min.js',
@@ -26,7 +28,7 @@ elixir(function (mix) {
 
     mix.scripts([
         'vendor.js',
-        'app/app.js'
+        'app.js'
     ], null, 'public/js');
 
     mix.version([
