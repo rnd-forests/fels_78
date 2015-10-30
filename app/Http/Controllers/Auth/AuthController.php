@@ -7,12 +7,15 @@ use Illuminate\Contracts\Auth\Guard;
 use FELS\Http\Requests\SignInRequest;
 use FELS\Http\Controllers\Controller;
 use FELS\Http\Requests\RegistrationRequest;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use FELS\Core\Repository\Contracts\UserRepository;
 
 class AuthController extends Controller
 {
+    use ThrottlesLogins;
+
     protected $users, $auth;
-    
+
     public function __construct(Guard $auth, UserRepository $users)
     {
         $this->auth = $auth;
@@ -67,11 +70,16 @@ class AuthController extends Controller
      */
     public function postLogin(SignInRequest $request)
     {
+        if ($this->hasTooManyLoginAttempts($request)) {
+            return $this->sendLockoutResponse($request);
+        }
+
         $credentials = array_merge(
             $request->only(['email', 'password']), ['confirmed' => 1]
         );
         if ($this->auth->attempt($credentials, $request->has('remember'))) {
             session()->flash('app_status', 'login_success');
+            $this->clearLoginAttempts($request);
 
             if ($this->auth->user()->isAdmin()) {
                 return redirect()->route('admin.users');
@@ -80,6 +88,7 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
         session()->flash('login_error', trans('auth.login_error'));
+        $this->incrementLoginAttempts($request);
 
         return redirect()->route('auth.login')
             ->withInput($request->only('email', 'remember'));
@@ -130,5 +139,25 @@ class AuthController extends Controller
             'confirmation_code' => '',
             'confirmed' => true,
         ]);
+    }
+
+    /**
+     * Get the user attribute used as login username.
+     *
+     * @return string
+     */
+    protected function loginUsername()
+    {
+        return 'email';
+    }
+
+    /**
+     * Get the login path.
+     *
+     * @return string
+     */
+    protected function loginPath()
+    {
+        return '/auth/login';
     }
 }
