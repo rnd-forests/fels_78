@@ -13,6 +13,10 @@ class UserObserver
      */
     public function deleting(User $user)
     {
+        $user->words()->detach();
+        $user->lessons->each(function ($lesson) {
+            $lesson->delete();
+        });
         $user->activities()->delete();
         $user->activeRelations()->delete();
         $user->passiveRelations()->delete();

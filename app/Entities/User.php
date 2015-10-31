@@ -73,7 +73,7 @@ class User extends Model implements
     /**
      * All learned words from lessons of a user.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function words()
     {

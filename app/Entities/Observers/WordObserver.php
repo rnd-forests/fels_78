@@ -14,5 +14,7 @@ class WordObserver
     public function deleting(Word $word)
     {
         $word->answers()->delete();
+        $word->lessons()->detach();
+        $word->users()->detach();
     }
 }

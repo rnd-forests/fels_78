@@ -211,6 +211,11 @@ class EloquentUserRepository implements
      */
     public function createRelationship($followedId, $user)
     {
+        $targetUser = $this->findById($followedId);
+        if ($user->cannot('follow', $targetUser)) {
+            abort(403);
+        }
+
         return $user->activeRelations()
             ->create(['followed_id' => $followedId]);
     }
