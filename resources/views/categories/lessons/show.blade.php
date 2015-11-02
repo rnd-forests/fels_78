@@ -49,6 +49,11 @@
                             @endforeach
                         </div>
                     @endforeach
+                    <div class="list-group-item">
+                        <button type="submit" class="btn btn-primary lesson-submit">
+                            {{ trans('lesson.submit') }} <i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
             {!! Form::close() !!}
         </div>

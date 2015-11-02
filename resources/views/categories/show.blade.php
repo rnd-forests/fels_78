@@ -42,7 +42,7 @@
                     @else
                         @foreach($lessons as $lesson)
                             <li class="list-group-item">
-                                <a href="{{ route('categories.lessons.show', [$category, $lesson]) }}">
+                                <a href="{{ $lesson->url() }}">
                                     @if($lesson->isFinished())
                                         <i class="fa fa-check text-success"></i> {{ $lesson->name }}
                                     @else
