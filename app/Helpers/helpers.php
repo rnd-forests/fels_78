@@ -167,10 +167,12 @@ if (!function_exists('paginate')) {
     function paginate($collection, array $queries = null)
     {
         if (!$queries) {
-            return '<div class="text-center">' . $collection->render() . '</div>';
+            $links = $collection->render();
         } else {
-            return '<div class="text-center">' . $collection->appends($queries)->render() . '</div>';
+            $links = $collection->appends($queries)->render();
         }
+
+        return "<div class=\"text-center\">{$links}</div>";
     }
 }
 

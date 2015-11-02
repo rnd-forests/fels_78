@@ -86,7 +86,12 @@ Route::group(['prefix' => '{users}', 'as' => 'user.', 'namespace' => 'User'], fu
     Route::delete('', ['as' => 'profile.destroy', 'uses' => 'ProfilesController@destroy']);
     Route::patch('name', ['as' => 'profile.name', 'uses' => 'ProfilesController@changeName']);
     Route::patch('password', ['as' => 'profile.password', 'uses' => 'ProfilesController@changePassword']);
+    Route::get('learned', ['as' => 'learned.words', 'uses' => 'WordsController@learned']);
 });
+
+Route::resource('words', 'User\WordsController', [
+    'only' => ['index']
+]);
 
 Route::group(['namespace' => 'Category'], function () {
     Route::resource('categories', 'CategoriesController', [

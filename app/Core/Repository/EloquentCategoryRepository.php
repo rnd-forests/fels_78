@@ -76,6 +76,37 @@ class EloquentCategoryRepository implements
     }
 
     /**
+     * Get the first match category.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function first()
+    {
+        return $this->model
+            ->orderBy('name', 'asc')
+            ->firstOrFail();
+    }
+
+    /**
+     * Filter words in a category.
+     *
+     * @param $user
+     * @param $category
+     * @param $type
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function filterWords($user, $category, $type)
+    {
+        $learnedWordIds = $user->words()->lists('id')->toArray();
+        $baseQuery = $category->words()->$type();
+        if ($type == 'learned') {
+            return $baseQuery->whereIn('id', $learnedWordIds)->get();
+        }
+
+        return $baseQuery->get();
+    }
+
+    /**
      * Paginate a collection of models.
      *
      * @param $limit

@@ -91,7 +91,7 @@ class User extends Model implements
             ->where('learned_words', '>=', counting($this->words))
             ->count();
 
-        return "{$rank} over {$this->count()}";
+        return "{$rank} / {$this->count()}";
     }
 
     /**

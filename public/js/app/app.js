@@ -80,6 +80,7 @@ var FELS = (function ($) {
         _global();
         _lesson();
         _wordForm();
+        _wordFilter();
         _searchForm();
         _followForm();
         _unfollowForm();
@@ -345,6 +346,24 @@ var FELS = (function ($) {
                 $('.lesson-completed').removeClass('hidden');
                 $form.find('.choice').not('.choice:checked').prop('disabled', true);
                 $form.submit();
+            });
+        });
+    };
+
+    // Words filtering form
+    var _wordFilter = function () {
+        $('#word-filter-form').on('submit', function (event) {
+            event.preventDefault();
+            var form = $(this),
+                container = $('.filtered-words'),
+                info = $('.filter-info'),
+                url = form.prop('action') + '?' + form.serialize();
+            $.get(url, function (data) {
+                container.empty();
+                $(data).find('.item').each(function (index, element) {
+                    $(element).appendTo(container);
+                });
+                info.html($(data).find('.filter-info').html());
             });
         });
     };

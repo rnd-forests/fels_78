@@ -20,7 +20,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-xs-6 text-center">
-                        <a href="#" class="btn btn-home btn-lg">Words</a>
+                        <a href="{{ route('words.index') }}" class="btn btn-home btn-lg">Words</a>
                     </div>
                     <div class="col-xs-6 text-center">
                         <a href="{{ route('categories.index') }}" class="btn btn-home btn-lg">Lessons</a>

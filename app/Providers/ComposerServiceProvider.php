@@ -44,7 +44,7 @@ class ComposerServiceProvider extends ServiceProvider
     protected function composeWordFormView()
     {
         view()->composer(
-            'admin.words.partials._main_form',
+            ['admin.words.partials._main_form', 'users.words.index'],
             \FELS\Core\Composers\WordForm::class
         );
     }
