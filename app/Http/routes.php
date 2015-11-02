@@ -114,3 +114,7 @@ Route::group(['prefix' => 'oauth', 'as' => 'oauth.', 'namespace' => 'Auth'], fun
     Route::get('facebook', ['as' => 'facebook', 'uses' => 'OAuthController@authenticateWithFacebook']);
     Route::get('google', ['as' => 'google', 'uses' => 'OAuthController@authenticateWithGoogle']);
 });
+
+Route::group(['namespace' => 'App'], function () {
+    Route::post('queue/subscribe', 'QueuesController@subscribe');
+});
