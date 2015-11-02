@@ -14,6 +14,16 @@ class Word extends Model
     protected $fillable = ['category_id', 'content'];
 
     /**
+     * Learned words that belong to a user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    /**
      * A word belongs to a specific category.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

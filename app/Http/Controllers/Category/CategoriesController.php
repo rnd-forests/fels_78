@@ -2,7 +2,6 @@
 
 namespace FELS\Http\Controllers\Category;
 
-use Illuminate\Contracts\Auth\Guard;
 use FELS\Http\Controllers\Controller;
 use FELS\Core\Repository\Contracts\WordRepository;
 use FELS\Core\Repository\Contracts\LessonRepository;
@@ -13,7 +12,6 @@ class CategoriesController extends Controller
     protected $words;
     protected $lessons;
     protected $categories;
-    protected static $user;
 
     public function __construct(WordRepository $words,
                                 LessonRepository $lessons,
@@ -22,7 +20,6 @@ class CategoriesController extends Controller
         $this->words = $words;
         $this->lessons = $lessons;
         $this->categories = $categories;
-        self::$user = app(Guard::class)->user();
         $this->middleware('auth');
     }
 
@@ -47,8 +44,8 @@ class CategoriesController extends Controller
     public function show($slug)
     {
         $category = $this->categories->findBySlug($slug);
-        $lessons = $this->lessons->fetchLessons(self::$user, $category);
-        $words = $this->words->fetchLearnedWords(self::$user, $category);
+        $lessons = $this->lessons->fetchLessons(auth()->user(), $category);
+        $words = $this->words->fetchLearnedWords(auth()->user(), $category);
 
         return view('categories.show', compact('category', 'words', 'lessons'));
     }

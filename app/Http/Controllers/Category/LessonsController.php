@@ -49,6 +49,7 @@ class LessonsController extends Controller
     public function show($categorySlug, $lessonId)
     {
         $lesson = $this->lessons->findLesson($categorySlug, $lessonId);
+        $this->authorize('showLesson', $lesson);
 
         return view('categories.lessons.show', compact('lesson'));
     }
@@ -78,6 +79,7 @@ class LessonsController extends Controller
     public function results($categorySlug, $lessonId)
     {
         $lesson = $this->lessons->findLesson($categorySlug, $lessonId);
+        $this->authorize('showResults', $lesson);
 
         return view('categories.lessons.results', compact('lesson'));
     }

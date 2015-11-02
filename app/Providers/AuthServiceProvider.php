@@ -2,6 +2,10 @@
 
 namespace FELS\Providers;
 
+use FELS\Entities\User;
+use FELS\Entities\Lesson;
+use FELS\Policies\UserPolicy;
+use FELS\Policies\LessonPolicy;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -13,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        //
+        User::class => UserPolicy::class,
+        Lesson::class => LessonPolicy::class,
     ];
 
     /**
@@ -26,8 +31,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         parent::registerPolicies($gate);
 
-        $gate->define('act-as-current-user', function ($user) {
-            return $user->id === auth()->user()->id;
-        });
+        //
     }
 }
