@@ -2,10 +2,11 @@
 
 namespace FELS\Exceptions;
 
+use Bugsnag;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -29,6 +30,13 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
+        if (auth()->check()) {
+            Bugsnag::setUser([
+                'name' => auth()->user()->name,
+                'email' => auth()->user()->email
+            ]);
+        }
+
         return parent::report($e);
     }
 

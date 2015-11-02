@@ -1,5 +1,5 @@
 <div class="pull-right">
-    <span class="activity-time text-muted">
+    <span class="activity-time">
         {{ $parser->timeAgo($activity) }}
     </span>
 </div>

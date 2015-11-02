@@ -15,7 +15,12 @@
         "doctrine/dbal": "~2.5",
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "laravel/socialite": "~2.0",
-        "cviebrock/eloquent-sluggable": "~3.0.0"
+        "cviebrock/eloquent-sluggable": "~3.0.0",
+        "maatwebsite/excel": "~2.0",
+        "iron-io/iron_mq": "~2.0",
+        "bugsnag/bugsnag-laravel": "1.*",
+        "dompdf/dompdf": "~0.6.1",
+        "predis/predis": "~1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

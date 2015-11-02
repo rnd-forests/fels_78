@@ -46,7 +46,7 @@
                                        title="Update">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    {{--{!! Form::delete('admin.categories.delete', $category) !!}--}}
+                                    {!! Form::delete('admin.categories.delete', $category) !!}
                                 </td>
                             </tr>
                         @endforeach
