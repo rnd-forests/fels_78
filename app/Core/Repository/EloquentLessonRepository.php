@@ -4,15 +4,15 @@ namespace FELS\Core\Repository;
 
 use FELS\Entities\Lesson;
 use FELS\Entities\Category;
-use FELS\Core\Repository\Traits\ShouldBeFoundTrait;
+use FELS\Core\Repository\Traits\Findable;
 use FELS\Core\Repository\Contracts\LessonRepository;
-use FELS\Core\Repository\Contracts\Activity\ShouldBeFound;
+use FELS\Core\Repository\Contracts\Findable as FindableContract;
 
 class EloquentLessonRepository implements
-    ShouldBeFound,
+    FindableContract,
     LessonRepository
 {
-    use ShouldBeFoundTrait;
+    use Findable;
 
     protected $model;
 

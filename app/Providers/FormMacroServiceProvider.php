@@ -35,9 +35,7 @@ class FormMacroServiceProvider extends ServiceProvider
     {
         Form::macro('delete', function ($route, $params, $class = null) {
             return Form::open(['method' => 'DELETE', 'route' => [$route, $params], 'class' => $class]) .
-            '<button type="submit"
-                   class="btn btn-danger btn-xs"
-                   title="Delete">
+            '<button type="submit" class="btn btn-danger btn-xs" title="Delete">
                 <i class="fa fa-times"></i>
             </button>' .
             Form::close();
@@ -51,9 +49,7 @@ class FormMacroServiceProvider extends ServiceProvider
     {
         Form::macro('restore', function ($route, $params, $class = null) {
             return Form::open(['method' => 'PUT', 'route' => [$route, $params], 'class' => $class]) .
-            '<button type="submit"
-               class="btn btn-info btn-xs"
-               title="Restore">
+            '<button type="submit" class="btn btn-info btn-xs" title="Restore">
                 <i class="fa fa-arrow-left"></i>
             </button>' .
             Form::close();

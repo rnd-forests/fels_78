@@ -3,15 +3,15 @@
 namespace FELS\Core\Repository;
 
 use FELS\Entities\Answer;
-use FELS\Core\Repository\Traits\ShouldBeFoundTrait;
+use FELS\Core\Repository\Traits\Findable;
 use FELS\Core\Repository\Contracts\AnswerRepository;
-use FELS\Core\Repository\Contracts\Activity\ShouldBeFound;
+use FELS\Core\Repository\Contracts\Findable as FindableContract;
 
 class EloquentAnswerRepository implements
-    ShouldBeFound,
+    FindableContract,
     AnswerRepository
 {
-    use ShouldBeFoundTrait;
+    use Findable;
 
     protected $model;
 

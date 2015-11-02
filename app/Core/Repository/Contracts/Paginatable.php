@@ -1,8 +1,8 @@
 <?php
 
-namespace FELS\Core\Repository\Contracts\Activity;
+namespace FELS\Core\Repository\Contracts;
 
-interface ShouldBePaginated
+interface Paginatable
 {
     /**
      * Paginate a collection of models.

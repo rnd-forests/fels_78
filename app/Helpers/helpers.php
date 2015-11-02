@@ -6,12 +6,6 @@ use Illuminate\Support\ViewErrorBag;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 if (!function_exists('short_time')) {
-    /**
-     * Return a short format of a timestamp.
-     *
-     * @param $timestamp
-     * @return string
-     */
     function short_time($timestamp)
     {
         return Carbon::parse($timestamp)->format('Y/m/d');
@@ -19,12 +13,6 @@ if (!function_exists('short_time')) {
 }
 
 if (!function_exists('full_time')) {
-    /**
-     * Return a full format of a timestamp.
-     *
-     * @param $timestamp
-     * @return string
-     */
     function full_time($timestamp)
     {
         return Carbon::parse($timestamp)->format('Y/m/d, H:i:s');
@@ -32,12 +20,6 @@ if (!function_exists('full_time')) {
 }
 
 if (!function_exists('humans_time')) {
-    /**
-     * Return the human-friendly difference time interval.
-     *
-     * @param $timestamp
-     * @return string
-     */
     function humans_time($timestamp)
     {
         return Carbon::parse($timestamp)->diffForHumans();
@@ -45,87 +27,56 @@ if (!function_exists('humans_time')) {
 }
 
 if (!function_exists('remaining_days')) {
-    /**
-     * Get the difference in days between a specified
-     * timestamp and current time.
-     *
-     * @param $finish
-     * @return string
-     */
     function remaining_days($finish)
     {
         $count = (int)Carbon::now()->diffInDays(Carbon::parse($finish));
+        $plural = str_plural('day', $count);
 
-        return $count . ' ' . str_plural('day', $count) . ' remaining';
+        return "{$count} {$plural} remaining";
     }
 }
 
 if (!function_exists('error_text')) {
-    /**
-     * Utility function to print out the error in forms.
-     *
-     * @param ViewErrorBag $errors
-     * @param $field
-     * @return mixed
-     */
     function error_text(ViewErrorBag $errors, $field)
     {
+        $html = '<span class="help-block form-error-text">:message</span>';
         if ($errors->has($field)) {
-            return $errors->first($field, '<span class="help-block form-error-text">:message</span>');
+            return $errors->first($field, $html);
         }
     }
 }
 
 if (!function_exists('plural')) {
-    /**
-     * Plural a word using the associated counter value.
-     *
-     * @param $pattern
-     * @param $counter
-     * @return string
-     */
     function plural($pattern, $counter)
     {
         if (!is_numeric($counter)) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException;
         }
+        $str = str_plural($pattern, $counter);
 
-        return $counter . ' ' . str_plural($pattern, $counter);
+        return "{$counter} {$str}";
     }
 }
 
 if (!function_exists('plural2')) {
-    /**
-     * Plural a word using the associated counter
-     * value with a middle pattern.
-     *
-     * @param $pattern
-     * @param $middle
-     * @param $counter
-     * @return string
-     */
     function plural2($pattern, $middle, $counter)
     {
         if (!is_numeric($counter)) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException;
         }
+        $plural = str_plural($pattern, $counter);
 
-        return $counter . ' ' . $middle . ' ' . str_plural($pattern, $counter);
+        return "{$counter} {$middle} {$plural}";
     }
 }
 
 if (!function_exists('counting')) {
-    /**
-     * Count the total number of instances inside a collection or a
-     * paginated collection.
-     *
-     * @param $object
-     * @return int
-     */
     function counting($object)
     {
-        if (!($object instanceof Collection || $object instanceof LengthAwarePaginator)) {
-            throw new InvalidArgumentException();
+        if (!($object instanceof Collection
+            || $object instanceof LengthAwarePaginator)
+        ) {
+            throw new InvalidArgumentException;
         }
 
         if ($object instanceof LengthAwarePaginator) {
@@ -137,17 +88,12 @@ if (!function_exists('counting')) {
 }
 
 if (!function_exists('blank')) {
-    /**
-     * Check if a collection or a paginated
-     * collection is empty or not.
-     *
-     * @param $object
-     * @return bool
-     */
     function blank($object)
     {
-        if (!($object instanceof Collection || $object instanceof LengthAwarePaginator)) {
-            throw new InvalidArgumentException();
+        if (!($object instanceof Collection
+            || $object instanceof LengthAwarePaginator)
+        ) {
+            throw new InvalidArgumentException;
         }
 
         return $object->isEmpty();
@@ -155,15 +101,6 @@ if (!function_exists('blank')) {
 }
 
 if (!function_exists('paginate')) {
-    /**
-     * Generate the pagination URL. There two cases:
-     *  - The normal case with no query string.
-     *  - And the paginate with some associated query strings.
-     *
-     * @param $collection
-     * @param array|null $queries
-     * @return string
-     */
     function paginate($collection, array $queries = null)
     {
         if (!$queries) {
@@ -177,14 +114,6 @@ if (!function_exists('paginate')) {
 }
 
 if (!function_exists('validate_query_string')) {
-    /**
-     * Check if the current query string is in the allowed set of
-     * query strings.
-     *
-     * @param $current
-     * @param array $possible
-     * @return bool
-     */
     function validate_query_string($current, array $possible)
     {
         if (!$current || !in_array($current, $possible)) {
@@ -196,13 +125,6 @@ if (!function_exists('validate_query_string')) {
 }
 
 if (!function_exists('verify_session_key')) {
-    /**
-     * Check if a session key exists and equal to a vlue.
-     *
-     * @param $key
-     * @param $value
-     * @return bool
-     */
     function verify_session_key($key, $value)
     {
         if (!session()->has($key)) {
@@ -218,13 +140,6 @@ if (!function_exists('verify_session_key')) {
 }
 
 if (!function_exists('getStatic')) {
-    /**
-     * Get the static property of a class if it exists.
-     *
-     * @param $class
-     * @param $name
-     * @return bool|mixed
-     */
     function getStatic($class, $name)
     {
         $reflection = new ReflectionClass($class);
@@ -241,12 +156,6 @@ if (!function_exists('getStatic')) {
 }
 
 if (!function_exists('array_random_val')) {
-    /**
-     * Generate random values from a given array.
-     *
-     * @param array $arr
-     * @return mixed
-     */
     function array_random_val(array $arr)
     {
         return $arr[array_rand($arr)];

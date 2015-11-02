@@ -5,6 +5,47 @@ namespace FELS\Core\Repository\Contracts;
 interface UserRepository
 {
     /**
+     * Create a new model instance.
+     *
+     * @param array $data
+     * @return static
+     */
+    public function create(array $data);
+
+    /**
+     * Update a model instance.
+     *
+     * @param array $data
+     * @param $identifier
+     * @return bool|int
+     */
+    public function update(array $data, $identifier);
+
+    /**
+     * Restore a soft deleted model instance.
+     *
+     * @param $identifier
+     * @return bool|null
+     */
+    public function restore($identifier);
+
+    /**
+     * Soft delete a model instance.
+     *
+     * @param $identifier
+     * @return bool|null
+     */
+    public function softDelete($identifier);
+
+    /**
+     * Permanently delete a soft deleted model instance.
+     *
+     * @param $identifier
+     * @return void
+     */
+    public function forceDelete($identifier);
+
+    /**
      * Find a user by slug with eager loaded relationships.
      *
      * @param $slug

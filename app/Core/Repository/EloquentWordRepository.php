@@ -3,17 +3,17 @@
 namespace FELS\Core\Repository;
 
 use FELS\Entities\Word;
+use FELS\Core\Repository\Traits\Findable;
+use FELS\Core\Repository\Contracts\Paginatable;
 use FELS\Core\Repository\Contracts\WordRepository;
-use FELS\Core\Repository\Traits\ShouldBeFoundTrait;
-use FELS\Core\Repository\Contracts\Activity\ShouldBeFound;
-use FELS\Core\Repository\Contracts\Activity\ShouldBePaginated;
+use FELS\Core\Repository\Contracts\Findable as FindableContract;
 
 class EloquentWordRepository implements
-    ShouldBeFound,
+    Paginatable,
     WordRepository,
-    ShouldBePaginated
+    FindableContract
 {
-    use ShouldBeFoundTrait;
+    use Findable;
 
     protected $model;
 

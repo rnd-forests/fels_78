@@ -5,6 +5,23 @@ namespace FELS\Core\Repository\Contracts;
 interface CategoryRepository
 {
     /**
+     * Create a new model instance.
+     *
+     * @param array $data
+     * @return static
+     */
+    public function create(array $data);
+
+    /**
+     * Update a model instance.
+     *
+     * @param array $data
+     * @param $identifier
+     * @return bool|int
+     */
+    public function update(array $data, $identifier);
+
+    /**
      * Delete a category.
      *
      * @param $slug

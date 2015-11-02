@@ -1,8 +1,8 @@
 <?php
 
-namespace FELS\Core\Repository\Traits;
+namespace FELS\Core\Repository\Contracts;
 
-trait ShouldBeFoundTrait
+interface Findable
 {
     /**
      * Find a model instance by its id.
@@ -11,10 +11,7 @@ trait ShouldBeFoundTrait
      * @return \Illuminate\Database\Eloquent\Model
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function findById($id)
-    {
-        return $this->model->findOrFail($id);
-    }
+    public function findById($id);
 
     /**
      * Find a model instance by its slug.
@@ -23,8 +20,5 @@ trait ShouldBeFoundTrait
      * @return \Illuminate\Database\Eloquent\Model
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function findBySlug($slug)
-    {
-        return $this->model->where('slug', $slug)->firstOrFail();
-    }
+    public function findBySlug($slug);
 }
