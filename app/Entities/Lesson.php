@@ -101,16 +101,13 @@ class Lesson extends Model
     }
 
     /**
-     * Generate URL to a lesson. If lesson is finished, we
-     * route to result page, otherwise we route to show page.
+     * Generate URL to a lesson.
      *
      * @return string
      */
     public function url()
     {
-        return ($this->finished)
-            ? route('categories.lessons.results', [$this->category, $this])
-            : route('categories.lessons.show', [$this->category, $this]);
+        return route('categories.lessons.show', [$this->category, $this]);
     }
 
     /**

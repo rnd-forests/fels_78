@@ -21,16 +21,4 @@ class LessonPolicy
     {
         return $user->id === $lesson->user->id;
     }
-
-    /**
-     * Authorize to view results of a lesson.
-     *
-     * @param User $user
-     * @param Lesson $lesson
-     * @return bool
-     */
-    public function showResults(User $user, Lesson $lesson)
-    {
-        return $user->id === $lesson->user->id && $lesson->isFinished();
-    }
 }

@@ -13,6 +13,9 @@ class CategoryObserver
      */
     public function deleting(Category $category)
     {
+        $category->lessons->each(function ($lesson) {
+            $lesson->delete();
+        });
         $category->words->each(function ($word) {
             $word->answers()->delete();
             $word->delete();

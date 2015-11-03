@@ -1,59 +1,17 @@
 <?php
 
-Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
-    Route::group(['prefix' => 'users/disabled', 'as' => 'users.'], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::group(['prefix' => 'users/disabled', 'as' => 'admin.users.'], function () {
         Route::get('', ['as' => 'disabled', 'uses' => 'DisabledUsersController@index']);
         Route::put('{users}', ['as' => 'disabled.restore', 'uses' => 'DisabledUsersController@restore']);
         Route::delete('{users}', ['as' => 'disabled.delete', 'uses' => 'DisabledUsersController@destroy']);
     });
-    Route::resource('users', 'UsersController', [
-        'only' => ['index', 'create', 'store', 'destroy'],
-        'names' => [
-            'index' => 'users',
-            'create' => 'users.create',
-            'store' => 'users.store',
-            'destroy' => 'users.delete'
-        ]
-    ]);
-
-    Route::resource('categories', 'CategoriesController', [
-        'except' => ['create', 'show'],
-        'names' => [
-            'index' => 'categories',
-            'store' => 'categories.store',
-            'edit' => 'categories.edit',
-            'update' => 'categories.update',
-            'destroy' => 'categories.delete'
-        ]
-    ]);
-    Route::resource('categories.words', 'CategoryWordController', [
-        'only' => ['index'],
-        'names' => [
-            'index' => 'categories.words'
-        ]
-    ]);
-
-    Route::resource('words', 'WordsController', [
-        'except' => ['edit'],
-        'names' => [
-            'index' => 'words',
-            'create' => 'words.create',
-            'show' => 'words.show',
-            'store' => 'words.store',
-            'update' => 'words.update',
-            'destroy' => 'words.delete'
-        ]
-    ]);
-
-    Route::resource('answers', 'AnswersController', [
-        'only' => ['update', 'destroy'],
-        'names' => [
-            'update' => 'answers.update',
-            'destroy' => 'answers.delete'
-        ]
-    ]);
-
-    Route::get('search', ['as' => 'search', 'uses' => 'SearchController@search']);
+    Route::resource('users', 'UsersController', ['except' => ['show', 'edit', 'update']]);
+    Route::resource('categories', 'CategoriesController', ['except' => ['create', 'show']]);
+    Route::resource('categories.words', 'CategoryWordController', ['only' => ['index']]);
+    Route::resource('words', 'WordsController', ['except' => ['edit']]);
+    Route::resource('answers', 'AnswersController', ['only' => ['update', 'destroy']]);
+    Route::get('search', ['as' => 'admin.search', 'uses' => 'SearchController@search']);
 });
 
 Route::group(['namespace' => 'Pages'], function () {
@@ -89,25 +47,14 @@ Route::group(['prefix' => '{users}', 'as' => 'user.', 'namespace' => 'User'], fu
     Route::get('learned', ['as' => 'learned.words', 'uses' => 'WordsController@learned']);
 });
 
-Route::resource('words', 'User\WordsController', [
-    'only' => ['index']
-]);
+Route::resource('words', 'User\WordsController', ['only' => ['index']]);
 
 Route::group(['namespace' => 'Category'], function () {
-    Route::resource('categories', 'CategoriesController', [
-        'only' => ['index', 'show']
-    ]);
-    Route::get('categories/{categories}/lessons/{lessons}/results', [
-        'as' => 'categories.lessons.results',
-        'uses' => 'LessonsController@results'
-    ]);
-    Route::resource('categories.lessons', 'LessonsController', [
-        'only' => ['store', 'show', 'update']
-    ]);
+    Route::resource('categories', 'CategoriesController', ['only' => ['index', 'show']]);
+    Route::resource('categories.lessons', 'LessonsController', ['only' => ['store', 'show', 'update']]);
 });
 
-Route::post('follows', ['as' => 'follows.path', 'uses' => 'User\RelationshipsController@store']);
-Route::delete('follows/{users}', ['as' => 'follow.path', 'uses' => 'User\RelationshipsController@destroy']);
+Route::resource('follows', 'User\RelationshipsController', ['only' => ['store', 'destroy']]);
 
 Route::group(['prefix' => 'oauth', 'as' => 'oauth.', 'namespace' => 'Auth'], function () {
     Route::get('github', ['as' => 'github', 'uses' => 'OAuthController@authenticateWithGithub']);
@@ -115,6 +62,4 @@ Route::group(['prefix' => 'oauth', 'as' => 'oauth.', 'namespace' => 'Auth'], fun
     Route::get('google', ['as' => 'google', 'uses' => 'OAuthController@authenticateWithGoogle']);
 });
 
-Route::group(['namespace' => 'App'], function () {
-    Route::post('queue/subscribe', 'QueuesController@subscribe');
-});
+Route::post('queue/subscribe', 'App\QueuesController@subscribe');

@@ -82,7 +82,7 @@ class AuthController extends Controller
             $this->clearLoginAttempts($request);
 
             if ($this->auth->user()->isAdmin()) {
-                return redirect()->route('admin.users');
+                return redirect()->route('admin.users.index');
             }
 
             return redirect()->intended('/');
