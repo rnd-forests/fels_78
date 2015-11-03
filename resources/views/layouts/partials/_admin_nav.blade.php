@@ -10,7 +10,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ route('admin.users') }}">FELS</a>
+            <a class="navbar-brand" href="{{ route('admin.users.index') }}">FELS</a>
         </div>
 
         <div class="collapse navbar-collapse" id="keep-nav">
@@ -22,13 +22,13 @@
                         Accounts <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ route('admin.users') }}">Current</a></li>
+                        <li><a href="{{ route('admin.users.index') }}">Current</a></li>
                         <li><a href="{{ route('admin.users.disabled') }}">Disabled</a></li>
                         <li><a href="{{ route('admin.users.create') }}">Add New Account</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ route('admin.categories') }}">Categories</a></li>
-                <li><a href="{{ route('admin.words') }}">Words</a></li>
+                <li><a href="{{ route('admin.categories.index') }}">Categories</a></li>
+                <li><a href="{{ route('admin.words.index') }}">Words</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>

@@ -26,7 +26,9 @@
                         {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Add Account <i class="fa fa-arrow-right"></i></button>
+                        <button type="submit" class="btn btn-primary">
+                            Add Account <i class="fa fa-arrow-right"></i>
+                        </button>
                     </div>
                 {!! Form::close() !!}
             </div>

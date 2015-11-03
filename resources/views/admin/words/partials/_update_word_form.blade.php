@@ -7,7 +7,7 @@
                 {!! Form::text('content', null, ['class' => 'form-control']) !!}
                 {!! error_text($errors, 'content') !!}
             </div>
-            <input type="submit" style="display:none">
+            <input type="submit" class="hidden">
         </div>
     </div>
 {!! Form::close() !!}

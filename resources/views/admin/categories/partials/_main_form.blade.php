@@ -8,5 +8,7 @@
     {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 6]) !!}
 </div>
 <div class="form-group">
-    <button type="submit" class="btn btn-primary">@yield('categorySubmit') <i class="fa fa-arrow-right"></i></button>
+    <button type="submit" class="btn btn-primary">
+        {{ $categorySubmit }} <i class="fa fa-arrow-right"></i>
+    </button>
 </div>
