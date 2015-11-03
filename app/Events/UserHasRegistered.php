@@ -5,7 +5,7 @@ namespace FELS\Events;
 use FELS\Entities\User;
 use Illuminate\Queue\SerializesModels;
 
-class UserHasRegistered extends AbstractEvent
+class UserHasRegistered extends Event
 {
     use SerializesModels;
 

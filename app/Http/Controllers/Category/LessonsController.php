@@ -40,7 +40,8 @@ class LessonsController extends Controller
     }
 
     /**
-     * Display a lesson.
+     * Display a lesson (can be processing lesson
+     * or completed lesson).
      *
      * @param $categorySlug
      * @param $lessonId

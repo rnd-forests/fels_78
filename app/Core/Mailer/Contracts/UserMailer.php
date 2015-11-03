@@ -2,7 +2,7 @@
 
 namespace FELS\Core\Mailer\Contracts;
 
-interface UserMailerInterface
+interface UserMailer
 {
     /**
      * Send an email with account activation link to user.

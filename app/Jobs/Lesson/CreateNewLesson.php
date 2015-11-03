@@ -91,7 +91,7 @@ class CreateNewLesson extends Job implements SelfHandling
      * Record started-lesson activity of the user.
      *
      * @param $lesson
-     * @return void
+     * @return static
      */
     protected function recordActivity($lesson)
     {

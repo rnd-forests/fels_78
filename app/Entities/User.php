@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use FELS\Entities\Traits\FollowableTrait;
 use FELS\Entities\Traits\SearchableTrait;
 use FELS\Entities\Presenters\UserPresenter;
-use FELS\Exceptions\MethodNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Cviebrock\EloquentSluggable\SluggableTrait;
@@ -99,13 +98,13 @@ class User extends Model implements
      *
      * @param $name
      * @param $related
-     * @return mixed
-     * @throws MethodNotFoundException
+     * @return static
+     * @throws \BadFunctionCallException
      */
     public function pushActivity($name, $related)
     {
         if (!method_exists($related, 'captureActivity')) {
-            throw new MethodNotFoundException;
+            throw new \BadFunctionCallException;
         }
 
         return $related->captureActivity($name);

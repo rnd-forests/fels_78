@@ -4,7 +4,7 @@ namespace FELS\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-abstract class AbstractRequest extends FormRequest
+abstract class Request extends FormRequest
 {
     /**
      * Because we use middleware to control accesses to

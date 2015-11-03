@@ -2,9 +2,9 @@
 
 namespace FELS\Core\Mailer;
 
-use FELS\Core\Mailer\Contracts\UserMailerInterface;
+use FELS\Core\Mailer\Contracts\UserMailer as UserMailerContract;
 
-class UserMailer extends AbstractMailer implements UserMailerInterface
+class UserMailer extends AbstractMailer implements UserMailerContract
 {
     /**
      * Send an email with account activation link to user.

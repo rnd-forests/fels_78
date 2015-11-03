@@ -2,7 +2,7 @@
 
 namespace FELS\Http\Requests;
 
-class UpdateNameRequest extends AbstractRequest
+class UpdateNameRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.

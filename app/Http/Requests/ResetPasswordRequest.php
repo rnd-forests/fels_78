@@ -2,7 +2,7 @@
 
 namespace FELS\Http\Requests;
 
-class ResetPasswordRequest extends AbstractRequest
+class ResetPasswordRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.

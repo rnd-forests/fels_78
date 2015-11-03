@@ -2,7 +2,7 @@
 
 namespace FELS\Http\Requests;
 
-class SignInRequest extends AbstractRequest
+class SignInRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.

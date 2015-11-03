@@ -2,7 +2,7 @@
 
 namespace FELS\Http\Requests;
 
-class UpdatePasswordRequest extends AbstractRequest
+class UpdatePasswordRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.

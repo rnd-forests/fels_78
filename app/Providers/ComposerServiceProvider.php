@@ -2,6 +2,7 @@
 
 namespace FELS\Providers;
 
+use FELS\Core\Composers\WordForm;
 use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -45,7 +46,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         view()->composer(
             ['admin.words.partials._main_form', 'users.words.index'],
-            \FELS\Core\Composers\WordForm::class
+            WordForm::class
         );
     }
 }

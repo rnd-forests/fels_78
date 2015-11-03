@@ -2,7 +2,7 @@
 
 namespace FELS\Http\Requests;
 
-class CategoryRequest extends AbstractRequest
+class CategoryRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.
