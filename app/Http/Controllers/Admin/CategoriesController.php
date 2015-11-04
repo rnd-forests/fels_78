@@ -67,7 +67,7 @@ class CategoriesController extends Controller
         $this->categories->update($request->only(['name', 'description']), $slug);
         flash()->success(trans('admin.category_updated'));
 
-        return redirect()->route('admin.categories');
+        return redirect()->route('admin.categories.index');
     }
 
     /**

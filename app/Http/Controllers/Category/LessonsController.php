@@ -31,7 +31,7 @@ class LessonsController extends Controller
         ]);
         if (!$flag) {
             flash()->warning(trans('lesson.not_enough_words'));
-            
+
             return back();
         }
         flash()->success(trans('lesson.created'));
@@ -66,21 +66,6 @@ class LessonsController extends Controller
             'user' => auth()->user()
         ]);
 
-        return redirect()->route('categories.lessons.results', $flag);
-    }
-
-    /**
-     * Display the result of a lesson.
-     *
-     * @param $categorySlug
-     * @param $lessonId
-     * @return \Illuminate\View\View
-     */
-    public function results($categorySlug, $lessonId)
-    {
-        $lesson = $this->lessons->findLesson($categorySlug, $lessonId);
-        $this->authorize('showResults', $lesson);
-
-        return view('categories.lessons.results', compact('lesson'));
+        return redirect()->route('categories.lessons.show', $flag);
     }
 }

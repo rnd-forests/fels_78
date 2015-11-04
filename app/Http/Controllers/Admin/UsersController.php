@@ -50,7 +50,7 @@ class UsersController extends Controller
         $this->users->adminCreate($credentials);
         flash()->success(trans('admin.user_added'));
 
-        return redirect()->route('admin.users');
+        return redirect()->route('admin.users.index');
     }
 
     /**
