@@ -4,27 +4,19 @@ namespace FELS\Core\Repository;
 
 use FELS\Entities\User;
 use FELS\Entities\Activity;
-use FELS\Core\Repository\Traits\GloballyTrait;
+use FELS\Core\Repository\Traits\Findable;
+use FELS\Core\Repository\Traits\Globally;
+use FELS\Core\Repository\Contracts\Paginatable;
 use FELS\Core\Repository\Contracts\UserRepository;
-use FELS\Core\Repository\Traits\ShouldBeFoundTrait;
-use FELS\Core\Repository\Contracts\Activity\Globally;
-use FELS\Core\Repository\Contracts\Activity\CanBeRemoved;
-use FELS\Core\Repository\Contracts\Activity\CanBeCreated;
-use FELS\Core\Repository\Contracts\Activity\CanBeUpdated;
-use FELS\Core\Repository\Contracts\Activity\ShouldBeFound;
-use FELS\Core\Repository\Contracts\Activity\ShouldBePaginated;
+use FELS\Core\Repository\Contracts\Findable as FindableContract;
 
 class EloquentUserRepository implements
-    Globally,
-    CanBeRemoved,
-    CanBeCreated,
-    CanBeUpdated,
-    ShouldBeFound,
+    Paginatable,
     UserRepository,
-    ShouldBePaginated
+    FindableContract
 {
-    use GloballyTrait,
-        ShouldBeFoundTrait;
+    use Globally,
+        Findable;
 
     protected $model;
 

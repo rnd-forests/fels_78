@@ -2,7 +2,7 @@
 
 namespace FELS\Core\Repository\Traits;
 
-trait GloballyTrait
+trait Globally
 {
     /**
      * Get a collection of all model instances.

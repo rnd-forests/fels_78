@@ -3,21 +3,17 @@
 namespace FELS\Core\Repository;
 
 use FELS\Entities\Category;
-use FELS\Core\Repository\Traits\ShouldBeFoundTrait;
+use FELS\Core\Repository\Traits\Findable;
+use FELS\Core\Repository\Contracts\Paginatable;
 use FELS\Core\Repository\Contracts\CategoryRepository;
-use FELS\Core\Repository\Contracts\Activity\CanBeCreated;
-use FELS\Core\Repository\Contracts\Activity\CanBeUpdated;
-use FELS\Core\Repository\Contracts\Activity\ShouldBeFound;
-use FELS\Core\Repository\Contracts\Activity\ShouldBePaginated;
+use FELS\Core\Repository\Contracts\Findable as FindableContract;
 
 class EloquentCategoryRepository implements
-    CanBeCreated,
-    CanBeUpdated,
-    ShouldBeFound,
-    ShouldBePaginated,
+    Paginatable,
+    FindableContract,
     CategoryRepository
 {
-    use ShouldBeFoundTrait;
+    use Findable;
 
     protected $model;
 
