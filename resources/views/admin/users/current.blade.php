@@ -26,7 +26,7 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ full_time($user->created_at) }}</td>
                             <td>
-                                {!! Form::delete('admin.users.delete', $user) !!}
+                                {!! Form::delete('admin.users.destroy', $user) !!}
                             </td>
                         </tr>
                     @endforeach

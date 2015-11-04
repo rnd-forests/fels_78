@@ -37,7 +37,7 @@
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->description }}</td>
                                 <td>
-                                    {!! link_to_route('admin.categories.words', counting($category->words), $category) !!}
+                                    {!! link_to_route('admin.categories.words.index', counting($category->words), $category) !!}
                                 </td>
                                 <td>{{ short_time($category->created_at) }}</td>
                                 <td>
@@ -46,7 +46,7 @@
                                        title="Update">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    {!! Form::delete('admin.categories.delete', $category) !!}
+                                    {!! Form::delete('admin.categories.destroy', $category) !!}
                                 </td>
                             </tr>
                         @endforeach

@@ -8,7 +8,7 @@
                     {!! Form::text('solution', null, ['class' => 'form-control']) !!}
                     {!! error_text($errors, 'solution') !!}
                 </div>
-                <input type="submit" style="display:none">
+                <input type="submit" class="hidden">
             </div>
         </div>
     {!! Form::close() !!}

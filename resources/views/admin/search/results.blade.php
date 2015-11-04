@@ -18,19 +18,25 @@
                         @if($source === 'user')
                             @foreach($results as $user)
                                 <li class="list-group-item item">
-                                    <a href="{{ route('user.profile.show', $user) }}">{{ $user->name }}</a>
+                                    <a href="{{ route('user.profile.show', $user) }}">
+                                        {{ $user->name }}
+                                    </a>
                                 </li>
                             @endforeach
                         @elseif($source === 'category')
                             @foreach($results as $category)
                                 <li class="list-group-item item">
-                                    <a href="{{ route('admin.categories.edit', $category) }}">{{ $category->name }}</a>
+                                    <a href="{{ route('admin.categories.edit', $category) }}">
+                                        {{ $category->name }}
+                                    </a>
                                 </li>
                             @endforeach
                         @else
                             @foreach($results as $word)
                                 <li class="list-group-item item">
-                                    <a href="{{ route('admin.words.show', $word) }}">{{ $word->content }}</a>
+                                    <a href="{{ route('admin.words.show', $word) }}">
+                                        {{ $word->content }}
+                                    </a>
                                 </li>
                             @endforeach
                         @endif
