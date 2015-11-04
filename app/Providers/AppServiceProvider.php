@@ -2,7 +2,9 @@
 
 namespace FELS\Providers;
 
+use FELS\Core\Mailer\UserMailer;
 use Illuminate\Support\ServiceProvider;
+use FELS\Core\Mailer\Contracts\UserMailer as UserMailerContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,11 +25,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerUserMailer();
+        $this->registerMailer();
     }
 
     /**
-     * Set different configurations for different application environments.
+     * Set different configurations for different
+     * application environments.
      */
     protected function configureAppEnvironments()
     {
@@ -49,21 +52,16 @@ class AppServiceProvider extends ServiceProvider
     protected function logDatabaseQueries()
     {
         $logger = $this->app->make('log');
-        $this->app->make('db')->listen(function ($sql, $bindings, $time) use ($logger) {
-            $logger->info($time);
+        $this->app->make('db')->listen(function ($sql) use ($logger) {
             $logger->info($sql);
-            $logger->info($bindings);
         });
     }
-    
+
     /**
      * Register mailer interfaces.
      */
-    protected function registerUserMailer()
+    protected function registerMailer()
     {
-        $this->app->singleton(
-            \FELS\Core\Mailer\Contracts\UserMailerInterface::class,
-            \FELS\Core\Mailer\UserMailer::class
-        );
+        $this->app->singleton(UserMailerContract::class, UserMailer::class);
     }
 }

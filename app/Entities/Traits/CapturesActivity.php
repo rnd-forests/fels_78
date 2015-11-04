@@ -25,6 +25,7 @@ trait CapturesActivity
      * Capture the activity.
      *
      * @param $event
+     * @return static
      */
     public function captureActivity($event)
     {

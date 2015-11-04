@@ -1,6 +1,12 @@
 <?php
 
-$factory->define(FELS\Entities\User::class, function (Faker\Generator $faker) {
+use FELS\Entities\User;
+use FELS\Entities\Word;
+use FELS\Entities\Answer;
+use FELS\Entities\Category;
+use Faker\Generator as Faker;
+
+$factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
@@ -9,26 +15,26 @@ $factory->define(FELS\Entities\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->defineAs(FELS\Entities\User::class, 'admin', function () use ($factory) {
+$factory->defineAs(User::class, 'admin', function () use ($factory) {
     $user = $factory->raw(FELS\Entities\User::class);
 
     return array_merge($user, ['admin' => true]);
 });
 
-$factory->define(FELS\Entities\Category::class, function (Faker\Generator $faker) {
+$factory->define(Category::class, function (Faker $faker) {
     return [
         'name' => $faker->sentence(5),
         'description' => $faker->sentences(2, true),
     ];
 });
 
-$factory->define(FELS\Entities\Word::class, function (Faker\Generator $faker) {
+$factory->define(Word::class, function (Faker $faker) {
     return [
         'content' => $faker->word,
     ];
 });
 
-$factory->define(FELS\Entities\Answer::class, function (Faker\Generator $faker) {
+$factory->define(Answer::class, function (Faker $faker) {
     return [
         'solution' => $faker->sentence(6),
         'correct' => false,

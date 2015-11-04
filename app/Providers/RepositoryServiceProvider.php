@@ -3,6 +3,16 @@
 namespace FELS\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use FELS\Core\Repository\EloquentUserRepository;
+use FELS\Core\Repository\EloquentWordRepository;
+use FELS\Core\Repository\Contracts\UserRepository;
+use FELS\Core\Repository\Contracts\WordRepository;
+use FELS\Core\Repository\EloquentAnswerRepository;
+use FELS\Core\Repository\EloquentLessonRepository;
+use FELS\Core\Repository\Contracts\AnswerRepository;
+use FELS\Core\Repository\EloquentCategoryRepository;
+use FELS\Core\Repository\Contracts\LessonRepository;
+use FELS\Core\Repository\Contracts\CategoryRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -20,38 +30,20 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerRepositories();
+        $this->bindRepositories();
     }
 
     /**
-     * Bind all repository interfaces to their concrete implementations.
+     * Bind all repository interfaces to their
+     * concrete implementations.
      */
-    protected function registerRepositories()
+    protected function bindRepositories()
     {
-        $this->app->singleton(
-            \FELS\Core\Repository\Contracts\UserRepository::class,
-            \FELS\Core\Repository\EloquentUserRepository::class
-        );
-
-        $this->app->singleton(
-            \FELS\Core\Repository\Contracts\CategoryRepository::class,
-            \FELS\Core\Repository\EloquentCategoryRepository::class
-        );
-
-        $this->app->singleton(
-            \FELS\Core\Repository\Contracts\WordRepository::class,
-            \FELS\Core\Repository\EloquentWordRepository::class
-        );
-
-        $this->app->singleton(
-            \FELS\Core\Repository\Contracts\AnswerRepository::class,
-            \FELS\Core\Repository\EloquentAnswerRepository::class
-        );
-
-        $this->app->singleton(
-            \FELS\Core\Repository\Contracts\LessonRepository::class,
-            \FELS\Core\Repository\EloquentLessonRepository::class
-        );
+        $this->app->singleton(UserRepository::class, EloquentUserRepository::class);
+        $this->app->singleton(CategoryRepository::class, EloquentCategoryRepository::class);
+        $this->app->singleton(WordRepository::class, EloquentWordRepository::class);
+        $this->app->singleton(AnswerRepository::class, EloquentAnswerRepository::class);
+        $this->app->singleton(LessonRepository::class, EloquentLessonRepository::class);
     }
 
     /**
@@ -62,11 +54,11 @@ class RepositoryServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            \FELS\Core\Repository\Contracts\UserRepository::class,
-            \FELS\Core\Repository\Contracts\CategoryRepository::class,
-            \FELS\Core\Repository\Contracts\WordRepository::class,
-            \FELS\Core\Repository\Contracts\AnswerRepository::class,
-            \FELS\Core\Repository\Contracts\LessonRepository::class,
+            UserRepository::class,
+            CategoryRepository::class,
+            WordRepository::class,
+            AnswerRepository::class,
+            LessonRepository::class,
         ];
     }
 }

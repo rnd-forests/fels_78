@@ -41,23 +41,11 @@ class RedirectIfNotCorrectUser
         $routeKey = $request->route('users');
         if ($routeKey) {
             $user = $this->users->findBySlug($routeKey);
-            if (!$user || !$this->isCurrentAuthenticatedUser($user)) {
+            if (!$user || !$user->is($this->auth->user())) {
                 throw new InvalidUserException(trans('exceptions.invalid_user'));
             }
         }
 
         return $next($request);
-    }
-
-    /**
-     * Check if the user in the current request is the
-     * authenticated user or not.
-     *
-     * @param $user
-     * @return bool
-     */
-    protected function isCurrentAuthenticatedUser($user)
-    {
-        return $user->id === $this->auth->user()->id;
     }
 }

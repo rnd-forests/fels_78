@@ -2,7 +2,9 @@
 
 namespace FELS\Providers;
 
+use FELS\Core\Search\EloquentSearch;
 use Illuminate\Support\ServiceProvider;
+use FELS\Core\Search\Contracts\Searchable;
 
 class SearchServiceProvider extends ServiceProvider
 {
@@ -29,10 +31,7 @@ class SearchServiceProvider extends ServiceProvider
      */
     protected function registerSearchContract()
     {
-        $this->app->singleton(
-            \FELS\Core\Search\Contracts\SearchInterface::class,
-            \FELS\Core\Search\EloquentSearch::class
-        );
+        $this->app->singleton(Searchable::class, EloquentSearch::class);
     }
 
     /**
@@ -40,7 +39,7 @@ class SearchServiceProvider extends ServiceProvider
      */
     protected function registerSearchFacade()
     {
-        $this->app->singleton('search', \FELS\Core\Search\Contracts\SearchInterface::class);
+        $this->app->singleton('search', Searchable::class);
     }
 
     /**
@@ -50,9 +49,6 @@ class SearchServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [
-            'search',
-            \FELS\Core\Search\Contracts\SearchInterface::class,
-        ];
+        return ['search', Searchable::class];
     }
 }

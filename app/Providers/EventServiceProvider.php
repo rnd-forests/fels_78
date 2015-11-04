@@ -2,6 +2,11 @@
 
 namespace FELS\Providers;
 
+use FELS\Entities\User;
+use FELS\Entities\Word;
+use FELS\Entities\Lesson;
+use FELS\Entities\Category;
+use FELS\Listeners\UserEventListener;
 use FELS\Entities\Observers\UserObserver;
 use FELS\Entities\Observers\WordObserver;
 use FELS\Entities\Observers\LessonObserver;
@@ -26,7 +31,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $subscribe = [
-        \FELS\Listeners\UserEventListener::class,
+        UserEventListener::class,
     ];
 
     /**
@@ -39,9 +44,9 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot($events);
 
-        \FELS\Entities\User::observe(new UserObserver);
-        \FELS\Entities\Word::observe(new WordObserver);
-        \FELS\Entities\Lesson::observe(new LessonObserver);
-        \FELS\Entities\Category::observe(new CategoryObserver);
+        User::observe(new UserObserver);
+        Word::observe(new WordObserver);
+        Lesson::observe(new LessonObserver);
+        Category::observe(new CategoryObserver);
     }
 }

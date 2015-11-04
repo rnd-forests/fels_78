@@ -3,8 +3,8 @@
 namespace FELS\Listeners;
 
 use FELS\Events\UserHasRegistered;
+use FELS\Core\Mailer\Contracts\UserMailer;
 use Illuminate\Contracts\Events\Dispatcher;
-use FELS\Core\Mailer\Contracts\UserMailerInterface;
 
 class UserEventListener
 {
@@ -15,7 +15,7 @@ class UserEventListener
      *
      * @param $mailer
      */
-    public function __construct(UserMailerInterface $mailer)
+    public function __construct(UserMailer $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -41,7 +41,7 @@ class UserEventListener
     public function subscribe(Dispatcher $events)
     {
         $events->listen(
-            \FELS\Events\UserHasRegistered::class,
+            UserHasRegistered::class,
             'FELS\Listeners\UserEventListener@onUserRegister'
         );
     }

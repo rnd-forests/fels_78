@@ -2,14 +2,14 @@
 
 namespace FELS\Core\Search\Contracts;
 
-interface SearchInterface
+interface Searchable
 {
     /**
      * Process search request by administrator.
      *
      * @param $source
      * @param $pattern
-     * @return mixed
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function adminSearch($source, $pattern);
 }

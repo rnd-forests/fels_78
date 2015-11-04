@@ -1,6 +1,7 @@
 <?php
 
 use FELS\Entities\Word;
+use FELS\Entities\Answer;
 use FELS\Entities\Category;
 use Illuminate\Database\Seeder;
 
@@ -20,10 +21,10 @@ class CategoriesTableSeeder extends Seeder
 
         Word::all()->each(function ($word) {
             $answers = collect([
-                factory(FELS\Entities\Answer::class)->make(),
-                factory(FELS\Entities\Answer::class)->make(),
-                factory(FELS\Entities\Answer::class)->make(),
-                factory(FELS\Entities\Answer::class)->make(['correct' => 1])
+                factory(Answer::class)->make(),
+                factory(Answer::class)->make(),
+                factory(Answer::class)->make(),
+                factory(Answer::class)->make(['correct' => 1]),
             ]);
             $shuffled = $answers->shuffle();
             $word->answers()->saveMany($shuffled);

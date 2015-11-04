@@ -4,13 +4,13 @@ namespace FELS\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use FELS\Http\Controllers\Controller;
-use FELS\Core\Search\Contracts\SearchInterface;
+use FELS\Core\Search\Contracts\Searchable;
 
 class SearchController extends Controller
 {
     protected $finder;
 
-    public function __construct(SearchInterface $finder)
+    public function __construct(Searchable $finder)
     {
         $this->finder = $finder;
         $this->middleware('admin');
