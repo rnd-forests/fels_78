@@ -31,10 +31,8 @@ class EloquentWordRepository implements
      */
     public function paginate($limit, array $params = null)
     {
-        return $this->model
-            ->with('category', 'answers')
-            ->oldest('content')
-            ->paginate($limit);
+        return $this->model->with('category', 'answers')
+            ->oldest('content')->paginate($limit);
     }
 
     /**
@@ -46,9 +44,7 @@ class EloquentWordRepository implements
      */
     public function fetchLearnedWords($user, $category)
     {
-        return $user->words()
-            ->where('category_id', $category->id)
-            ->learned()
-            ->paginate(15);
+        return $user->words()->where('category_id', $category->id)
+            ->learned()->paginate(15);
     }
 }

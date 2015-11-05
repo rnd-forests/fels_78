@@ -26,14 +26,12 @@ class EloquentLessonRepository implements
      *
      * @param $categorySlug
      * @param $lessonId
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\Lesson
      */
     public function findLesson($categorySlug, $lessonId)
     {
         return Category::where('slug', $categorySlug)
-            ->firstOrFail()
-            ->lessons()
-            ->firstOrNew(['id' => $lessonId]);
+            ->firstOrFail()->lessons()->firstOrNew(['id' => $lessonId]);
     }
 
     /**
@@ -45,8 +43,6 @@ class EloquentLessonRepository implements
      */
     public function fetchLessons($user, $category)
     {
-        return $user->lessons()
-            ->where('category_id', $category->id)
-            ->paginate(15);
+        return $user->lessons()->where('category_id', $category->id)->paginate(15);
     }
 }
