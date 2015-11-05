@@ -2,6 +2,7 @@
 
 namespace FELS\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use FELS\Entities\Traits\FollowableTrait;
@@ -159,6 +160,22 @@ class User extends Model implements
     public function scopeNormal($query)
     {
         return $query->where('admin', 0);
+    }
+
+    /**
+     * Get the period of time between the first lesson
+     * and the latest lesson of a user.
+     *
+     * @return int
+     */
+    public function getLearningPeriodAttribute()
+    {
+        $period = $this->lessons->sum(function ($lesson) {
+            return Carbon::parse($lesson->created_at)
+                ->diffInSeconds(Carbon::parse($lesson->updated_at), true);
+        });
+
+        return plural('second', $period);
     }
 
     /**

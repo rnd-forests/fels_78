@@ -123,4 +123,11 @@ interface UserRepository
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function oauthCreate(array $userData, $authProvider);
+
+    /**
+     * Get the leaderboard (learned words of users).
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getLeaderboard();
 }

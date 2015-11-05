@@ -1,0 +1,64 @@
+.leaderboard {
+  .leaderboard--user {
+    .media-left {
+      position: relative;
+      overflow: visible;
+    }
+    margin-bottom: 35px;
+    .leaderboard--user__avatar {
+      border-radius: 50%;
+      border: 1px solid #dddddd;
+      padding: 4px;
+      background-color: #ffffff;
+    }
+    .leaderboard--user__ranking {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 2em;
+      height: 2em;
+      padding: 3px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: #A7B3C2;
+      border-radius: 50%;
+      background-color: #ffffff;
+      border: 2px solid #A7B3C2;
+    }
+    .leaderboard--user__info {
+      float: left;
+      .user-name {
+        color: #A7B3C2;
+        text-shadow: 0 .1px .1px #A7B3C2;
+      }
+      .user-email {
+        color: #999999;
+      }
+    }
+    .leaderboard--user__meta {
+      .learned-words-counter {
+        display: block;
+        font-size: 3.5em;
+        color: #4b4b4b;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 5px;
+        small {
+          font-weight: normal;
+          font-size: 25px;
+          text-transform: uppercase;
+        }
+      }
+      .learning-period,
+      .lesson-counter {
+        float: right;
+        margin-right: 10px;
+        text-transform: uppercase;
+        font-size: 15px;
+        color: #A7B3C2;
+        font-weight: 400;
+      }
+    }
+  }
+}

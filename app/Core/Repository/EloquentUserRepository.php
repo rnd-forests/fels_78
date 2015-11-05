@@ -261,4 +261,19 @@ class EloquentUserRepository implements
 
         return $user;
     }
+
+    /**
+     * Get the leaderboard (learned words of users).
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getLeaderboard()
+    {
+        return $this->model
+            ->with('lessons', 'words')
+            ->where('learned_words', '>', 0)
+            ->orderBy('learned_words', 'desc')
+            ->take(15)
+            ->get();
+    }
 }

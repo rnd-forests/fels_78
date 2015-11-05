@@ -9,6 +9,7 @@
 @import "modules/user";
 @import "modules/word";
 @import "modules/lesson";
+@import "modules/leaderboard";
 
 @font-face {
   font-family: 'FontAwesome';
@@ -23,6 +24,8 @@
 }
 
 body {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 16px;
   background: #eef1f2;
   padding-top: 70px;
   position: relative;

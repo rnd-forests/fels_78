@@ -19,6 +19,7 @@
                     <li><a href="{{ route('categories.index') }}">Categories</a></li>
                     <li><a href="{{ route('words.index') }}">Word List</a></li>
                     <li><a href="{{ route('user.learned.words', $currentUser) }}">Learned Words</a></li>
+                    <li><a href="{{ route('pages.leaderboard') }}">Leaderboard</a></li>
                     <li><a href="{{ route('pages.members') }}">Members</a></li>
                 @endif
                 <li><a href="{{ route('pages.about') }}">About</a></li>
