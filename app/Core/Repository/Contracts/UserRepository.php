@@ -8,7 +8,7 @@ interface UserRepository
      * Create a new model instance.
      *
      * @param array $data
-     * @return static
+     * @return \FELS\Entities\User
      */
     public function create(array $data);
 
@@ -16,42 +16,41 @@ interface UserRepository
      * Update a model instance.
      *
      * @param array $data
-     * @param $identifier
+     * @param $slug
      * @return bool|int
      */
-    public function update(array $data, $identifier);
+    public function update(array $data, $slug);
 
     /**
      * Restore a soft deleted model instance.
      *
-     * @param $identifier
+     * @param $slug
      * @return bool|null
      */
-    public function restore($identifier);
+    public function restore($slug);
 
     /**
      * Soft delete a model instance.
      *
-     * @param $identifier
+     * @param $slug
      * @return bool|null
      */
-    public function softDelete($identifier);
+    public function softDelete($slug);
 
     /**
      * Permanently delete a soft deleted model instance.
      *
-     * @param $identifier
-     * @return void
+     * @param $slug
+     * @return bool|null
      */
-    public function forceDelete($identifier);
+    public function forceDelete($slug);
 
     /**
      * Find a user by slug with eager loaded relationships.
      *
      * @param $slug
      * @return mixed
-     * @return \Illuminate\Database\Eloquent\Model
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @return \FELS\Entities\User
      */
     public function findBySlugWithRelations($slug);
 
@@ -67,7 +66,7 @@ interface UserRepository
      * Add new user by administrator.
      *
      * @param array $data
-     * @return mixed
+     * @return \FELS\Entities\User
      */
     public function adminCreate(array $data);
 
@@ -75,7 +74,7 @@ interface UserRepository
      * Finding a user or creating a new user if the user does not exist.
      *
      * @param array $userData
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\User
      */
     public function findOrCreate(array $userData);
 
@@ -84,16 +83,24 @@ interface UserRepository
      *
      * @param $code
      * @param bool|false $confirmed
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\User
      */
-    public function findByActivationCode($code, $confirmed = false);
+    public function findPendingActivationAccount($code, $confirmed = false);
+
+    /**
+     * Clear activation code of the user account.
+     *
+     * @param $user
+     * @return bool
+     */
+    public function clearActivationCode($user);
 
     /**
      * Follow a user.
      *
      * @param $followedId
      * @param $user
-     * @return mixed
+     * @return \FELS\Entities\Relationship
      */
     public function createRelationship($followedId, $user);
 
@@ -102,7 +109,7 @@ interface UserRepository
      *
      * @param $followedId
      * @param $user
-     * @return mixed
+     * @return bool|null
      */
     public function destroyRelationship($followedId, $user);
 
@@ -110,7 +117,7 @@ interface UserRepository
      * Get activity feed for a user.
      *
      * @param $user
-     * @return mixed
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getActivityFeedFor($user);
 
@@ -120,7 +127,7 @@ interface UserRepository
      *
      * @param array $userData
      * @param $authProvider
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\User
      */
     public function oauthCreate(array $userData, $authProvider);
 

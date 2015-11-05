@@ -9,7 +9,7 @@ interface LessonRepository
      *
      * @param $categorySlug
      * @param $lessonId
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\Lesson
      */
     public function findLesson($categorySlug, $lessonId);
 

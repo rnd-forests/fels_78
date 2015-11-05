@@ -1,9 +1,15 @@
 @extends('layouts.default')
-@section('title', 'Password Recovery . Keep')
+@section('title', 'Password Recovery')
 @section('content')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="well-w">
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+                @include('layouts.partials._form_errors')
                 {!! Form::open() !!}
                     <div class="form-group">
                         {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
@@ -12,12 +18,16 @@
                         {!! error_text($errors, 'email') !!}
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Send Password Reset Link <i class="fa fa-arrow-right"></i></button>
+                        <button type="submit" class="btn btn-primary">
+                            Send Password Reset Link <i class="fa fa-arrow-right"></i>
+                        </button>
                     </div>
                 {!! Form::close() !!}
             </div>
             <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                <button class="btn btn-default dropdown-toggle"
+                        type="button"
+                        data-toggle="dropdown">
                     <i class="fa fa-cog"></i>
                 </button>
                 <ul class="dropdown-menu">
