@@ -4,6 +4,7 @@ namespace FELS\Http\Controllers\User;
 
 use Illuminate\Contracts\Auth\Guard;
 use FELS\Http\Controllers\Controller;
+use FELS\Core\Excel\Export\WordExporter;
 use FELS\Core\Repository\Contracts\CategoryRepository;
 
 class WordsController extends Controller
@@ -28,6 +29,16 @@ class WordsController extends Controller
         );
 
         return view('users.words.index', compact('category', 'type', 'words'));
+    }
+
+    /**
+     * Export learned words of a user to PDF.
+     *
+     * @param WordExporter $exporter
+     */
+    public function export(WordExporter $exporter)
+    {
+        $exporter->exportPdf($this->auth->user()->words);
     }
 
     /**
