@@ -4,7 +4,7 @@ namespace FELS\Http\Controllers\Pages;
 
 use FELS\Http\Controllers\Controller;
 
-class StaticPagesController extends Controller
+class PagesController extends Controller
 {
     /**
      * About page.
