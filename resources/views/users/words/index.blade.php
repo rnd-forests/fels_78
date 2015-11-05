@@ -14,13 +14,13 @@
                     <div class="form-group">
                         <p><i class="fa fa-filter"></i> Choose filtering option</p>
                         <label class="radio-inline">
-                            {!! Form::radio('filter-by', 'learned', true) !!} Learned words
+                            {!! Form::radio('filter-by', \FELS\Entities\Word::LEARNED, true) !!} Learned words
                         </label>
                         <label class="radio-inline">
-                            {!! Form::radio('filter-by', 'unlearned') !!} Unlearned words
+                            {!! Form::radio('filter-by', \FELS\Entities\Word::UNLEARNED) !!} Unlearned words
                         </label>
                         <label class="radio-inline">
-                            {!! Form::radio('filter-by', 'alphabetical') !!} All words (alphabetical order)
+                            {!! Form::radio('filter-by', \FELS\Entities\Word::ALPHABET) !!} All words (alphabetical order)
                         </label>
                     </div>
                     <div class="form-group">

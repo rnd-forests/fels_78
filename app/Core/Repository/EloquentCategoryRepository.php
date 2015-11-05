@@ -2,6 +2,7 @@
 
 namespace FELS\Core\Repository;
 
+use FELS\Entities\Word;
 use FELS\Entities\Category;
 use FELS\Core\Repository\Traits\Findable;
 use FELS\Core\Repository\Contracts\Paginatable;
@@ -93,13 +94,16 @@ class EloquentCategoryRepository implements
      */
     public function filterWords($user, $category, $type)
     {
-        $learnedWordIds = $user->words()->lists('id')->toArray();
-        $baseQuery = $category->words()->$type();
-        if ($type == 'learned') {
-            return $baseQuery->whereIn('id', $learnedWordIds)->get();
+        switch ($type) {
+            case Word::LEARNED:
+                return $user->getLearnedWordsIn($category)->get();
+            case Word::UNLEARNED:
+                return $category->unlearnedWordsOf($user)->get();
+            case Word::ALPHABET:
+                return $category->words()->alphabetized()->get();
+            default:
+                return null;
         }
-
-        return $baseQuery->get();
     }
 
     /**

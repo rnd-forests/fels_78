@@ -81,6 +81,19 @@ class User extends Model implements
     }
 
     /**
+     * Get learned words of a user in a category.
+     *
+     * @param $category
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function getLearnedWordsIn($category)
+    {
+        return $this->words()
+            ->alphabetized()
+            ->where('category_id', $category->id);
+    }
+    
+    /**
      * User ranking attribute accessor.
      *
      * @return string

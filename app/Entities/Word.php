@@ -7,6 +7,10 @@ use FELS\Entities\Traits\SearchableTrait;
 
 class Word extends Model
 {
+    const LEARNED = 'learned';
+    const UNLEARNED = 'unlearned';
+    const ALPHABET = 'alphabetized';
+
     use SearchableTrait;
 
     protected $table = 'words';
@@ -96,12 +100,12 @@ class Word extends Model
     }
 
     /**
-     * Sort words.
+     * Query scope for sorting words in alphabetical order.
      *
      * @param $query
      * @return mixed
      */
-    public function scopeAlphabetical($query)
+    public function scopeAlphabetized($query)
     {
         return $query->orderBy('content', 'asc');
     }

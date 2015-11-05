@@ -66,8 +66,7 @@ class CreateNewLesson extends Job implements SelfHandling
     protected function hasEnoughWords()
     {
         return $this->category
-            ->words()
-            ->unlearned()
+            ->unlearnedWordsOf(auth()->user())
             ->count() >= config('lesson.min_words');
     }
 
@@ -79,8 +78,7 @@ class CreateNewLesson extends Job implements SelfHandling
     protected function randomizeWords()
     {
         return $this->category
-            ->words()
-            ->unlearned()
+            ->unlearnedWordsOf(auth()->user())
             ->lists('id')
             ->shuffle()
             ->take(config('lesson.max_words'))
