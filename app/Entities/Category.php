@@ -37,6 +37,21 @@ class Category extends Model implements SluggableInterface
     }
 
     /**
+     * Unlearned words of a user in this category.
+     *
+     * @param $user
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function unlearnedWordsOf($user)
+    {
+        $ids = $user->getLearnedWordsIn($this)->lists('id')->toArray();
+
+        return $this->words()
+            ->alphabetized()
+            ->whereNotIn('id', $ids);
+    }
+
+    /**
      * Set the route key.
      *
      * @return string
