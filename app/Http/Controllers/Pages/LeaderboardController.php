@@ -16,7 +16,7 @@ class LeaderboardController extends Controller
     }
 
     /**
-     * Display the leaderboard.
+     * Display the memorized words leaderboard.
      *
      * @return \Illuminate\View\View
      */

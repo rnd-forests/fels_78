@@ -2,31 +2,29 @@
 
 namespace FELS\Http\Controllers\User;
 
-use Illuminate\Contracts\Auth\Guard;
 use FELS\Http\Controllers\Controller;
 use FELS\Core\Excel\Export\WordExporter;
 use FELS\Core\Repository\Contracts\CategoryRepository;
 
 class WordsController extends Controller
 {
-    protected $auth;
     protected $categories;
 
-    public function __construct(Guard $auth, CategoryRepository $categories)
+    public function __construct(CategoryRepository $categories)
     {
-        $this->auth = $auth;
         $this->categories = $categories;
         $this->middleware('auth');
     }
 
+    /**
+     * Filter words of categories.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
-        list($category, $type) = $this->parseFilterRequest();
-        $words = $this->categories->filterWords(
-            $this->auth->user(),
-            $category,
-            $type
-        );
+        list($category, $type) = $this->parseRequest();
+        $words = $this->categories->filterWords(auth()->user(), $category, $type);
 
         return view('users.words.index', compact('category', 'type', 'words'));
     }
@@ -38,7 +36,7 @@ class WordsController extends Controller
      */
     public function export(WordExporter $exporter)
     {
-        $exporter->exportPdf($this->auth->user()->words);
+        $exporter->exportPdf(auth()->user()->words);
     }
 
     /**
@@ -48,7 +46,7 @@ class WordsController extends Controller
      */
     public function learned()
     {
-        $words = $this->auth->user()->words()->paginate(15);
+        $words = auth()->user()->words()->paginate(15);
 
         return view('users.words.learned', compact('words'));
     }
@@ -58,7 +56,7 @@ class WordsController extends Controller
      *
      * @return array
      */
-    protected function parseFilterRequest()
+    protected function parseRequest()
     {
         $request = app('request');
         $category = $request->has('in-category')
