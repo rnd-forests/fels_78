@@ -18,7 +18,7 @@ class Word extends Model
     protected $fillable = ['category_id', 'content'];
 
     /**
-     * Learned words that belong to a user.
+     * All users that learned this word.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

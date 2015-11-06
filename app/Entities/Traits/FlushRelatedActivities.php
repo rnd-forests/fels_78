@@ -9,6 +9,8 @@ trait FlushRelatedActivities
     /**
      * Delete activities containing the model instance after
      * deleting that model instance.
+     *
+     * @return void
      */
     protected static function bootFlushRelatedActivities()
     {
@@ -19,6 +21,8 @@ trait FlushRelatedActivities
 
     /**
      * Clear activities with null target object.
+     *
+     * @return void
      */
     public static function clearInvalidActivities()
     {

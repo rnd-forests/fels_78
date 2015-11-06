@@ -19,7 +19,7 @@ trait FollowableTrait
     /**
      * The list of users that are followed by current user.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function following()
     {
@@ -40,7 +40,7 @@ trait FollowableTrait
     /**
      * The list of users that follow the current user.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function followers()
     {
@@ -51,26 +51,22 @@ trait FollowableTrait
     /**
      * Check if the current user is followed by another user.
      *
-     * @param $anotherUser
+     * @param $user
      * @return bool
      */
-    public function isFollowedBy($anotherUser)
+    public function isFollowedBy($user)
     {
-        return $this->passiveRelations()
-            ->where('follower_id', $anotherUser->id)
-            ->exists();
+        return $this->passiveRelations()->where('follower_id', $user->id)->exists();
     }
 
     /**
      * Check if the current user is following another user.
      *
-     * @param $anotherUser
+     * @param $user
      * @return bool
      */
-    public function isFollowing($anotherUser)
+    public function isFollowing($user)
     {
-        return $this->activeRelations()
-            ->where('followed_id', $anotherUser->id)
-            ->exists();
+        return $this->activeRelations()->where('followed_id', $user->id)->exists();
     }
 }

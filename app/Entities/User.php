@@ -2,10 +2,11 @@
 
 namespace FELS\Entities;
 
-use Carbon\Carbon;
+use BadMethodCallException;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use FELS\Entities\Traits\FollowableTrait;
+use Laracasts\Presenter\PresentableTrait;
 use FELS\Entities\Traits\SearchableTrait;
 use FELS\Entities\Presenters\UserPresenter;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,8 +15,6 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
 use FELS\Entities\Traits\FlushRelatedActivities;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use FELS\Entities\Presenters\Traits\PresentableTrait;
-use FELS\Entities\Presenters\Contracts\PresentableInterface;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -23,7 +22,6 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 class User extends Model implements
     SluggableInterface,
     AuthorizableContract,
-    PresentableInterface,
     AuthenticatableContract,
     CanResetPasswordContract
 {
@@ -81,53 +79,9 @@ class User extends Model implements
     }
 
     /**
-     * Get learned words of a user in a category.
-     *
-     * @param $category
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function getLearnedWordsIn($category)
-    {
-        return $this->words()
-            ->alphabetized()
-            ->where('category_id', $category->id);
-    }
-    
-    /**
-     * User ranking attribute accessor.
-     *
-     * @return string
-     */
-    public function getRankingAttribute()
-    {
-        $rank = $this->newQuery()
-            ->where('learned_words', '>=', counting($this->words))
-            ->count();
-
-        return "{$rank} / {$this->count()}";
-    }
-
-    /**
-     * Push new activity for a user.
-     *
-     * @param $name
-     * @param $related
-     * @return static
-     * @throws \BadFunctionCallException
-     */
-    public function pushActivity($name, $related)
-    {
-        if (!method_exists($related, 'captureActivity')) {
-            throw new \BadFunctionCallException;
-        }
-
-        return $related->captureActivity($name);
-    }
-
-    /**
      * Check if a user is administrator or not.
      *
-     * @return mixed
+     * @return bool
      */
     public function isAdmin()
     {
@@ -137,7 +91,7 @@ class User extends Model implements
     /**
      * Check if a user's account has been activated or not.
      *
-     * @return mixed
+     * @return bool
      */
     public function isConfirmed()
     {
@@ -145,7 +99,57 @@ class User extends Model implements
     }
 
     /**
-     * Encrypt password attribute of a user (mutator).
+     * Scope for fetching normal users.
+     *
+     * @param $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNormal($query)
+    {
+        return $query->where('admin', 0);
+    }
+
+    /**
+     * Get learned words of a user in a category.
+     *
+     * @param $category
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function getLearnedWordsIn($category)
+    {
+        return $this->words()->alphabetized()->where('category_id', $category->id);
+    }
+
+    /**
+     * Push new activity for a user.
+     *
+     * @param $name
+     * @param $relatedEntity
+     * @return \FELS\Entities\Activity
+     * @throws BadMethodCallException
+     */
+    public function pushActivity($name, $relatedEntity)
+    {
+        if (!method_exists($relatedEntity, 'captureActivity')) {
+            throw new BadMethodCallException;
+        }
+
+        return $relatedEntity->captureActivity($name);
+    }
+
+    /**
+     * Check the identity of two users.
+     *
+     * @param $user
+     * @return bool
+     */
+    public function is($user)
+    {
+        return $user->id === $this->getKey();
+    }
+
+    /**
+     * Encrypt password attribute of a user.
      *
      * @param $password
      */
@@ -165,41 +169,15 @@ class User extends Model implements
     }
 
     /**
-     * Scope for fetching normal users.
+     * Get ranking attribute of the user.
      *
-     * @param $query
-     * @return mixed
+     * @return string
      */
-    public function scopeNormal($query)
+    public function getRankingAttribute()
     {
-        return $query->where('admin', 0);
-    }
+        $rank = $this->newQuery()->where('learned_words', '>=', counting($this->words));
 
-    /**
-     * Get the period of time between the first lesson
-     * and the latest lesson of a user.
-     *
-     * @return int
-     */
-    public function getLearningPeriodAttribute()
-    {
-        $period = $this->lessons->sum(function ($lesson) {
-            return Carbon::parse($lesson->created_at)
-                ->diffInSeconds(Carbon::parse($lesson->updated_at), true);
-        });
-
-        return plural('second', $period);
-    }
-
-    /**
-     * Check the identity of two users.
-     *
-     * @param $user
-     * @return bool
-     */
-    public function is($user)
-    {
-        return $user->id === $this->id;
+        return "{$rank->count()} / {$this->count()}";
     }
 
     /**
