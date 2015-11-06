@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class LessonWord extends Model
 {
     protected $table = 'lesson_word';
-    protected $touches = ['lesson', 'word'];
     protected $casts = ['valid' => 'boolean'];
     protected $fillable = ['lesson_id', 'word_id', 'answer_id', 'valid'];
 

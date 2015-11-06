@@ -10,7 +10,7 @@ trait SearchableTrait
      * @param $query
      * @param $column
      * @param $pattern
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSearch($query, $column, $pattern)
     {

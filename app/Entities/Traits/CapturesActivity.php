@@ -25,19 +25,17 @@ trait CapturesActivity
      * Capture the activity.
      *
      * @param $event
-     * @return static
+     * @return \FELS\Entities\Activity
      */
     public function captureActivity($event)
     {
-        $class = static::class;
-        $userId = getStatic($class, 'activityUserId') ?: 'user_id';
-        $targetId = getStatic($class, 'activityTargetId') ?: 'id';
-        $targetType = getStatic($class, 'activityTargetType') ?: $class;
+        $attributes = fetch_static_attributes(static::class, static::mapAttributes());
+        list($userId, $targetId, $targetType) = $attributes;
         Activity::create([
             'user_id' => $this->$userId,
             'targetable_id' => $this->$targetId,
             'targetable_type' => $targetType,
-            'action' => $this->getActivityName($this, $event)
+            'action' => $this->getActivityName($this, $event),
         ]);
     }
 
@@ -68,5 +66,19 @@ trait CapturesActivity
         }
 
         return ['created', 'updated', 'deleted'];
+    }
+
+    /**
+     * Get activity attributes mapping.
+     *
+     * @return array
+     */
+    protected static function mapAttributes()
+    {
+        return [
+            'activityUserId' => 'user_id',
+            'activityTargetId' => 'id',
+            'activityTargetType' => static::class,
+        ];
     }
 }

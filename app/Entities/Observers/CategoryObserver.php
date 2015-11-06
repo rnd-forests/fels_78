@@ -10,6 +10,7 @@ class CategoryObserver
      * Hook into category deleting event.
      *
      * @param Category $category
+     * @return void
      */
     public function deleting(Category $category)
     {
