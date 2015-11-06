@@ -10,6 +10,7 @@ class LessonObserver
      * Hook into lesson deleting event.
      *
      * @param Lesson $lesson
+     * @return void
      */
     public function deleting(Lesson $lesson)
     {

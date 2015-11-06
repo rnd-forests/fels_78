@@ -2,7 +2,9 @@
 
 namespace FELS\Entities\Presenters;
 
-class UserPresenter extends AbstractPresenter
+use Laracasts\Presenter\Presenter;
+
+class UserPresenter extends Presenter
 {
     /**
      * Get gravatar profile image associated
@@ -13,47 +15,36 @@ class UserPresenter extends AbstractPresenter
      */
     public function gravatar($size = 35)
     {
-        return trans('presenter.gravatar', [
-            'email' => md5($this->email), 'size' => $size
-        ]);
+        return trans('presenter.gravatar', ['email' => md5($this->email), 'size' => $size]);
     }
 
     /**
      * Link to user GitHub profile.
      *
-     * @param $user
      * @return string
      */
-    public function githubUrl($user)
+    public function githubUrl()
     {
-        return trans('presenter.github_url', [
-            'name' => $user->github_name
-        ]);
+        return trans('presenter.github', ['name' => $this->github_name]);
     }
 
     /**
      * Link to user Google Plus profile.
      *
-     * @param $user
      * @return string
      */
-    public function googleUrl($user)
+    public function googleUrl()
     {
-        return trans('presenter.google_url', [
-            'name' => $user->google_name
-        ]);
+        return trans('presenter.google', ['name' => $this->google_name]);
     }
 
     /**
      * Link to user Facebook profile.
      *
-     * @param $user
      * @return string
      */
-    public function facebookUrl($user)
+    public function facebookUrl()
     {
-        return trans('presenter.facebook_url', [
-            'name' => $user->facebook_name
-        ]);
+        return trans('presenter.facebook', ['name' => $this->facebook_name]);
     }
 }

@@ -10,6 +10,7 @@ class WordObserver
      * Hook into word deleting event.
      *
      * @param Word $word
+     * @return void
      */
     public function deleting(Word $word)
     {

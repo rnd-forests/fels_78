@@ -2,19 +2,25 @@
 
 namespace FELS\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Laracasts\Presenter\PresentableTrait;
 use FELS\Entities\Traits\CapturesActivity;
+use FELS\Entities\Presenters\LessonPresenter;
 use FELS\Entities\Traits\FlushRelatedActivities;
 
 class Lesson extends Model
 {
     use CapturesActivity,
+        PresentableTrait,
         FlushRelatedActivities;
 
     protected $table = 'lessons';
+    protected $dates = ['finished_at'];
     protected static $capturedEvents = [];
     protected $casts = ['finished' => 'boolean'];
-    protected $fillable = ['user_id', 'category_id', 'name', 'finished'];
+    protected $presenter = LessonPresenter::class;
+    protected $fillable = ['user_id', 'category_id', 'name', 'finished', 'finished_at'];
 
     /**
      * A lesson belongs to a specific user.
@@ -88,36 +94,25 @@ class Lesson extends Model
     }
 
     /**
-     * Lesson name attribute accessor.
-     *
-     * @param $name
-     * @return string
-     */
-    public function getNameAttribute($name)
-    {
-        $parts = preg_split('/_/', $name);
-
-        return "{$parts[0]} on @{$parts[1]} ({$this->created_at})";
-    }
-
-    /**
      * Generate URL to a lesson.
      *
      * @return string
      */
-    public function url()
+    public function getUrlAttribute()
     {
         return route('categories.lessons.show', [$this->category, $this]);
     }
 
     /**
-     * Lesson created_at attribute accessor.
+     * Get the total length of a lesson.
      *
-     * @param $timestamp
-     * @return string
+     * @return int
      */
-    public function getCreatedAtAttribute($timestamp)
+    public function getLengthAttribute()
     {
-        return full_time($timestamp);
+        return $this->isFinished()
+            ? Carbon::parse($this->created_at)
+                ->diffInSeconds(Carbon::parse($this->finished_at), true)
+            : 0;
     }
 }

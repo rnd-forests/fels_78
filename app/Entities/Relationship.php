@@ -10,7 +10,6 @@ class Relationship extends Model
     use CapturesActivity;
 
     protected $table = 'follows';
-    protected $touches = ['followed', 'follower'];
     protected $fillable = ['follower_id', 'followed_id'];
 
     protected static $activityUserId = 'follower_id';
@@ -19,8 +18,6 @@ class Relationship extends Model
     protected static $capturedEvents = ['created', 'deleted'];
 
     /**
-     * User who is followed by another use.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function followed()
@@ -29,8 +26,6 @@ class Relationship extends Model
     }
 
     /**
-     * User who follows another user.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function follower()

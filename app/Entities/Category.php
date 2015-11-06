@@ -46,9 +46,7 @@ class Category extends Model implements SluggableInterface
     {
         $ids = $user->getLearnedWordsIn($this)->lists('id')->toArray();
 
-        return $this->words()
-            ->alphabetized()
-            ->whereNotIn('id', $ids);
+        return $this->words()->alphabetized()->whereNotIn('id', $ids);
     }
 
     /**

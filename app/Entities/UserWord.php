@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserWord extends Model
 {
     protected $table = 'user_word';
-    protected $touches = ['user', 'word'];
     protected $fillable = ['user_id', 'word_id'];
 
     /**
