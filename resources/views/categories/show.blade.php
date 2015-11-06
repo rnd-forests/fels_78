@@ -42,12 +42,13 @@
                     @else
                         @foreach($lessons as $lesson)
                             <li class="list-group-item">
-                                <a href="{{ $lesson->url() }}">
+                                <a href="{{ $lesson->url }}">
                                     @if($lesson->isFinished())
-                                        <i class="fa fa-check text-success"></i> {{ $lesson->name }}
+                                        <i class="fa fa-check text-success"></i>
                                     @else
-                                        <i class="fa fa-times text-warning"></i> {{ $lesson->name }}
+                                        <i class="fa fa-times text-warning"></i>
                                     @endif
+                                    {{ $lesson->present()->fullName }}
                                 </a>
                             </li>
                         @endforeach

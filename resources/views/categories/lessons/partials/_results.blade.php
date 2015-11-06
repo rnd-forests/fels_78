@@ -2,7 +2,7 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="list-group">
             <div class="list-group-item text-success">
-                <strong>{{ $lesson->name }}</strong>
+                <strong>{{ $lesson->present()->fullName }}</strong>
             </div>
             <div class="list-group-item">
                 Learned <strong>{{ plural('word', $lesson->learnedWords()->count()) }}</strong>

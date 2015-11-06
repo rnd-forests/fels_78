@@ -23,9 +23,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception $e
+     * @param \Exception $e
      * @return void
      */
     public function report(Exception $e)
@@ -33,7 +31,7 @@ class Handler extends ExceptionHandler
         if (auth()->check()) {
             Bugsnag::setUser([
                 'name' => auth()->user()->name,
-                'email' => auth()->user()->email
+                'email' => auth()->user()->email,
             ]);
         }
 
@@ -43,21 +41,17 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Exception $e
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception $e
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $e)
     {
-        switch (class_basename($e)) {
-            case 'InvalidUserException':
-                flash()->warning($e->getMessage());
-                return redirect()->home();
+        if ($e instanceof InvalidUserException) {
+            flash()->warning($e->getMessage());
 
-            case 'NotFoundHttpException':
-                flash()->warning(trans('exceptions.not_found_http_exception'));
-                return redirect()->home();
-        };
+            return redirect()->home();
+        }
 
         return parent::render($request, $e);
     }
