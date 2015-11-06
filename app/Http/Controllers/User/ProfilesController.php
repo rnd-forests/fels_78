@@ -2,14 +2,23 @@
 
 namespace FELS\Http\Controllers\User;
 
+use Illuminate\Http\Request;
 use FELS\Http\Controllers\Controller;
-use FELS\Http\Requests\UpdateNameRequest;
-use FELS\Http\Requests\UpdatePasswordRequest;
 use FELS\Core\Repository\Contracts\UserRepository;
 
 class ProfilesController extends Controller
 {
     protected $users;
+
+    protected static $nameRules = [
+        'old_name' => 'required',
+        'new_name' => 'required|different:old_name|alpha_spaces|max:255',
+    ];
+
+    protected static $passwordRules = [
+        'old_pass' => 'required',
+        'new_pass' => 'required|confirmed|min:6',
+    ];
 
     public function __construct(UserRepository $users)
     {
@@ -32,7 +41,7 @@ class ProfilesController extends Controller
     }
 
     /**
-     * Load form to edit profile.
+     * Load form to edit user's profile.
      *
      * @param $slug
      * @return \Illuminate\View\View
@@ -45,62 +54,9 @@ class ProfilesController extends Controller
     }
 
     /**
-     * Perform the process of changing user name.
-     *
-     * @param $userSlug
-     * @param UpdateNameRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function changeName(UpdateNameRequest $request, $userSlug)
-    {
-        $oldName = $request->get('old_name');
-        $newName = $request->get('new_name');
-        $user = $this->users->findBySlug($userSlug);
-
-        if ($this->isCorrectName($oldName, $user) &&
-            $this->areTheDifferentNames($oldName, $newName)
-        ) {
-            return $this->handleUpdateName($user, $newName);
-        }
-        session()->flash(
-            'invalid.name',
-            trans('user.invalid_name')
-        );
-
-        return back();
-    }
-
-    /**
-     * Perform the process of changing user password.
-     *
-     * @param $userSlug
-     * @param UpdatePasswordRequest $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function changePassword(UpdatePasswordRequest $request, $userSlug)
-    {
-        $oldPassword = $request->get('old_pass');
-        $newPassword = $request->get('new_pass');
-        $user = $this->users->findBySlug($userSlug);
-
-        if ($this->isValidPassword($oldPassword, $user)) {
-            return $this->handleUpdatePassword($user, $newPassword);
-        }
-        session()->flash(
-            'invalid.password',
-            trans('user.invalid_password')
-        );
-
-        return back();
-    }
-
-    /**
      * Cancel account.
      *
      * @param $userSlug
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($userSlug)
@@ -112,11 +68,80 @@ class ProfilesController extends Controller
     }
 
     /**
+     * Perform the process of changing user name.
+     *
+     * @param $userSlug
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeName(Request $request, $userSlug)
+    {
+        $this->validate($request, self::$nameRules);
+        list($oldName, $newName) = [$request->get('old_name'), $request->get('new_name')];
+        $user = $this->users->findBySlug($userSlug);
+        if ($this->isCorrectNames($oldName, $newName, $user)) {
+            return $this->handleUpdateName($user, $newName);
+        }
+        session()->flash('invalid.name', trans('user.invalid_name'));
+
+        return back();
+    }
+
+    /**
+     * Check the validity of names. Old name must be the same
+     * as current name, and new name must be different from
+     * old name.
+     *
+     * @param $old
+     * @param $new
+     * @param $user
+     * @return bool
+     */
+    protected function isCorrectNames($old, $new, $user)
+    {
+        return strcasecmp($old, $user->name) === 0 && strcasecmp($old, $new) !== 0;
+    }
+
+    /**
+     * Handle the process of updating user name.
+     *
+     * @param $user
+     * @param $newName
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function handleUpdateName($user, $newName)
+    {
+        $user->update(['name' => $newName]);
+        flash()->success(trans('user.valid_name'));
+
+        return redirect()->route('users.edit', $user);
+    }
+
+    /**
+     * Perform the process of changing user password.
+     *
+     * @param $userSlug
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changePassword(Request $request, $userSlug)
+    {
+        $this->validate($request, self::$passwordRules);
+        list($oldPassword, $newPassword) = [$request->get('old_pass'), $request->get('new_pass')];
+        $user = $this->users->findBySlug($userSlug);
+        if ($this->isValidPassword($oldPassword, $user)) {
+            return $this->handleUpdatePassword($user, $newPassword);
+        }
+        session()->flash('invalid.password', trans('user.invalid_password'));
+
+        return back();
+    }
+
+    /**
      * Validate the password of a user.
      *
      * @param $password
      * @param $user
-     *
      * @return mixed
      */
     protected function isValidPassword($password, $user)
@@ -129,59 +154,13 @@ class ProfilesController extends Controller
      *
      * @param $user
      * @param $newPassword
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function handleUpdatePassword($user, $newPassword)
     {
         $user->update(['password' => $newPassword]);
-        session()->flash(
-            'valid.password',
-            trans('user.valid_password')
-        );
+        session()->flash('valid.password', trans('user.valid_password'));
 
         return back();
-    }
-
-    /**
-     * Compare current name of a user with a new name.
-     *
-     * @param $name
-     * @param $user
-     *
-     * @return bool
-     */
-    protected function isCorrectName($name, $user)
-    {
-        return strcasecmp($name, $user->name) === 0;
-    }
-
-    /**
-     * Check the difference between two names.
-     *
-     * @param $old
-     * @param $new
-     *
-     * @return bool
-     */
-    protected function areTheDifferentNames($old, $new)
-    {
-        return strcasecmp($old, $new) !== 0;
-    }
-
-    /**
-     * Handle the process of updating user name.
-     *
-     * @param $user
-     * @param $newName
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function handleUpdateName($user, $newName)
-    {
-        $user->update(['name' => $newName]);
-        flash()->success(trans('user.valid_name'));
-
-        return redirect()->route('user.profile.edit', $user);
     }
 }

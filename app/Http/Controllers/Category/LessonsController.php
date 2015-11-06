@@ -26,9 +26,7 @@ class LessonsController extends Controller
      */
     public function store(Request $request)
     {
-        $flag = $this->dispatchFrom(CreateNewLesson::class, $request, [
-            'user' => auth()->user()
-        ]);
+        $flag = $this->dispatchFrom(CreateNewLesson::class, $request, ['user' => auth()->user()]);
         if (!$flag) {
             flash()->warning(trans('lesson.not_enough_words'));
 
@@ -63,9 +61,7 @@ class LessonsController extends Controller
      */
     public function update(Request $request)
     {
-        $flag = $this->dispatchFrom(StoreLessonResults::class, $request, [
-            'user' => auth()->user()
-        ]);
+        $flag = $this->dispatchFrom(StoreLessonResults::class, $request, ['user' => auth()->user()]);
 
         return redirect()->route('categories.lessons.show', $flag);
     }

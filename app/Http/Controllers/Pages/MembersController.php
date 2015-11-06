@@ -7,11 +7,11 @@ use FELS\Core\Repository\Contracts\UserRepository;
 
 class MembersController extends Controller
 {
-    protected $repository;
+    protected $users;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepository $users)
     {
-        $this->repository = $repository;
+        $this->users = $users;
         $this->middleware('auth');
     }
 
@@ -22,7 +22,7 @@ class MembersController extends Controller
      */
     public function index()
     {
-        $members = $this->repository->paginate(15);
+        $members = $this->users->paginate(15);
 
         return view('pages.members', compact('members'));
     }

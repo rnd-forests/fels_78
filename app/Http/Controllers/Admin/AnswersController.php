@@ -27,9 +27,7 @@ class AnswersController extends Controller
     {
         $this->validate($request, ['solution' => 'required']);
         $answer = $this->answers->findById($id);
-        $answer->update([
-            'solution' => $request->get('solution')
-        ]);
+        $answer->update(['solution' => $request->get('solution')]);
 
         return $answer->toJson();
     }

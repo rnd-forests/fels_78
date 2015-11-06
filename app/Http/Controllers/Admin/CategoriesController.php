@@ -2,13 +2,18 @@
 
 namespace FELS\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use FELS\Http\Controllers\Controller;
-use FELS\Http\Requests\CategoryRequest;
 use FELS\Core\Repository\Contracts\CategoryRepository;
 
 class CategoriesController extends Controller
 {
     protected $categories;
+
+    protected static $rules = [
+        'name' => 'required|between:4,500',
+        'description' => 'required|max:1500',
+    ];
 
     public function __construct(CategoryRepository $categories)
     {
@@ -31,11 +36,12 @@ class CategoriesController extends Controller
     /**
      * Create new category.
      *
-     * @param CategoryRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
+        $this->validate($request, self::$rules);
         $this->categories->create($request->only(['name', 'description']));
         flash()->success(trans('admin.category_created'));
 
@@ -58,12 +64,13 @@ class CategoriesController extends Controller
     /**
      * Update a category.
      *
-     * @param CategoryRequest $request
+     * @param Request $request
      * @param $slug
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(CategoryRequest $request, $slug)
+    public function update(Request $request, $slug)
     {
+        $this->validate($request, self::$rules);
         $this->categories->update($request->only(['name', 'description']), $slug);
         flash()->success(trans('admin.category_updated'));
 
