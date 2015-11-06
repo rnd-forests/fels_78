@@ -18,7 +18,7 @@
                         @if($source === 'user')
                             @foreach($results as $user)
                                 <li class="list-group-item item">
-                                    <a href="{{ route('user.profile.show', $user) }}">
+                                    <a href="{{ route('users.show', $user) }}">
                                         {{ $user->name }}
                                     </a>
                                 </li>

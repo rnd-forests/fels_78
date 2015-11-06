@@ -4,7 +4,7 @@
     </span>
 </div>
 <i class="fa fa-2x fa-play-circle text-info"></i>
-<a href="{{ route('user.profile.show', $parser->owner($activity)) }}">
+<a href="{{ route('users.show', $parser->owner($activity)) }}">
     <strong>{{ $parser->owner($activity)->name }}</strong>
 </a>
 started

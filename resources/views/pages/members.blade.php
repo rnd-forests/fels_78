@@ -17,18 +17,18 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading">
-                                        <a href="{{ route('user.profile.show', $user) }}">
+                                        <a href="{{ route('users.show', $user) }}">
                                             {{ $user->name }}
                                         </a>
                                     </h4>
                                     <h5>{{ $user->email }}</h5>
                                     <h6>Joined on: {{ short_time($user->created_at) }}</h6>
-                                    <a href="{{ route('user.following.show', $user) }}">
+                                    <a href="{{ route('users.following.index', $user) }}">
                                         <span class="label label-default">
                                             {{ plural('following', counting($user->following)) }}
                                         </span>
                                     </a>
-                                    <a href="{{ route('user.followers.show', $user) }}">
+                                    <a href="{{ route('users.followers.index', $user) }}">
                                         <span class="label label-default">
                                             {{ plural('follower', counting($user->followers)) }}
                                         </span>
