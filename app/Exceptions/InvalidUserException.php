@@ -2,6 +2,8 @@
 
 namespace FELS\Exceptions;
 
-class InvalidUserException extends \Exception
+use Exception;
+
+class InvalidUserException extends Exception
 {
 }
