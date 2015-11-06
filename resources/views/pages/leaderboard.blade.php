@@ -4,12 +4,12 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2 leaderboard">
             <div class="well-w">
-                <strong>Memorized Words Leaderboard</strong>
+                <strong><i class="fa fa-trophy"></i> Memorized Words Leaderboard</strong>
             </div>
             @foreach($users as $user)
                 <article class="media leaderboard--user">
                     <div class="media-left">
-                        <a href="{{ route('user.profile.show', $user) }}">
+                        <a href="{{ route('users.show', $user) }}">
                             <img class="user-avatar-picture leaderboard--user__avatar"
                                  src="{{ $user->present()->gravatar(isset($size) ? $size : 100) }}"
                                  alt="{{ $user->name }}">
