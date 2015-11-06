@@ -1,7 +1,7 @@
 @if (session('invalid.name'))
     <div class="alert alert-warning">{{ session('invalid.name') }}</div>
 @endif
-{!! Form::open(['method' => 'PATCH', 'route' => ['user.profile.name', $user]]) !!}
+{!! Form::open(['method' => 'PATCH', 'route' => ['users.name', $user]]) !!}
     <div class="form-group">
         <label for="" class="control-label"></label>
         {!! Form::label('old_name', 'Current name', ['class' => 'control-label']) !!}
