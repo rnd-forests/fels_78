@@ -55,12 +55,11 @@ class WordsController extends Controller
     /**
      * Store new word.
      *
-     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store()
     {
-        $this->dispatch(new CreateNewWord($request));
+        $this->dispatch(new CreateNewWord);
         flash()->success(trans('admin.word_created'));
 
         return redirect()->route('admin.words.index');
