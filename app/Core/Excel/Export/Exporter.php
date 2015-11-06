@@ -43,12 +43,12 @@ abstract class Exporter extends NewExcelFile
      * @param \Illuminate\Database\Eloquent\Collection $data
      * @return array
      */
-    protected abstract function formatData($data);
+    abstract protected function formatData($data);
 
     /**
      * Get the sheet name.
      *
      * @return string
      */
-    protected abstract function getSheetName();
+    abstract protected function getSheetName();
 }

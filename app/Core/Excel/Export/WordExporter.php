@@ -14,10 +14,10 @@ class WordExporter extends Exporter
     {
         return $data->map(function ($word) {
             return [
-                'Word ID' => $word->id,
-                'Word Content' => $word->content,
+                'ID' => $word->id,
+                'Content' => $word->content,
                 'Category' => $word->category->name,
-                'Created at' => full_time($word->created_at),
+                'Published Date' => full_time($word->created_at),
             ];
         })->toArray();
     }
