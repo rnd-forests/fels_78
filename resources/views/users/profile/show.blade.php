@@ -2,7 +2,7 @@
 @section('title', $user->name)
 @section('content')
     <div class="row">
-        <div class="col-md-3 user-sidebar">
+        <div class="col-md-3 users">
             @include('users.profile.partials._profile_card', ['size' => 250])
             @unless($user->is($currentUser))
                 @include('users.profile.partials._relationship_form')

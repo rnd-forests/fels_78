@@ -14,7 +14,7 @@
         </div>
     @else
         <div class="row">
-            <div class="col-md-3 user-sidebar">
+            <div class="col-md-3 users">
                 @include('users.profile.partials._profile_card', ['user' => $currentUser, 'size' => 250])
             </div>
             <div class="col-md-9">
