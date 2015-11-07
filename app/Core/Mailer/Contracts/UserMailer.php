@@ -5,11 +5,11 @@ namespace FELS\Core\Mailer\Contracts;
 interface UserMailer
 {
     /**
-     * Send an email with account activation link to user.
+     * Send email with account activation link.
      *
      * @param $user
      * @param $code
      * @return mixed
      */
-    public function emailActivationLink($user, $code);
+    public function sendActivationURL($user, $code);
 }

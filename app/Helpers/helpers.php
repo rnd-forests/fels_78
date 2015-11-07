@@ -114,28 +114,9 @@ if (!function_exists('paginate')) {
 }
 
 if (!function_exists('validate_query_string')) {
-    function validate_query_string($current, array $possible)
+    function validate_query_string($query, array $queries)
     {
-        if (!$current || !in_array($current, $possible)) {
-            return false;
-        }
-
-        return true;
-    }
-}
-
-if (!function_exists('verify_session_key')) {
-    function verify_session_key($key, $value)
-    {
-        if (!session()->has($key)) {
-            return false;
-        }
-
-        if (session($key) === $value) {
-            return true;
-        }
-
-        return false;
+        return $query && in_array($query, $queries);
     }
 }
 
@@ -159,5 +140,19 @@ if (!function_exists('array_random_val')) {
     function array_random_val(array $arr)
     {
         return $arr[array_rand($arr)];
+    }
+}
+
+if (!function_exists('clear_pattern')) {
+    function clear_pattern($pattern, $source)
+    {
+        return str_replace($pattern, '', $source);
+    }
+}
+
+if (!function_exists('now')) {
+    function now()
+    {
+        return Carbon::now();
     }
 }
