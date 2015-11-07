@@ -10,8 +10,7 @@
         'class' => 'form-control select2-selection']) !!}
 </div>
 <div class="alert alert-info form-helper" role="alert">
-    You can add more answers for a word by pressing <strong>+</strong> button below.
-    Maximum number of answers per word is 10.
+    {{ trans('word.word_form') }}
 </div>
 <div class="word-answers">
     <div class="form-group">

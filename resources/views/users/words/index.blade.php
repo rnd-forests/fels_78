@@ -40,7 +40,7 @@
             <div class="list-group filtered-words auto-pagination">
                 @foreach($words as $word)
                     <div class="list-group-item word item">
-                        <span class="word-info">{{ $word->content }}</span>
+                        <span class="word--info">{{ $word->content }}</span>
                     </div>
                 @endforeach
             </div>
