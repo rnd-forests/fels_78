@@ -21,7 +21,7 @@
                 </div>
                 @foreach($words->load('category') as $word)
                     <div class="list-group-item word item">
-                        <span class="word-info">{{ $word->content }}</span>
+                        <span class="word--info">{{ $word->content }}</span>
                         <small>on category</small>
                         <strong class="text-info">
                             <a href="{{ route('categories.show', $word->category) }}">

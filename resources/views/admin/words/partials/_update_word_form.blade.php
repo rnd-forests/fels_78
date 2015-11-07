@@ -1,6 +1,6 @@
 {!! Form::model($word, ['method' => 'PATCH',
     'route' => ['admin.words.update', $word],
-    'class' => 'word-update-form']) !!}
+    'class' => 'word--form__update-word']) !!}
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">

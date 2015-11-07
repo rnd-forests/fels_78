@@ -1,7 +1,7 @@
 <div class="pull-right">
-    {!! Form::delete('admin.words.destroy', $word, 'delete-word-form') !!}
+    {!! Form::delete('admin.words.destroy', $word, 'word--form__delete-word') !!}
 </div>
-<h3 class="word-info pull-left">
+<h3 class="word--info pull-left">
     <span class="word-content">{{ $word->content }}</span>
     <i class="fa fa-arrow-circle-down content-toggle"
        data-toggle="collapse"
@@ -22,7 +22,7 @@
                                 data-target="#{{ $answer->id }}-answer-update">
                             <i class="fa fa-pencil"></i>
                         </button>
-                        {!! Form::delete('admin.answers.destroy', $answer, 'delete-answer-form') !!}
+                        {!! Form::delete('admin.answers.destroy', $answer, 'word--form__delete-answer') !!}
                     </div>
                     @if($answer->correct)
                         <span class="text-success">
