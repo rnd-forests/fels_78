@@ -172,7 +172,7 @@ FELS = (($) ->
           showConfirmButton: false
 
   _deleteAnswerForm = ->
-    $('.delete-answer-form').on 'submit', (e) ->
+    $('.word--form__delete-answer').on 'submit', (e) ->
       e.preventDefault()
       form = $(this)
       $.ajax
@@ -183,7 +183,7 @@ FELS = (($) ->
           form.closest('.list-group-item').remove()
 
   _updateAnswerForm = ->
-    $('.answer-update-form').on 'submit', (e) ->
+    $('.word--form__update-answer').on 'submit', (e) ->
       e.preventDefault()
       form = $(this)
       $.ajax
@@ -194,7 +194,7 @@ FELS = (($) ->
           form.closest('.list-group-item').find('.solution').text form.find('input[name=solution]').val()
 
   _updateWordForm = ->
-    $('.word-update-form').on 'submit', (e) ->
+    $('.word--form__update-word').on 'submit', (e) ->
       e.preventDefault()
       form = $(this)
       $.ajax
@@ -205,7 +205,7 @@ FELS = (($) ->
           form.closest('.word').find('.word-content').text form.find('input[name=content]').val()
 
   _deleteWordForm = ->
-    $('.delete-word-form').on 'submit', (e) ->
+    $('.word--form__delete-word').on 'submit', (e) ->
       e.preventDefault()
       form = $(this)
       $.ajax
@@ -231,10 +231,10 @@ FELS = (($) ->
         return false
 
   _lesson = ->
-    $form = $('.lesson-form')
-    $start = $('.lesson-start')
-    $submit = $('.lesson-submit')
-    $timer = $('#lesson-timer')
+    $form = $('.lesson')
+    $start = $('.lesson--start')
+    $submit = $('.lesson--submit')
+    $timer = $('.lesson--helper__timer')
     $submit.prop 'disabled', true
     $form.find('.choice').prop 'disabled', true
     $form.find('.choice').closest('label').addClass 'blurry-text'
@@ -245,7 +245,7 @@ FELS = (($) ->
       $form.find('.choice').prop 'disabled', false
       $form.find('.choice').closest('label').removeClass 'blurry-text'
       $form.find('.choice').on 'change', ->
-        progress = $('.lesson-progress span')
+        progress = $('.lesson--helper__progress span')
         if !$(this).hasClass('chosen')
           $(this).addClass 'chosen'
           $(this).closest('.list-group-item').find('.choice').not('.choice:checked').addClass 'chosen'
@@ -256,7 +256,7 @@ FELS = (($) ->
         $(this).html '<i class="fa fa-clock-o"></i> ' + e.strftime('%H:%M:%S')
       ).on 'finish.countdown', ->
         $(this).parent().prop 'disabled', true
-        $('.lesson-completed').removeClass 'hidden'
+        $('.lesson--helper__completed').removeClass 'hidden'
         $form.find('.choice').not('.choice:checked').prop 'disabled', true
         $form.submit()
 
