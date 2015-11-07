@@ -13,7 +13,7 @@ class FacebookAuthentication extends AbstractOAuth implements OAuthenticatable
      */
     public function getAuthProvider()
     {
-        return 'facebook';
+        return parent::FACEBOOK;
     }
 
     /**

@@ -19,15 +19,13 @@ class CreateNewLesson extends Job implements SelfHandling
     }
 
     /**
-     * Execute the job.
+     * Create a new lesson.
      *
      * @return bool
      */
     public function handle()
     {
-        return $this->hasEnoughWords()
-            ? $this->buildLessonRelations()
-            : false;
+        return $this->hasEnoughWords() ? $this->buildLessonRelations() : false;
     }
 
     /**
@@ -39,7 +37,7 @@ class CreateNewLesson extends Job implements SelfHandling
     {
         return (new Lesson)->fill([
             'name' => uniqid("Lesson_{$this->category->name}_"),
-            'finished' => false
+            'finished' => false,
         ]);
     }
 
@@ -53,7 +51,7 @@ class CreateNewLesson extends Job implements SelfHandling
         $lesson = $this->buildLesson();
         $this->associateMany($lesson, ['user', 'category']);
         $lesson->words()->attach($this->randomizeWords());
-        $this->recordActivity($lesson);
+        $this->user->pushActivity('started', $lesson);
 
         return [$this->category, $lesson];
     }
@@ -65,8 +63,7 @@ class CreateNewLesson extends Job implements SelfHandling
      */
     protected function hasEnoughWords()
     {
-        return $this->category
-            ->unlearnedWordsOf(auth()->user())
+        return $this->category->unlearnedWordsOf(auth()->user())
             ->count() >= config('lesson.min_words');
     }
 
@@ -77,23 +74,8 @@ class CreateNewLesson extends Job implements SelfHandling
      */
     protected function randomizeWords()
     {
-        return $this->category
-            ->unlearnedWordsOf(auth()->user())
-            ->lists('id')
-            ->shuffle()
-            ->take(config('lesson.max_words'))
-            ->toArray();
-    }
-
-    /**
-     * Record started-lesson activity of the user.
-     *
-     * @param $lesson
-     * @return static
-     */
-    protected function recordActivity($lesson)
-    {
-        return $this->user->pushActivity('started', $lesson);
+        return $this->category->unlearnedWordsOf(auth()->user())
+            ->lists('id')->shuffle()->take(config('lesson.max_words'))->toArray();
     }
 
     /**
