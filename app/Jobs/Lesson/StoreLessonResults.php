@@ -21,16 +21,15 @@ class StoreLessonResults extends Job implements SelfHandling
     }
 
     /**
-     * Execute the job.
+     * Store the results of the lesson.
      *
      * @return array
      */
     public function handle()
     {
         $lesson = $this->markLessonAsFinished();
-        $choices = $this->parseUserChoices();
-        $this->updatePivots($choices, $lesson);
-        $this->updateLearnedWords();
+        $this->updatePivots($this->parseUserChoices(), $lesson);
+        $this->user->update(['learned_words' => counting($this->user->words)]);
 
         return [$lesson->category, $lesson];
     }
@@ -43,8 +42,8 @@ class StoreLessonResults extends Job implements SelfHandling
     protected function markLessonAsFinished()
     {
         $lesson = app(LessonRepository::class)->findById($this->lesson);
-        $lesson->update(['finished' => true]);
-        $this->recordActivity($lesson);
+        $lesson->update(['finished' => true, 'finished_at' => now()]);
+        $this->user->pushActivity('finished', $lesson);
 
         return $lesson;
     }
@@ -57,7 +56,7 @@ class StoreLessonResults extends Job implements SelfHandling
     protected function parseUserChoices()
     {
         return collect($this->words)->map(function ($item) {
-            return $item = intval($item['choice']);
+            return $item = $item['choice'];
         })->toArray();
     }
 
@@ -70,36 +69,10 @@ class StoreLessonResults extends Job implements SelfHandling
      */
     protected function validateChoice($word, $choice)
     {
-        $validChoices = app(WordRepository::class)
-            ->findById($word)
-            ->answers()
-            ->lists('correct', 'id')
-            ->toArray();
+        $validChoices = app(WordRepository::class)->findById($word)
+            ->answers()->lists('correct', 'id')->toArray();
 
         return $validChoices[$choice] === 1;
-    }
-
-    /**
-     * Capture finished-lesson activity of the user.
-     *
-     * @param $lesson
-     * @return mixed
-     */
-    protected function recordActivity($lesson)
-    {
-        return $this->user->pushActivity('finished', $lesson);
-    }
-
-    /**
-     * Update the current number of learned words of the user.
-     *
-     * @return mixed
-     */
-    protected function updateLearnedWords()
-    {
-        return $this->user->update([
-            'learned_words' => $this->user->words()->count()
-        ]);
     }
 
     /**
@@ -107,15 +80,13 @@ class StoreLessonResults extends Job implements SelfHandling
      *
      * @param $choices
      * @param $lesson
+     * @return void
      */
     protected function updatePivots($choices, $lesson)
     {
         foreach ($choices as $word => $choice) {
             $valid = $this->validateChoice($word, $choice);
-            $lesson->words()->updateExistingPivot($word, [
-                'answer_id' => $choice,
-                'valid' => $valid
-            ]);
+            $lesson->words()->updateExistingPivot($word, ['answer_id' => $choice, 'valid' => $valid]);
             if ($valid) {
                 $this->user->words()->attach($word);
             }

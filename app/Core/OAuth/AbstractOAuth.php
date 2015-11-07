@@ -9,11 +9,16 @@ use Laravel\Socialite\Contracts\User as SocialiteUser;
 
 abstract class AbstractOAuth
 {
+    const GOOGLE = 'google';
+    const GITHUB = 'github';
+    const FACEBOOK = 'facebook';
+    const GITHUB_URL = 'https://github.com/';
+    const GOOGLE_URL = 'https://plus.google.com/';
+
     protected $users;
     protected $socialite;
 
-    public function __construct(UserRepository $users,
-                                Socialite $socialite)
+    public function __construct(UserRepository $users, Socialite $socialite)
     {
         $this->users = $users;
         $this->socialite = $socialite;
@@ -45,9 +50,7 @@ abstract class AbstractOAuth
      */
     protected function getAuthorizationUrl()
     {
-        return $this->socialite
-            ->driver($this->getAuthProvider())
-            ->redirect();
+        return $this->socialite->driver($this->getAuthProvider())->redirect();
     }
 
     /**
@@ -58,9 +61,7 @@ abstract class AbstractOAuth
      */
     protected function handleProviderCallback()
     {
-        return $this->socialite
-            ->driver($this->getAuthProvider())
-            ->user();
+        return $this->socialite->driver($this->getAuthProvider())->user();
     }
 
     /**
@@ -72,14 +73,9 @@ abstract class AbstractOAuth
      */
     protected function handleUserCreation($data)
     {
-        $user = $this->users->oauthCreate(
-            $this->parseProviderData($data),
-            $this->getAuthProvider()
-        );
+        $user = $this->users->oauthCreate($this->parseProviderData($data), $this->getAuthProvider());
         if (!$user) {
-            throw new InvalidUserException(
-                $this->getAuthException()
-            );
+            throw new InvalidUserException($this->getAuthException());
         }
         if (method_exists(static::class, 'extractAndUpdate')) {
             $this->extractAndUpdate($user, $data);

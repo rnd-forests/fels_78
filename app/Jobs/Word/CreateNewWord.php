@@ -5,29 +5,19 @@ namespace FELS\Jobs\Word;
 use FELS\Jobs\Job;
 use FELS\Entities\Word;
 use FELS\Entities\Answer;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\Bus\SelfHandling;
 use FELS\Core\Repository\Contracts\CategoryRepository;
 
 class CreateNewWord extends Job implements SelfHandling
 {
-    protected $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
     /**
-     * Execute the job.
+     * Create a new word.
      *
      * @return mixed
      */
     public function handle()
     {
-        $word = $this->saveNewWord();
-
-        return $this->saveAnswersFor($word);
+        return $this->saveAnswersFor($this->saveNewWord());
     }
 
     /**
@@ -37,26 +27,25 @@ class CreateNewWord extends Job implements SelfHandling
      */
     public function saveNewWord()
     {
-        $category = app(CategoryRepository::class)
-            ->findById($this->request->get('category'));
-        return $category->words()->create([
-            'content' => $this->parseWordContent()
-        ]);
+        return app(CategoryRepository::class)
+            ->findById(request()->get('category'))->words()->create([
+                'content' => $this->parseWordContent(),
+            ]);
     }
 
     /**
      * Save answers belong to this word.
      *
      * @param Word $word
-     * @return mixed
+     * @return array
      */
     protected function saveAnswersFor(Word $word)
     {
         return $word->answers()->createMany(
-            $this->parseAnswersFromRequest()->map(function ($answer) {
-                return new Answer([
+            $this->parseAnswers()->map(function ($answer) {
+                return (new Answer)->fill([
                     'solution' => $answer['solution'],
-                    'correct' => $answer['correct']
+                    'correct' => $answer['correct'],
                 ]);
             })->toArray()
         );
@@ -68,11 +57,9 @@ class CreateNewWord extends Job implements SelfHandling
      *
      * @return \Illuminate\Support\Collection
      */
-    protected function parseAnswersFromRequest()
+    protected function parseAnswers()
     {
-        return collect(array_values(head(
-            $this->request->only('word.answers'))['answers']
-        ));
+        return collect(array_values(head(request()->only('word.answers'))['answers']));
     }
 
     /**
@@ -82,6 +69,6 @@ class CreateNewWord extends Job implements SelfHandling
      */
     protected function parseWordContent()
     {
-        return head($this->request->only('word.content'))['content'];
+        return head(request()->only('word.content'))['content'];
     }
 }

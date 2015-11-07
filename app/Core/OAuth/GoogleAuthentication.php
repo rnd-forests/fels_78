@@ -16,7 +16,7 @@ class GoogleAuthentication extends AbstractOAuth implements
      */
     public function getAuthProvider()
     {
-        return 'google';
+        return parent::GOOGLE;
     }
 
     /**
@@ -35,12 +35,12 @@ class GoogleAuthentication extends AbstractOAuth implements
      *
      * @param $user
      * @param $data
-     * @return mixed
+     * @return bool|int
      */
     public function extractAndUpdate($user, $data)
     {
-        return $user->update([
-            'google_name' => str_replace('https://plus.google.com/', '', $data->user['url']),
-        ]);
+        $name = clear_pattern(parent::GOOGLE_URL, $data->user['url']);
+
+        return $user->update(['google_name' => $name]);
     }
 }
