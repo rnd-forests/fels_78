@@ -19,7 +19,7 @@ class VerifyAdminUser
             return redirect()->guest('auth/login');
         }
 
-        if (!auth()->user()->isAdmin()) {
+        if (! auth()->user()->isAdmin()) {
             abort(403);
         }
 

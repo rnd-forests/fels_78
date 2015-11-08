@@ -99,7 +99,7 @@ class EloquentCategoryRepository implements
             case Word::ALPHABET:
                 return $category->words()->alphabetized()->get();
             default:
-                return null;
+                return;
         }
     }
 

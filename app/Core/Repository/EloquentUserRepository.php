@@ -37,7 +37,7 @@ class EloquentUserRepository implements
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'confirmation_code' => str_random(60) . $data['email'],
+            'confirmation_code' => str_random(60).$data['email'],
         ]);
     }
 

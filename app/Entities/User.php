@@ -130,7 +130,7 @@ class User extends Model implements
      */
     public function pushActivity($name, $relatedEntity)
     {
-        if (!method_exists($relatedEntity, 'captureActivity')) {
+        if (! method_exists($relatedEntity, 'captureActivity')) {
             throw new BadMethodCallException;
         }
 

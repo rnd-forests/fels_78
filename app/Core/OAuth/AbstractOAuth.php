@@ -33,7 +33,7 @@ abstract class AbstractOAuth
      */
     public function authorize($code, $listener)
     {
-        if (!$code) {
+        if (! $code) {
             return $this->getAuthorizationUrl();
         }
         $data = $this->handleProviderCallback();
@@ -74,7 +74,7 @@ abstract class AbstractOAuth
     protected function handleUserCreation($data)
     {
         $user = $this->users->oauthCreate($this->parseProviderData($data), $this->getAuthProvider());
-        if (!$user) {
+        if (! $user) {
             throw new InvalidUserException($this->getAuthException());
         }
         if (method_exists(static::class, 'extractAndUpdate')) {
