@@ -29,7 +29,7 @@ if (! function_exists('humans_time')) {
 if (! function_exists('remaining_days')) {
     function remaining_days($finish)
     {
-        $count = (int)Carbon::now()->diffInDays(Carbon::parse($finish));
+        $count = (int) Carbon::now()->diffInDays(Carbon::parse($finish));
         $plural = str_plural('day', $count);
 
         return "{$count} {$plural} remaining";
@@ -120,7 +120,7 @@ if (! function_exists('validate_query_string')) {
     }
 }
 
-if (!function_exists('fetch_static_attributes')) {
+if (! function_exists('fetch_static_attributes')) {
     function fetch_static_attributes($class, array $attributes)
     {
         $results = [];

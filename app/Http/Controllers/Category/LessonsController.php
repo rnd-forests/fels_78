@@ -27,7 +27,7 @@ class LessonsController extends Controller
     public function store(Request $request)
     {
         $flag = $this->dispatchFrom(CreateNewLesson::class, $request, ['user' => auth()->user()]);
-        if (!$flag) {
+        if (! $flag) {
             flash()->warning(trans('lesson.not_enough_words'));
 
             return back();

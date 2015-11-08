@@ -33,7 +33,7 @@ class EloquentSearch implements Searchable
      */
     public function adminSearch($source, $pattern)
     {
-        $model = static::$namespace . ucfirst($source);
+        $model = static::$namespace.ucfirst($source);
 
         return call_user_func_array(
             "{$model}::search",

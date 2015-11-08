@@ -93,7 +93,7 @@ class WordsController extends Controller
         $word = $this->words->findById($id);
         $word->delete();
 
-        if (!$request->ajax()) {
+        if (! $request->ajax()) {
             flash()->success(trans('admin.word_deleted'));
 
             return redirect()->route('admin.words.index');

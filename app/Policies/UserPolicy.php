@@ -18,6 +18,6 @@ class UserPolicy
      */
     public function follow(User $user, User $target)
     {
-        return $user->id !== $target->id && !$user->following->contains($target);
+        return $user->id !== $target->id && ! $user->following->contains($target);
     }
 }
