@@ -60,7 +60,7 @@ class WordsController extends Controller
     public function store()
     {
         $this->dispatch(new CreateNewWord);
-        flash()->success(trans('admin.word_created'));
+        flash()->success(trans('admin.word.created'));
 
         return redirect()->route('admin.words.index');
     }
@@ -94,7 +94,7 @@ class WordsController extends Controller
         $word->delete();
 
         if (!$request->ajax()) {
-            flash()->success(trans('admin.word_deleted'));
+            flash()->success(trans('admin.word.deleted'));
 
             return redirect()->route('admin.words.index');
         }

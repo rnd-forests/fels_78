@@ -14,7 +14,6 @@ class WordExporter extends Exporter
     {
         return $data->map(function ($word) {
             return [
-                'ID' => $word->id,
                 'Content' => $word->content,
                 'Category' => $word->category->name,
                 'Published Date' => full_time($word->created_at),
@@ -29,7 +28,7 @@ class WordExporter extends Exporter
      */
     public function getFilename()
     {
-        return uniqid('Words_');
+        return uniqid('words-');
     }
 
     /**
@@ -39,6 +38,6 @@ class WordExporter extends Exporter
      */
     protected function getSheetName()
     {
-        return uniqid('Word_sheet_');
+        return uniqid('sheet-');
     }
 }

@@ -31,7 +31,7 @@
                 {!! Form::close() !!}
             </div>
             <div class="well-w filter-info">
-                {!! trans('word.filter_title', [
+                {!! trans('word.filter.result', [
                     'wordCount' => plural('word', counting($words)),
                     'type' => $type,
                     'category' => $category->name

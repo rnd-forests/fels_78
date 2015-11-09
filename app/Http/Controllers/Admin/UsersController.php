@@ -48,7 +48,7 @@ class UsersController extends Controller
     {
         $credentials = $request->only(['name', 'email', 'password']);
         $this->users->adminCreate($credentials);
-        flash()->success(trans('admin.user_added'));
+        flash()->success(trans('admin.user.added'));
 
         return redirect()->route('admin.users.index');
     }
@@ -62,7 +62,7 @@ class UsersController extends Controller
     public function destroy($slug)
     {
         $this->users->softDelete($slug);
-        flash()->success(trans('admin.user_deleted'));
+        flash()->success(trans('admin.user.deleted'));
 
         return back();
     }

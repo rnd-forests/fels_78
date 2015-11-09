@@ -62,7 +62,7 @@ class ProfilesController extends Controller
     public function destroy($userSlug)
     {
         $this->users->softDelete($userSlug);
-        flash()->success(trans('user.account_canceled'));
+        flash()->success(trans('user.account.canceled'));
 
         return redirect()->home();
     }
@@ -82,7 +82,7 @@ class ProfilesController extends Controller
         if ($this->isCorrectNames($oldName, $newName, $user)) {
             return $this->handleUpdateName($user, $newName);
         }
-        session()->flash('invalid.name', trans('user.invalid_name'));
+        session()->flash('invalid.name', trans('user.name.invalid'));
 
         return back();
     }
@@ -112,7 +112,7 @@ class ProfilesController extends Controller
     protected function handleUpdateName($user, $newName)
     {
         $user->update(['name' => $newName]);
-        flash()->success(trans('user.valid_name'));
+        flash()->success(trans('user.name.valid'));
 
         return redirect()->route('users.edit', $user);
     }
@@ -132,7 +132,7 @@ class ProfilesController extends Controller
         if ($this->isValidPassword($oldPassword, $user)) {
             return $this->handleUpdatePassword($user, $newPassword);
         }
-        session()->flash('invalid.password', trans('user.invalid_password'));
+        session()->flash('invalid.password', trans('user.password.invalid'));
 
         return back();
     }
@@ -159,7 +159,7 @@ class ProfilesController extends Controller
     protected function handleUpdatePassword($user, $newPassword)
     {
         $user->update(['password' => $newPassword]);
-        session()->flash('valid.password', trans('user.valid_password'));
+        session()->flash('valid.password', trans('user.password.valid'));
 
         return back();
     }

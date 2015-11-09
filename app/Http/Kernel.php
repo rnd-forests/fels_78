@@ -2,7 +2,18 @@
 
 namespace FELS\Http;
 
+use FELS\Http\Middleware\Authenticate;
+use FELS\Http\Middleware\EncryptCookies;
+use FELS\Http\Middleware\VerifyAdminUser;
+use FELS\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Session\Middleware\StartSession;
+use FELS\Http\Middleware\RedirectIfAuthenticated;
+use FELS\Http\Middleware\RedirectIfNotCorrectUser;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
 
 class Kernel extends HttpKernel
 {
@@ -12,12 +23,12 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \FELS\Http\Middleware\EncryptCookies::class,
-        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-        \Illuminate\Session\Middleware\StartSession::class,
-        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \FELS\Http\Middleware\VerifyCsrfToken::class,
+        CheckForMaintenanceMode::class,
+        EncryptCookies::class,
+        AddQueuedCookiesToResponse::class,
+        StartSession::class,
+        ShareErrorsFromSession::class,
+        VerifyCsrfToken::class,
     ];
 
     /**
@@ -26,10 +37,10 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \FELS\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \FELS\Http\Middleware\RedirectIfAuthenticated::class,
-        'auth.user' => \FELS\Http\Middleware\RedirectIfNotCorrectUser::class,
-        'admin' => \FELS\Http\Middleware\VerifyAdminUser::class,
+        'auth' => Authenticate::class,
+        'auth.basic' => AuthenticateWithBasicAuth::class,
+        'guest' => RedirectIfAuthenticated::class,
+        'auth.user' => RedirectIfNotCorrectUser::class,
+        'admin' => VerifyAdminUser::class,
     ];
 }

@@ -26,7 +26,7 @@ class GoogleAuthentication extends AbstractOAuth implements
      */
     public function getAuthException()
     {
-        return trans('auth.google_error');
+        return trans('auth.oauth.google.error');
     }
 
     /**

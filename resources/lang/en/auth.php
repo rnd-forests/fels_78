@@ -1,14 +1,18 @@
 <?php
 
 return [
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'login_error' => 'Your credentials are wrong or your account has not been activated.',
-    'logged_out' => 'You\'ve been logged out!',
-    'account_activation' => 'Check your email address to activate your account.',
-    'activation_success' => 'Your account has been activated.',
-    'activation_error' => 'Something went wrong. Please check your activation link again.',
-    'social_auth_success' => 'Your social authentication process was successful.',
-    'facebook_error' => 'Something went wrong with your Facebook authentication process.',
-    'github_error' => 'Something went wrong with your GitHub authentication process.',
-    'google_error' => 'Something went wrong with your Google authentication process.',
+    'throttle'    => 'Too many login attempts. Please try again in :seconds seconds.',
+    'login.error' => 'Your credentials are wrong or your account has not been activated.',
+    'logged.out'  => 'You\'ve been logged out!',
+    'activation' => [
+        'sent'    => 'Check your email address to activate your account.',
+        'success' => 'Your account has been activated.',
+        'failure' => 'Something went wrong. Please check your activation link again.',
+    ],
+    'oauth' => [
+        'success'        => 'Your social authentication process was successful.',
+        'facebook.error' => 'Something went wrong with your Facebook authentication process.',
+        'github.error'   => 'Something went wrong with your GitHub authentication process.',
+        'google.error'   => 'Something went wrong with your Google authentication process.',
+    ],
 ];
