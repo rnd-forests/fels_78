@@ -45,6 +45,6 @@ class ActivityParser
      */
     public function url($activity)
     {
-        return $this->target($activity)->url();
+        return $this->target($activity)->url;
     }
 }

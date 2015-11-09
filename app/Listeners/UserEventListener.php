@@ -27,10 +27,7 @@ class UserEventListener
      */
     public function onUserRegister(UserHasRegistered $event)
     {
-        $this->mailer->emailActivationLink(
-            $event->user,
-            $event->user->confirmation_code
-        );
+        $this->mailer->sendActivationURL($event->user, $event->user->confirmation_code);
     }
 
     /**

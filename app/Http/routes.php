@@ -38,26 +38,23 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], funct
     Route::post('password/reset', 'PasswordController@postReset');
 });
 
-Route::group(['prefix' => '{users}', 'as' => 'user.', 'namespace' => 'User'], function () {
-    Route::get('profile', ['as' => 'profile.show', 'uses' => 'ProfilesController@show']);
-    Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'ProfilesController@edit']);
-    Route::get('following', ['as' => 'following.show', 'uses' => 'RelationshipsController@following']);
-    Route::get('followers', ['as' => 'followers.show', 'uses' => 'RelationshipsController@followers']);
-    Route::delete('', ['as' => 'profile.destroy', 'uses' => 'ProfilesController@destroy']);
-    Route::patch('name', ['as' => 'profile.name', 'uses' => 'ProfilesController@changeName']);
-    Route::patch('password', ['as' => 'profile.password', 'uses' => 'ProfilesController@changePassword']);
-    Route::get('learned', ['as' => 'learned.words', 'uses' => 'WordsController@learned']);
-    Route::post('learned', ['as' => 'learned.words', 'uses' => 'WordsController@export']);
-});
+Route::group(['namespace' => 'User'], function () {
+    Route::get('users/{users}/learned-words', ['as' => 'users.learned.words', 'uses' => 'WordsController@learned']);
+    Route::post('users/{users}/learned-words', ['as' => 'users.learned.words', 'uses' => 'WordsController@export']);
+    Route::patch('users/{users}/name', ['as' => 'users.name', 'uses' => 'ProfilesController@changeName']);
+    Route::patch('users/{users}/password', ['as' => 'users.password', 'uses' => 'ProfilesController@changePassword']);
+    Route::resource('users', 'ProfilesController', ['only' => ['show', 'edit', 'destroy']]);
 
-Route::resource('words', 'User\WordsController', ['only' => ['index']]);
+    Route::resource('words', 'WordsController', ['only' => ['index']]);
+    Route::resource('users.followers', 'FollowersController', ['only' => ['index']]);
+    Route::resource('users.following', 'FollowingsController', ['only' => ['index']]);
+    Route::resource('follows', 'RelationshipsController', ['only' => ['store', 'destroy']]);
+});
 
 Route::group(['namespace' => 'Category'], function () {
     Route::resource('categories', 'CategoriesController', ['only' => ['index', 'show']]);
     Route::resource('categories.lessons', 'LessonsController', ['only' => ['store', 'show', 'update']]);
 });
-
-Route::resource('follows', 'User\RelationshipsController', ['only' => ['store', 'destroy']]);
 
 Route::group(['prefix' => 'oauth', 'as' => 'oauth.', 'namespace' => 'Auth'], function () {
     Route::get('github', ['as' => 'github', 'uses' => 'OAuthController@authenticateWithGithub']);
