@@ -1,7 +1,7 @@
 <div class="collapse" id="{{ $answer->id }}-answer-update">
     {!! Form::model($answer, ['method' => 'PATCH',
     'route' => ['admin.answers.update', $answer],
-    'class' => 'answer-update-form']) !!}
+    'class' => 'word--form__update-answer']) !!}
         <div class="row">
             <div class="col-xs-12">
                 <div class="form-group">

@@ -3,14 +3,14 @@
 @section('content')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <div class="user-list auto-pagination">
+            <div class="users auto-pagination">
                 @foreach($members->chunk(15) as $userList)
                     @foreach($userList as $user)
-                        <div class="user-block item">
+                        <div class="users--user item">
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="{{ route('user.profile.show', $user) }}">
-                                        <img class="user-avatar-picture"
+                                    <a href="{{ route('users.show', $user) }}">
+                                        <img class="users--user__avatar"
                                              src="{{ $user->present()->gravatar(isset($size) ? $size : 60) }}"
                                              alt="{{ $user->name }}">
                                     </a>

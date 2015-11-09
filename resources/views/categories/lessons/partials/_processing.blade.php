@@ -1,17 +1,16 @@
-<div class="lesson-helper">
+<div class="lesson--helper">
     <div class="well-w">
-        <div class="text-success text-center" id="lesson-timer">
+        <div class="text-success text-center lesson--helper__timer">
             <i class="fa fa-clock-o"></i> 00:01:00
         </div>
     </div>
     <div class="well-w">
-        <div class="text-center lesson-progress">
+        <div class="text-center lesson--helper__progress">
             <i class="fa fa-spinner fa-spin"></i> <span>0</span> / {{ counting($lesson->words) }}
         </div>
     </div>
-    <div class="alert alert-success text-center hidden lesson-completed">
+    <div class="alert alert-success text-center hidden lesson--helper__completed">
         <i class="fa fa-2x fa-cog fa-spin"></i>
-
         <p>{{ trans('lesson.completed') }}</p>
     </div>
 </div>
@@ -25,13 +24,13 @@
         </div>
         {!! Form::open(['method' => 'PATCH',
             'route' => ['categories.lessons.update', $lesson->category, $lesson],
-            'class' => 'lesson-form']) !!}
+            'class' => 'lesson']) !!}
             {!! Form::hidden('lesson', $lesson->id) !!}
             <div class="list-group">
                 <div class="list-group-item">
-                    <buton type="button" class="btn btn-primary lesson-start">
+                    <button type="button" class="btn btn-primary lesson--start">
                         {{ trans('lesson.start') }} <i class="fa fa-arrow-right"></i>
-                    </buton>
+                    </button>
                 </div>
                 @foreach($lesson->words->load('answers') as $word)
                     <div class="list-group-item">
@@ -48,7 +47,7 @@
                     </div>
                 @endforeach
                 <div class="list-group-item">
-                    <button type="submit" class="btn btn-primary lesson-submit">
+                    <button type="submit" class="btn btn-primary lesson--submit">
                         {{ trans('lesson.submit') }} <i class="fa fa-arrow-right"></i>
                     </button>
                 </div>
