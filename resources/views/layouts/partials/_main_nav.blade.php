@@ -18,7 +18,7 @@
                 @if(auth()->check())
                     <li><a href="{{ route('categories.index') }}">Categories</a></li>
                     <li><a href="{{ route('words.index') }}">Word List</a></li>
-                    <li><a href="{{ route('user.learned.words', $currentUser) }}">Learned Words</a></li>
+                    <li><a href="{{ route('users.learned.words', $currentUser) }}">Learned Words</a></li>
                     <li><a href="{{ route('pages.leaderboard') }}">Leaderboard</a></li>
                     <li><a href="{{ route('pages.members') }}">Members</a></li>
                 @endif
@@ -39,10 +39,10 @@
                             {{ $currentUser->name }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('user.profile.show', $currentUser) }}">Profile</a></li>
-                            <li><a href="{{ route('user.profile.edit', $currentUser) }}">Edit Profile</a></li>
-                            <li><a href="{{ route('user.following.show', $currentUser) }}">Followings</a></li>
-                            <li><a href="{{ route('user.followers.show', $currentUser) }}">Followers</a></li>
+                            <li><a href="{{ route('users.show', $currentUser) }}">Profile</a></li>
+                            <li><a href="{{ route('users.edit', $currentUser) }}">Edit Profile</a></li>
+                            <li><a href="{{ route('users.following.index', $currentUser) }}">Followings</a></li>
+                            <li><a href="{{ route('users.followers.index', $currentUser) }}">Followers</a></li>
                             <li><a href="{{ route('auth.logout') }}">Sign Out</a></li>
                         </ul>
                     </li>

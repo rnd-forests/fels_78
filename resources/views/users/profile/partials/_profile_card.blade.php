@@ -14,14 +14,14 @@
         </ul>
         <ul>
             <li>
-                <a href="{{ route('user.following.show', $user) }}"
+                <a href="{{ route('users.following.index', $user) }}"
                    class="btn btn-primary">
                     <i class="fa fa-heart"></i>
                     {{ plural('following', counting($user->following)) }}
                 </a>
             </li>
             <li>
-                <a href="{{ route('user.followers.show', $user) }}"
+                <a href="{{ route('users.followers.index', $user) }}"
                    id="followers"
                    class="btn btn-info">
                     <i class="fa fa-heart-o"></i>

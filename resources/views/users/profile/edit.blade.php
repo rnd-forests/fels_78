@@ -33,8 +33,10 @@
                             Once your account is deleted, the system will
                             immediately delete everything related to your account.
                         </div>
-                        {!! Form::open(['route' => ['user.profile.destroy', $user], 'method' => 'DELETE']) !!}
-                        <button type="submit" class="btn btn-danger">Confirm <i class="fa fa-arrow-right"></i></button>
+                        {!! Form::open(['route' => ['users.destroy', $user], 'method' => 'DELETE']) !!}
+                            <button type="submit" class="btn btn-danger">
+                                Confirm <i class="fa fa-arrow-right"></i>
+                            </button>
                         {!! Form::close() !!}
                     </div>
                 </div>
