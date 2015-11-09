@@ -16,7 +16,7 @@ class GithubAuthentication extends AbstractOAuth implements
      */
     public function getAuthProvider()
     {
-        return 'github';
+        return parent::GITHUB;
     }
 
     /**
@@ -35,12 +35,12 @@ class GithubAuthentication extends AbstractOAuth implements
      *
      * @param $user
      * @param $data
-     * @return mixed
+     * @return bool|int
      */
     public function extractAndUpdate($user, $data)
     {
-        return $user->update([
-            'github_name' => str_replace('https://github.com/', '', $data->user['html_url']),
-        ]);
+        $name = clear_pattern(parent::GITHUB_URL, $data->user['html_url']);
+        
+        return $user->update(['github_name' => $name]);
     }
 }

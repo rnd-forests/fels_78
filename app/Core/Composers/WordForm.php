@@ -7,20 +7,14 @@ use FELS\Core\Repository\Contracts\CategoryRepository;
 
 class WordForm
 {
-    protected $categories;
-
-    public function __construct(CategoryRepository $categories)
-    {
-        $this->categories = $categories;
-    }
-
     /**
-     * Composer word forms.
+     * Compose word forms.
      *
      * @param View $view
+     * @return void
      */
     public function compose(View $view)
     {
-        $view->with('categories', $this->categories->lists());
+        $view->with('categories', app(CategoryRepository::class)->lists());
     }
 }

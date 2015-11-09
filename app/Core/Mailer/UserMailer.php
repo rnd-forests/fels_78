@@ -13,7 +13,7 @@ class UserMailer extends AbstractMailer implements UserMailerContract
      * @param $code
      * @return mixed
      */
-    public function emailActivationLink($user, $code)
+    public function sendActivationURL($user, $code)
     {
         $subject = trans('mailer.account_activation_subject');
         $view = 'emails.auth.account_activation';
