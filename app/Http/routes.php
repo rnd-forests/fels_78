@@ -16,20 +16,21 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 Route::group(['namespace' => 'Pages'], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@home']);
-    Route::get('leaderboard', ['as' => 'pages.leaderboard', 'uses' => 'LeaderboardController@index']);
+    Route::get('faq', ['as' => 'pages.faq', 'uses' => 'PagesController@faq']);
+    Route::get('help', ['as' => 'pages.help', 'uses' => 'PagesController@help']);
+    Route::get('about', ['as' => 'pages.about', 'uses' => 'PagesController@about']);
     Route::get('members', ['as' => 'pages.members', 'uses' => 'MembersController@index']);
-    Route::get('about', ['as' => 'pages.about', 'uses' => 'StaticPagesController@about']);
-    Route::get('help', ['as' => 'pages.help', 'uses' => 'StaticPagesController@help']);
-    Route::get('faq', ['as' => 'pages.faq', 'uses' => 'StaticPagesController@faq']);
+    Route::get('leaderboard', ['as' => 'pages.leaderboard', 'uses' => 'LeaderboardController@index']);
 });
 
 Route::group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'Auth'], function () {
-    Route::get('register', ['as' => 'register', 'uses' => 'AuthController@getRegister']);
-    Route::post('register', ['as' => 'register', 'uses' => 'AuthController@postRegister']);
-    Route::get('activate/{code}', ['as' => 'activate', 'uses' => 'AuthController@getActivate']);
-    Route::get('login', ['as' => 'login', 'uses' => 'AuthController@getLogin']);
-    Route::post('login', ['as' => 'login', 'uses' => 'AuthController@postLogin']);
-    Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@getLogout']);
+    Route::get('register', ['as' => 'register', 'uses' => 'RegistrationsController@create']);
+    Route::post('register', ['as' => 'register', 'uses' => 'RegistrationsController@store']);
+    Route::get('activate/{code}', ['as' => 'activate', 'uses' => 'RegistrationsController@update']);
+
+    Route::get('login', ['as' => 'login', 'uses' => 'SessionsController@create']);
+    Route::post('login', ['as' => 'login', 'uses' => 'SessionsController@store']);
+    Route::get('logout', ['as' => 'logout', 'uses' => 'SessionsController@logout']);
 
     Route::get('password/email', 'PasswordController@getEmail');
     Route::post('password/email', 'PasswordController@postEmail');

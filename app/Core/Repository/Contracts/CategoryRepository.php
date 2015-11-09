@@ -8,7 +8,7 @@ interface CategoryRepository
      * Create a new model instance.
      *
      * @param array $data
-     * @return static
+     * @return \FELS\Entities\Category
      */
     public function create(array $data);
 
@@ -16,10 +16,10 @@ interface CategoryRepository
      * Update a model instance.
      *
      * @param array $data
-     * @param $identifier
+     * @param $slug
      * @return bool|int
      */
-    public function update(array $data, $identifier);
+    public function update(array $data, $slug);
 
     /**
      * Delete a category.
@@ -39,7 +39,7 @@ interface CategoryRepository
     /**
      * Get the first match category.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\Category
      */
     public function first();
 
@@ -49,7 +49,7 @@ interface CategoryRepository
      * @param $user
      * @param $category
      * @param $type
-     * @return mixed
+     * @return null|\Illuminate\Database\Eloquent\Collection
      */
     public function filterWords($user, $category, $type);
 }

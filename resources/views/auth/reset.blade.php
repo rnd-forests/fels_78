@@ -4,6 +4,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="well-w">
+                @include('layouts.partials._form_errors')
                 {!! Form::open(['url' => url('auth/password/reset')]) !!}
                     {!! Form::hidden('token', $token) !!}
                     <div class="form-group">
@@ -22,7 +23,9 @@
                         {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Reset Password <i class="fa fa-arrow-right"></i></button>
+                        <button type="submit" class="btn btn-primary">
+                            Reset Password <i class="fa fa-arrow-right"></i>
+                        </button>
                     </div>
                 {!! Form::close() !!}
             </div>

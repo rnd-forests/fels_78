@@ -27,7 +27,7 @@ class EloquentCategoryRepository implements
      * Create a new model instance.
      *
      * @param array $data
-     * @return static
+     * @return \FELS\Entities\Category
      */
     public function create(array $data)
     {
@@ -38,12 +38,12 @@ class EloquentCategoryRepository implements
      * Update a model instance.
      *
      * @param array $data
-     * @param $identifier
+     * @param $slug
      * @return bool|int
      */
-    public function update(array $data, $identifier)
+    public function update(array $data, $slug)
     {
-        $category = $this->findBySlug($identifier);
+        $category = $this->findBySlug($slug);
 
         return $category->update($data);
     }
@@ -57,7 +57,8 @@ class EloquentCategoryRepository implements
     public function delete($slug)
     {
         $category = $this->findBySlug($slug);
-        $category->delete();
+
+        return $category->delete();
     }
 
     /**
@@ -67,21 +68,17 @@ class EloquentCategoryRepository implements
      */
     public function lists()
     {
-        return $this->model
-            ->oldest('name')
-            ->lists('name', 'id');
+        return $this->model->oldest('name')->lists('name', 'id');
     }
 
     /**
      * Get the first match category.
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\Category
      */
     public function first()
     {
-        return $this->model
-            ->orderBy('name', 'asc')
-            ->firstOrFail();
+        return $this->model->orderBy('name', 'asc')->firstOrFail();
     }
 
     /**
@@ -90,7 +87,7 @@ class EloquentCategoryRepository implements
      * @param $user
      * @param $category
      * @param $type
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return null|\Illuminate\Database\Eloquent\Collection
      */
     public function filterWords($user, $category, $type)
     {
@@ -115,9 +112,6 @@ class EloquentCategoryRepository implements
      */
     public function paginate($limit, array $params = null)
     {
-        return $this->model
-            ->with('words')
-            ->latest()
-            ->paginate($limit);
+        return $this->model->with('words')->latest()->paginate($limit);
     }
 }

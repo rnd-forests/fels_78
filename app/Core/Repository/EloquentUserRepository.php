@@ -26,19 +26,85 @@ class EloquentUserRepository implements
     }
 
     /**
+     * Create a new model instance.
+     *
+     * @param array $data
+     * @return \FELS\Entities\User
+     */
+    public function create(array $data)
+    {
+        return $this->model->create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'confirmation_code' => str_random(60) . $data['email'],
+        ]);
+    }
+
+    /**
+     * Update a model instance.
+     *
+     * @param array $data
+     * @param $slug
+     * @return bool|int
+     */
+    public function update(array $data, $slug)
+    {
+        $user = $this->findBySlug($slug);
+
+        return $user->update($data);
+    }
+
+    /**
+     * Restore a soft deleted model instance.
+     *
+     * @param $slug
+     * @return bool|null
+     */
+    public function restore($slug)
+    {
+        $user = $this->findSoftDeletedUser($slug);
+
+        return $user->restore();
+    }
+
+    /**
+     * Soft delete a model instance.
+     *
+     * @param $slug
+     * @return bool|null
+     */
+    public function softDelete($slug)
+    {
+        $user = $this->findBySlug($slug);
+
+        return $user->delete();
+    }
+
+    /**
+     * Permanently delete a soft deleted model instance.
+     *
+     * @param $slug
+     * @return bool|null
+     */
+    public function forceDelete($slug)
+    {
+        $user = $this->findSoftDeletedUser($slug);
+
+        return $user->forceDelete();
+    }
+
+    /**
      * Find a user by slug with eager loaded relationships.
      *
      * @param $slug
      * @return mixed
-     * @return \Illuminate\Database\Eloquent\Model
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @return \FELS\Entities\User
      */
     public function findBySlugWithRelations($slug)
     {
-        return $this->model
-            ->with('words', 'following', 'followers')
-            ->where('slug', $slug)
-            ->firstOrFail();
+        return $this->model->with('words', 'following', 'followers')
+            ->where('slug', $slug)->firstOrFail();
     }
 
     /**
@@ -49,18 +115,15 @@ class EloquentUserRepository implements
      */
     public function disabled($limit)
     {
-        return $this->model
-            ->normal()
-            ->onlyTrashed()
-            ->latest('deleted_at')
-            ->paginate($limit);
+        return $this->model->normal()->onlyTrashed()
+            ->latest('deleted_at')->paginate($limit);
     }
 
     /**
      * Add new user by administrator.
      *
      * @param array $data
-     * @return mixed
+     * @return \FELS\Entities\User
      */
     public function adminCreate(array $data)
     {
@@ -76,7 +139,7 @@ class EloquentUserRepository implements
      * Finding a user or creating a new user if the user does not exist.
      *
      * @param array $userData
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\User
      */
     public function findOrCreate(array $userData)
     {
@@ -88,95 +151,34 @@ class EloquentUserRepository implements
      *
      * @param $code
      * @param bool|false $confirmed
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\User
      */
-    public function findByActivationCode($code, $confirmed = false)
+    public function findPendingActivationAccount($code, $confirmed = false)
     {
-        return $this->model
-            ->where('confirmation_code', $code)
-            ->where('confirmed', $confirmed)
-            ->firstOrFail();
+        return $this->model->where('confirmation_code', $code)
+            ->where('confirmed', $confirmed)->firstOrFail();
     }
 
     /**
-     * Create a new model instance.
+     * Clear activation code of the user account.
      *
-     * @param array $data
-     * @return static
+     * @param $user
+     * @return bool
      */
-    public function create(array $data)
+    public function clearActivationCode($user)
     {
-        return $this->model->create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
-            'confirmation_code' => str_random(100),
-        ]);
-    }
-
-    /**
-     * Update a model instance.
-     *
-     * @param array $data
-     * @param $identifier
-     * @return bool|int
-     */
-    public function update(array $data, $identifier)
-    {
-        $user = $this->findBySlug($identifier);
-
-        return $user->update($data);
-    }
-
-    /**
-     * Restore a soft deleted model instance.
-     *
-     * @param $identifier
-     * @return bool|null
-     */
-    public function restore($identifier)
-    {
-        $user = $this->findSoftDeletedUser($identifier);
-        $user->restore();
-    }
-
-    /**
-     * Soft delete a model instance.
-     *
-     * @param $identifier
-     * @return bool|null
-     */
-    public function softDelete($identifier)
-    {
-        $user = $this->findBySlug($identifier);
-        $user->delete();
-    }
-
-    /**
-     * Permanently delete a soft deleted model instance.
-     *
-     * @param $identifier
-     * @return void
-     */
-    public function forceDelete($identifier)
-    {
-        $user = $this->findSoftDeletedUser($identifier);
-        $user->forceDelete();
+        return $user->update(['confirmation_code' => '', 'confirmed' => true]);
     }
 
     /**
      * Finding a soft deleted user.
      *
      * @param $slug
-     * @return \Illuminate\Database\Eloquent\Model
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @return \FELS\Entities\User
      */
     public function findSoftDeletedUser($slug)
     {
-        return $this->model
-            ->onlyTrashed()
-            ->where('slug', $slug)
-            ->firstOrFail();
+        return $this->model->onlyTrashed()->where('slug', $slug)->firstOrFail();
     }
 
     /**
@@ -188,10 +190,8 @@ class EloquentUserRepository implements
      */
     public function paginate($limit, array $params = null)
     {
-        return $this->model
-            ->with('following', 'followers')
-            ->normal()
-            ->paginate($limit);
+        return $this->model->with('following', 'followers')
+            ->normal()->paginate($limit);
     }
 
     /**
@@ -199,7 +199,7 @@ class EloquentUserRepository implements
      *
      * @param $followedId
      * @param $user
-     * @return mixed
+     * @return \FELS\Entities\Relationship
      */
     public function createRelationship($followedId, $user)
     {
@@ -208,8 +208,7 @@ class EloquentUserRepository implements
             abort(403);
         }
 
-        return $user->activeRelations()
-            ->create(['followed_id' => $followedId]);
+        return $user->activeRelations()->create(['followed_id' => $followedId]);
     }
 
     /**
@@ -217,22 +216,19 @@ class EloquentUserRepository implements
      *
      * @param $followedId
      * @param $user
-     * @return mixed
+     * @return bool|null
      */
     public function destroyRelationship($followedId, $user)
     {
-        $relation = $user->activeRelations()
-            ->where('followed_id', $followedId)
-            ->firstOrFail();
-
-        return $relation->delete();
+        return $user->activeRelations()->where('followed_id', $followedId)
+            ->firstOrFail()->delete();
     }
 
     /**
      * Get activity feed for a user.
      *
      * @param $user
-     * @return mixed
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getActivityFeedFor($user)
     {
@@ -248,7 +244,7 @@ class EloquentUserRepository implements
      *
      * @param array $userData
      * @param $authProvider
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return \FELS\Entities\User
      */
     public function oauthCreate(array $userData, $authProvider)
     {
@@ -269,11 +265,7 @@ class EloquentUserRepository implements
      */
     public function getLeaderboard()
     {
-        return $this->model
-            ->with('lessons', 'words')
-            ->where('learned_words', '>', 0)
-            ->orderBy('learned_words', 'desc')
-            ->take(15)
-            ->get();
+        return $this->model->with('lessons', 'words')->where('learned_words', '>', 0)
+            ->orderBy('learned_words', 'desc')->take(15)->get();
     }
 }
