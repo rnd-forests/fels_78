@@ -9,7 +9,7 @@
 </a>
 started
 <a href="{{ $parser->url($activity) }}">
-    <strong>new lesson</strong>
+    <strong>a lesson</strong>
 </a>
 on category
 <a href="{{ route('categories.show', $parser->target($activity)->category) }}">

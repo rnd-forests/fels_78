@@ -28,9 +28,6 @@
                                 {{ counting($user->words) }}
                                 <small>{{ str_plural('word', counting($user->words)) }}</small>
                             </span>
-                            <span class="learning-period">
-                                {{ $user->learningPeriod }}
-                            </span>
                             <span class="lesson-counter">
                                 {{ plural('lesson', counting($user->lessons)) }}
                             </span>
