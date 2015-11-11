@@ -7,6 +7,16 @@ use FELS\Entities\User;
 class UserObserver
 {
     /**
+     * Hook into user created event.
+     *
+     * @param User $user
+     */
+    public function created(User $user)
+    {
+        $user->update(['avatar' => config('avatar.default')]);
+    }
+
+    /**
      * Hook into user deleting event.
      *
      * @param User $user

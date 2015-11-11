@@ -11,7 +11,7 @@
                     <div class="media-left">
                         <a href="{{ route('users.show', $user) }}">
                             <img class="user-avatar-picture leaderboard--user__avatar"
-                                 src="{{ $user->present()->gravatar(isset($size) ? $size : 100) }}"
+                                 src="{{ $user->avatar }}"
                                  alt="{{ $user->name }}">
                         </a>
                         <span class="leaderboard--user__ranking">

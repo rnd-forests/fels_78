@@ -5,10 +5,13 @@
         <div class="col-md-4">
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation" class="active">
-                    <a href="#update-name" role="tab" data-toggle="tab">Change Current Name</a>
+                    <a href="#update-name" role="tab" data-toggle="tab">Current Name</a>
                 </li>
                 <li role="presentation">
-                    <a href="#update-password" role="tab" data-toggle="tab">Change Current Password</a>
+                    <a href="#update-password" role="tab" data-toggle="tab">Current Password</a>
+                </li>
+                <li role="presentation">
+                    <a href="#update-avatar" role="tab" data-toggle="tab">Profile Picture</a>
                 </li>
                 <li role="presentation">
                     <a href="#cancel-account" role="tab" data-toggle="tab">Cancel Account</a>
@@ -25,6 +28,21 @@
                 <div role="tabpanel" class="tab-pane" id="update-password">
                     <div class="well-w">
                         @include('users.profile.partials._update_password_form')
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="update-avatar">
+                    <div class="well-w">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="alert alert-success form-helper">
+                                    {{ trans('user.avatar.helper') }}
+                                </div>
+                                @include('users.profile.partials._update_avatar_form')
+                            </div>
+                            <div class="col-sm-6">
+                                @include('users.profile.partials._avatar')
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="cancel-account">

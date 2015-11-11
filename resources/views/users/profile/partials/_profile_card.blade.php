@@ -29,19 +29,19 @@
                 </a>
             </li>
         </ul>
-        @unless(empty($user->google_name))
+        @unless(empty($user->google))
             <a href="{{ $user->present()->googleUrl }}"
                class="btn btn-social-icon btn-google">
                 <i class="fa fa-google"></i>
             </a>
         @endunless
-        @unless(empty($user->facebook_name))
+        @unless(empty($user->facebook))
             <a href="{{ $user->present()->facebookUrl }}"
                class="btn btn-social-icon btn-facebook">
                 <i class="fa fa-facebook"></i>
             </a>
         @endunless
-        @unless(empty($user->github_name))
+        @unless(empty($user->github))
             <a href="{{ $user->present()->githubUrl }}"
                class="btn btn-social-icon btn-github">
                 <i class="fa fa-github"></i>
