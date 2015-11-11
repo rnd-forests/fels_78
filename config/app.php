@@ -159,6 +159,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -215,6 +216,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
         'Bugsnag'   => Bugsnag\BugsnagLaravel\BugsnagFacade::class,
+        'Image'     => Intervention\Image\Facades\Image::class,
 
     ],
 

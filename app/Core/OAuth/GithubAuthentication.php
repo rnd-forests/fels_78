@@ -41,6 +41,6 @@ class GithubAuthentication extends AbstractOAuth implements
     {
         $name = clear_pattern(parent::GITHUB_URL, $data->user['html_url']);
         
-        return $user->update(['github_name' => $name]);
+        return $user->update(['github' => $name]);
     }
 }

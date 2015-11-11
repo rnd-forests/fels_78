@@ -95,7 +95,6 @@ abstract class AbstractOAuth
         return [
             'name' => $data->getName(),
             'email' => $data->getEmail(),
-            'auth_provider_id' => $data->getId(),
         ];
     }
 }

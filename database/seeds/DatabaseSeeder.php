@@ -34,7 +34,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        User::flushEventListeners();
         $this->truncateDatabase();
         foreach ($this->seeders as $seeder) {
             $this->call($seeder);
