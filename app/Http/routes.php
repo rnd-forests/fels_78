@@ -42,6 +42,7 @@ Route::group(['namespace' => 'User'], function () {
     Route::get('users/{users}/learned-words', ['as' => 'users.learned.words', 'uses' => 'WordsController@learned']);
     Route::post('users/{users}/learned-words', ['as' => 'users.learned.words', 'uses' => 'WordsController@export']);
     Route::patch('users/{users}/name', ['as' => 'users.name', 'uses' => 'ProfilesController@changeName']);
+    Route::patch('users/{users}/avatar', ['as' => 'users.avatar', 'uses' => 'ProfilesController@changeAvatar']);
     Route::patch('users/{users}/password', ['as' => 'users.password', 'uses' => 'ProfilesController@changePassword']);
     Route::resource('users', 'ProfilesController', ['only' => ['show', 'edit', 'destroy']]);
 

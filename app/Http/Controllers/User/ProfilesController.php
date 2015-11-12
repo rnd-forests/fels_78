@@ -2,23 +2,15 @@
 
 namespace FELS\Http\Controllers\User;
 
+use FELS\Helpers\Rules;
 use Illuminate\Http\Request;
+use FELS\Core\Uploader\Avatar\Avatar;
 use FELS\Http\Controllers\Controller;
 use FELS\Core\Repository\Contracts\UserRepository;
 
 class ProfilesController extends Controller
 {
     protected $users;
-
-    protected static $nameRules = [
-        'old_name' => 'required',
-        'new_name' => 'required|different:old_name|alpha_spaces|max:255',
-    ];
-
-    protected static $passwordRules = [
-        'old_pass' => 'required',
-        'new_pass' => 'required|confirmed|min:6',
-    ];
 
     public function __construct(UserRepository $users)
     {
@@ -76,7 +68,7 @@ class ProfilesController extends Controller
      */
     public function changeName(Request $request, $userSlug)
     {
-        $this->validate($request, self::$nameRules);
+        $this->validate($request, Rules::$name);
         list($oldName, $newName) = [$request->get('old_name'), $request->get('new_name')];
         $user = $this->users->findBySlug($userSlug);
         if ($this->isCorrectNames($oldName, $newName, $user)) {
@@ -126,7 +118,7 @@ class ProfilesController extends Controller
      */
     public function changePassword(Request $request, $userSlug)
     {
-        $this->validate($request, self::$passwordRules);
+        $this->validate($request, Rules::$password);
         list($oldPassword, $newPassword) = [$request->get('old_pass'), $request->get('new_pass')];
         $user = $this->users->findBySlug($userSlug);
         if ($this->isValidPassword($oldPassword, $user)) {
@@ -160,6 +152,23 @@ class ProfilesController extends Controller
     {
         $user->update(['password' => $newPassword]);
         session()->flash('valid.password', trans('user.password.valid'));
+
+        return back();
+    }
+
+    /**
+     * Handle the process of updating user avatar.
+     *
+     * @param Request $request
+     * @param $userSlug
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changeAvatar(Request $request, $userSlug)
+    {
+        $this->validate($request, Rules::$avatar);
+        $user = $this->users->findBySlug($userSlug);
+        (new Avatar($user, $request->file('avatar')))->make();
+        flash()->success(trans('user.avatar.updated'));
 
         return back();
     }

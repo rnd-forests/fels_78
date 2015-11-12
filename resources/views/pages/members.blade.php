@@ -10,9 +10,7 @@
                             <div class="media">
                                 <div class="media-left">
                                     <a href="{{ route('users.show', $user) }}">
-                                        <img class="users--user__avatar"
-                                             src="{{ $user->present()->gravatar(isset($size) ? $size : 60) }}"
-                                             alt="{{ $user->name }}">
+                                        <img class="users--user__avatar" src="{{ $user->avatar }}" alt="{{ $user->name }}">
                                     </a>
                                 </div>
                                 <div class="media-body">
