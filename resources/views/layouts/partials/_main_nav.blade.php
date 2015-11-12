@@ -40,7 +40,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('users.show', $currentUser) }}">Profile</a></li>
-                            <li><a href="{{ route('users.edit', $currentUser) }}">Edit Profile</a></li>
+                            <li><a href="{{ route('users.edit', $currentUser) }}">Settings</a></li>
                             <li><a href="{{ route('users.following.index', $currentUser) }}">Followings</a></li>
                             <li><a href="{{ route('users.followers.index', $currentUser) }}">Followers</a></li>
                             <li><a href="{{ route('auth.logout') }}">Sign Out</a></li>

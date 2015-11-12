@@ -72,7 +72,7 @@ class StoreLessonResults extends Job implements SelfHandling
         $validChoices = app(WordRepository::class)->findById($word)
             ->answers()->lists('correct', 'id')->toArray();
 
-        return $validChoices[$choice] === 1;
+        return $validChoices[$choice] === true;
     }
 
     /**

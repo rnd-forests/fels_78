@@ -14,13 +14,11 @@
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <h4 class="media-heading">
-                                        <a href="{{ route('users.show', $user) }}">
-                                            {{ $user->name }}
-                                        </a>
-                                    </h4>
-                                    <h5>{{ $user->email }}</h5>
-                                    <h6>Joined on: {{ short_time($user->created_at) }}</h6>
+                                    <a href="{{ route('users.show', $user) }}">
+                                        <h4 class="media-heading">{{ $user->name }}</h4>
+                                    </a>
+                                    <p>{{ $user->email }}</p>
+                                    <p>Joined on: {{ short_time($user->created_at) }}</p>
                                     <a href="{{ route('users.following.index', $user) }}">
                                         <span class="label label-default">
                                             {{ plural('following', counting($user->following)) }}

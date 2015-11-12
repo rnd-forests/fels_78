@@ -12,24 +12,28 @@
                 </strong>
             </div>
             <div class="list-group auto-pagination">
-                <div class="list-group-item">
-                    {!! Form::open() !!}
-                        <button type="submit" class="btn btn-primary">
-                            Download <i class="fa fa-download"></i>
-                        </button>
-                    {!! Form::close() !!}
-                </div>
-                @foreach($words->load('category') as $word)
-                    <div class="list-group-item word item">
-                        <span class="word--info">{{ $word->content }}</span>
-                        <small>on category</small>
-                        <strong class="text-info">
-                            <a href="{{ route('categories.show', $word->category) }}">
-                                {{ $word->category->name }}
-                            </a>
-                        </strong>
+                @if(blank($words))
+                    <div class="well-w">Nothing yet.</div>
+                @else
+                    <div class="list-group-item">
+                        {!! Form::open() !!}
+                            <button type="submit" class="btn btn-primary">
+                                Export PDF <i class="fa fa-download"></i>
+                            </button>
+                        {!! Form::close() !!}
                     </div>
-                @endforeach
+                    @foreach($words->load('category') as $word)
+                        <div class="list-group-item word item">
+                            <span class="word--info">{{ $word->content }}</span>
+                            <small>on category</small>
+                            <strong class="text-info">
+                                <a href="{{ route('categories.show', $word->category) }}">
+                                    {{ $word->category->name }}
+                                </a>
+                            </strong>
+                        </div>
+                    @endforeach
+                @endif
             </div>
             @include('layouts.partials._loader')
             {!! paginate($words) !!}
