@@ -15,7 +15,7 @@ class UserMailer extends AbstractMailer implements UserMailerContract
      */
     public function sendActivationURL($user, $code)
     {
-        $subject = trans('mailer.account_activation_subject');
+        $subject = trans('mailer.account.activation.subject');
         $view = 'emails.auth.account_activation';
         $data = ['activationUrl' => route('auth.activate', $code)];
         $this->sendTo($user, $subject, $view, $data);

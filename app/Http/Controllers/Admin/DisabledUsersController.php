@@ -36,7 +36,7 @@ class DisabledUsersController extends Controller
     public function restore($slug)
     {
         $this->users->restore($slug);
-        flash()->success(trans('admin.user_restored'));
+        flash()->success(trans('admin.user.restored'));
 
         return back();
     }
@@ -50,7 +50,7 @@ class DisabledUsersController extends Controller
     public function destroy($slug)
     {
         $this->users->forceDelete($slug);
-        flash()->success(trans('admin.user_destroyed'));
+        flash()->success(trans('admin.user.destroyed'));
 
         return back();
     }

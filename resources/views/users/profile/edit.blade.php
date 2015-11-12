@@ -30,8 +30,7 @@
                 <div role="tabpanel" class="tab-pane" id="cancel-account">
                     <div class="well-w">
                         <div class="alert alert-danger" role="alert">
-                            Once your account is deleted, the system will
-                            immediately delete everything related to your account.
+                            {{ trans('user.account.warning') }}
                         </div>
                         {!! Form::open(['route' => ['users.destroy', $user], 'method' => 'DELETE']) !!}
                             <button type="submit" class="btn btn-danger">

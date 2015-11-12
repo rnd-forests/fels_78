@@ -10,7 +10,7 @@
         'class' => 'form-control select2-selection']) !!}
 </div>
 <div class="alert alert-info form-helper" role="alert">
-    {{ trans('word.word_form') }}
+    {{ trans('word.form.helper') }}
 </div>
 <div class="word-answers">
     <div class="form-group">

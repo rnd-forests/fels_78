@@ -26,7 +26,7 @@ class GithubAuthentication extends AbstractOAuth implements
      */
     public function getAuthException()
     {
-        return trans('auth.github_error');
+        return trans('auth.oauth.github.error');
     }
 
     /**

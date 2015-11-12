@@ -23,6 +23,6 @@ class FacebookAuthentication extends AbstractOAuth implements OAuthenticatable
      */
     public function getAuthException()
     {
-        return trans('auth.facebook_error');
+        return trans('auth.oauth.facebook.error');
     }
 }

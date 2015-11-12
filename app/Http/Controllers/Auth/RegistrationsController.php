@@ -44,7 +44,7 @@ class RegistrationsController extends Controller
         $this->validate($request, self::$rules);
         $user = $this->users->create($request->only(['name', 'email', 'password']));
         event(new UserHasRegistered($user));
-        flash()->info(trans('auth.account_activation'));
+        flash()->info(trans('auth.activation.sent'));
 
         return redirect()->home();
     }
@@ -70,11 +70,11 @@ class RegistrationsController extends Controller
     {
         if ($this->users->clearActivationCode($user)) {
             auth()->login($user);
-            flash()->success(trans('auth.activation_success'));
+            flash()->success(trans('auth.activation.success'));
 
             return redirect()->home();
         }
-        flash()->warning(trans('auth.activation_error'));
+        flash()->warning(trans('auth.activation.failure'));
 
         return redirect()->home();
     }

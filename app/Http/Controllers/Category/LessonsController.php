@@ -28,7 +28,7 @@ class LessonsController extends Controller
     {
         $flag = $this->dispatchFrom(CreateNewLesson::class, $request, ['user' => auth()->user()]);
         if (!$flag) {
-            flash()->warning(trans('lesson.not_enough_words'));
+            flash()->warning(trans('lesson.not.enough.words'));
 
             return back();
         }

@@ -49,7 +49,7 @@ class SessionsController extends Controller
         if (auth()->attempt($credentials, $request->has('remember'))) {
             return $this->handleSuccessAuthentication($request);
         }
-        session()->flash('login_error', trans('auth.login_error'));
+        session()->flash('login_error', trans('auth.login.error'));
         $this->incrementLoginAttempts($request);
 
         return redirect()->route('auth.login')->withInput($request->only('email', 'remember'));
@@ -63,7 +63,7 @@ class SessionsController extends Controller
     public function logout()
     {
         auth()->logout();
-        flash()->success(trans('auth.logged_out'));
+        flash()->success(trans('auth.logged.out'));
 
         return redirect()->home();
     }

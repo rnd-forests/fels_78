@@ -43,7 +43,7 @@ class CategoriesController extends Controller
     {
         $this->validate($request, self::$rules);
         $this->categories->create($request->only(['name', 'description']));
-        flash()->success(trans('admin.category_created'));
+        flash()->success(trans('admin.category.created'));
 
         return back();
     }
@@ -72,7 +72,7 @@ class CategoriesController extends Controller
     {
         $this->validate($request, self::$rules);
         $this->categories->update($request->only(['name', 'description']), $slug);
-        flash()->success(trans('admin.category_updated'));
+        flash()->success(trans('admin.category.updated'));
 
         return redirect()->route('admin.categories.index');
     }
@@ -86,7 +86,7 @@ class CategoriesController extends Controller
     public function destroy($slug)
     {
         $this->categories->delete($slug);
-        flash()->success(trans('admin.category_deleted'));
+        flash()->success(trans('admin.category.deleted'));
 
         return back();
     }
