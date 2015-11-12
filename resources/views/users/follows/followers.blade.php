@@ -6,27 +6,31 @@
             @if(blank($followers))
                 <div class="well text-center">No user available</div>
             @else
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Users that are following <strong>{{ $user->name }}</strong>
-                    </div>
-                    <div class="list-group">
-                        @foreach($followers as $follower)
-                            <div class="list-group-item">
-                                <div class="media">
-                                    <div class="media-left">
-                                        @include('users.profile.partials._avatar', ['user' => $follower])
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="media-heading">{{ $follower->name }}</h5>
-                                        <p class="text-muted">{{ $follower->email }}</p>
-                                    </div>
+                <div class="well-w">
+                    Users that are following <strong>{{ $user->name }}</strong>
+                </div>
+                <div class="users auto-pagination">
+                    @foreach($followers as $follower)
+                        <div class="users--user item">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="{{ route('users.show', $follower) }}">
+                                        <img class="users--user__avatar" src="{{ $follower->avatar }}" alt="{{ $follower->name }}">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <a href="{{ route('users.show', $follower) }}">
+                                        <h4 class="media-heading">{{ $follower->name }}</h4>
+                                    </a>
+                                    <p class="text-muted">{{ $follower->email }}</p>
+                                    <p class="text-muted">Joined on: {{ short_time($follower->created_at) }}</p>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
-                    {!! paginate($followers) !!}
+                        </div>
+                    @endforeach
                 </div>
+                @include('layouts.partials._loader')
+                {!! paginate($followers) !!}
             @endif
         </div>
     </div>
