@@ -21,7 +21,9 @@
         "bugsnag/bugsnag-laravel": "1.*",
         "dompdf/dompdf": "~0.6.1",
         "predis/predis": "~1.0",
-        "laracasts/presenter": "^0.2.1"
+        "laracasts/presenter": "^0.2.1",
+        "intervention/image": "^2.3",
+        "intervention/imagecache": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

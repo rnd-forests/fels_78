@@ -41,6 +41,6 @@ class GoogleAuthentication extends AbstractOAuth implements
     {
         $name = clear_pattern(parent::GOOGLE_URL, $data->user['url']);
 
-        return $user->update(['google_name' => $name]);
+        return $user->update(['google' => $name]);
     }
 }

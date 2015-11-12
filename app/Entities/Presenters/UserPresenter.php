@@ -25,7 +25,7 @@ class UserPresenter extends Presenter
      */
     public function githubUrl()
     {
-        return trans('presenter.github', ['name' => $this->github_name]);
+        return trans('presenter.github', ['name' => $this->github]);
     }
 
     /**
@@ -35,7 +35,7 @@ class UserPresenter extends Presenter
      */
     public function googleUrl()
     {
-        return trans('presenter.google', ['name' => $this->google_name]);
+        return trans('presenter.google', ['name' => $this->google]);
     }
 
     /**
@@ -45,6 +45,6 @@ class UserPresenter extends Presenter
      */
     public function facebookUrl()
     {
-        return trans('presenter.facebook', ['name' => $this->facebook_name]);
+        return trans('presenter.facebook', ['name' => $this->facebook]);
     }
 }
