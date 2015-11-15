@@ -1,13 +1,11 @@
-<div class="pull-right">
-    <span class="activity--time">
-        {{ $parser->timeAgo($activity) }}
-    </span>
+<i class="fa fa-2x fa-user-plus activity--icon"></i>
+<div class="activity--body">
+    <a href="{{ route('users.show', $activity->user) }}" class="activity--user">
+        {{ $activity->user->name }}
+    </a>
+    followed
+    <a href="{{ route('users.show', $activity->targetable) }}" class="activity--target">
+        {{ $activity->targetable->name }}
+    </a>
 </div>
-<i class="fa fa-2x fa-plus-square text-success"></i>
-<a href="{{ route('users.show', $parser->owner($activity)) }}">
-    <strong>{{ $parser->owner($activity)->name }}</strong>
-</a>
-is following
-<a href="{{ route('users.show', $parser->target($activity)) }}">
-    <strong>{{ $parser->target($activity)->name }}</strong>
-</a>
+<h5 class="activity--time">{{ humans_time($activity->created_at) }}</h5>
