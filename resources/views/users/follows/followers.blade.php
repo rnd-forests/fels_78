@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             @if(blank($followers))
-                <div class="well text-center">No user available</div>
+                @include('layouts.partials._empty')
             @else
                 <div class="well-w">
                     Users that are following <strong>{{ $user->name }}</strong>
