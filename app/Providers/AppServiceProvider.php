@@ -36,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
     {
         switch ($this->app->environment()) {
             case 'production':
+                $this->configurePgSQL();
                 break;
             case 'local':
                 $this->logDatabaseQueries();
@@ -63,5 +64,18 @@ class AppServiceProvider extends ServiceProvider
     protected function registerMailer()
     {
         $this->app->singleton(UserMailerContract::class, UserMailer::class);
+    }
+
+    /**
+     * Configure PostgreSQL for production.
+     * Heroku deployment.
+     */
+    protected function configurePgSQL()
+    {
+        $url = env('DATABASE_URL');
+        config(['database.connections.pgsql.host' => parse_url($url)['host']]);
+        config(['database.connections.pgsql.database' => substr(parse_url($url)['path'], 1)]);
+        config(['database.connections.pgsql.username' => parse_url($url)['user']]);
+        config(['database.connections.pgsql.password' => parse_url($url)['pass']]);
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use FELS\Entities\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,7 +33,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        $this->truncateDatabase();
+        if (DB::connection()->getName() === 'mysql') {
+            $this->truncateDatabase();
+        }
         foreach ($this->seeders as $seeder) {
             $this->call($seeder);
         }

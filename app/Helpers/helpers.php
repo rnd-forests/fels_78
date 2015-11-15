@@ -176,3 +176,10 @@ if (!function_exists('now')) {
         return Carbon::now();
     }
 }
+
+if (!function_exists('percentage')) {
+    function percentage($completed, $total)
+    {
+        return round($completed / $total * 100) . '%';
+    }
+}
