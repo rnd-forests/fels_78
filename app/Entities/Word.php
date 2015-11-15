@@ -4,18 +4,26 @@ namespace FELS\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use FELS\Entities\Traits\SearchableTrait;
+use Laracasts\Presenter\PresentableTrait;
+use FELS\Entities\Presenters\WordPresenter;
 
 class Word extends Model
 {
+    const HARD = 'hard';
+    const MEDIUM = 'medium';
+    const EASY = 'easy';
+    const COMBINED = 'combined';
     const LEARNED = 'learned';
     const UNLEARNED = 'unlearned';
     const ALPHABET = 'alphabetized';
 
-    use SearchableTrait;
+    use SearchableTrait,
+        PresentableTrait;
 
     protected $table = 'words';
+    protected $presenter = WordPresenter::class;
     protected $touches = ['category', 'lessons'];
-    protected $fillable = ['category_id', 'content'];
+    protected $fillable = ['category_id', 'content', 'level'];
 
     /**
      * All users that learned this word.
@@ -71,7 +79,7 @@ class Word extends Model
      * Query scope for learned word.
      *
      * @param $query
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeLearned($query)
     {
@@ -87,7 +95,7 @@ class Word extends Model
      * Query scope for unlearned word.
      *
      * @param $query
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeUnlearned($query)
     {
@@ -103,11 +111,23 @@ class Word extends Model
      * Query scope for sorting words in alphabetical order.
      *
      * @param $query
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeAlphabetized($query)
     {
         return $query->orderBy('content', 'asc');
+    }
+
+    /**
+     * Get word with a specified difficulty level.
+     *
+     * @param $query
+     * @param $level
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfLevel($query, $level)
+    {
+        return $query->where('level', $level);
     }
 
     /**
@@ -119,5 +139,17 @@ class Word extends Model
     public function isLearned($lesson)
     {
         return $lesson->learnedWords->contains($this);
+    }
+
+    /**
+     * Get difficulty levels.
+     *
+     * @return array
+     */
+    public static function getLevels()
+    {
+        $levels = [self::HARD, self::MEDIUM, self::EASY];
+
+        return array_combine($levels, $levels);
     }
 }
