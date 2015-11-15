@@ -49,7 +49,8 @@ interface CategoryRepository
      * @param $user
      * @param $category
      * @param $type
-     * @return null|\Illuminate\Database\Eloquent\Collection
+     * @param $level
+     * @return \Illuminate\Database\Eloquent\Collection|null
      */
-    public function filterWords($user, $category, $type);
+    public function filterWords($user, $category, $type, $level);
 }

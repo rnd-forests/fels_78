@@ -4,9 +4,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="well-w">
-                <div class="text-center">
-                    {{ plural('word', counting($words)) }} of <strong>{{ $category->name }}</strong>
-                </div>
+                {{ plural('word', counting($words)) }} of <strong>{{ $category->name }}</strong>
             </div>
             @if(blank($words))
                 @include('layouts.partials._empty')
@@ -23,9 +21,9 @@
                             @endforeach
                         </div>
                     </div>
+                    @include('layouts.partials._loader')
+                    {!! paginate($words) !!}
                 </div>
-                @include('layouts.partials._loader')
-                {!! paginate($words) !!}
             @endif
         </div>
     </div>
