@@ -2,6 +2,7 @@
 
 namespace FELS\Http\Controllers\Category;
 
+use JavaScript;
 use Illuminate\Http\Request;
 use FELS\Jobs\Lesson\CreateNewLesson;
 use FELS\Http\Controllers\Controller;
@@ -48,6 +49,7 @@ class LessonsController extends Controller
     public function show($categorySlug, $lessonId)
     {
         $lesson = $this->lessons->findLesson($categorySlug, $lessonId);
+        JavaScript::put(['lessonDuration' => $lesson->duration]);
         $this->authorize('showLesson', $lesson);
 
         return view('categories.lessons.show', compact('lesson'));
