@@ -30,10 +30,28 @@
     font-size: 12px
 
 .activity
+  a
+    font-weight: bold
+  .activity--user
+    color: #5fcf80
+  .activity--target,
+  .activity--extra
+    color: #384047
+    .activity--target__emphasized
+      color: #f56857
   .activity--time
-    vertical-align: middle
+    position: relative
+    overflow: hidden
+    padding-left: 40px
     font-size: 12px
     font-weight: bold
-  .fa
-    vertical-align: middle
-    margin-right: 5px
+  .activity--body
+    overflow: hidden
+    padding-left: 40px
+  .activity--icon
+    color: #576366
+    position: absolute
+    top: 12px
+    left: 10px
+    width: 32px
+    height: 32px
