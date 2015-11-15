@@ -13,11 +13,6 @@ class SessionsController extends Controller
 
     use ThrottlesLogins;
 
-    protected static $rules = [
-        'email' => 'required|email',
-        'password' => 'required',
-    ];
-
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
@@ -41,7 +36,7 @@ class SessionsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, self::$rules);
+        $this->validate($request, config('rules.session'));
         if ($this->hasTooManyLoginAttempts($request)) {
             return $this->sendLockoutResponse($request);
         }

@@ -25,14 +25,4 @@ class PagesController extends Controller
     {
         return view('pages.statics.help');
     }
-
-    /**
-     * Frequently asked questions page.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function faq()
-    {
-        return view('pages.statics.faq');
-    }
 }

@@ -11,12 +11,6 @@ class RegistrationsController extends Controller
 {
     protected $users;
 
-    protected static $rules = [
-        'name' => 'required|alpha_spaces|max:255',
-        'email' => 'required|email|max:255|unique:users',
-        'password' => 'required|confirmed|min:6',
-    ];
-
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
@@ -41,7 +35,7 @@ class RegistrationsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, self::$rules);
+        $this->validate($request, config('rules.registration'));
         $user = $this->users->create($request->only(['name', 'email', 'password']));
         event(new UserHasRegistered($user));
         flash()->info(trans('auth.activation.sent'));

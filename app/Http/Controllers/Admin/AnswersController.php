@@ -25,7 +25,7 @@ class AnswersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['solution' => 'required']);
+        $this->validate($request, config('rules.answer'));
         $answer = $this->answers->findById($id);
         $answer->update(['solution' => $request->get('solution')]);
 
