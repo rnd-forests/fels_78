@@ -1,17 +1,15 @@
-<div class="pull-right">
-    <span class="activity--time">
-        {{ $parser->timeAgo($activity) }}
-    </span>
+<i class="fa fa-2x fa-play-circle activity--icon"></i>
+<div class="activity--body">
+    <a href="{{ route('users.show', $activity->user) }}" class="activity--user">
+        {{ $activity->user->name }}
+    </a>
+    started
+    <a href="{{ $activity->targetable->url }}" class="activity--target">
+        new <span class="activity--target__emphasized">{{ $activity->targetable->type }}</span> lesson
+    </a>
+    in category
+    <a href="{{ route('categories.show', $activity->targetable->category) }}" class="activity--extra">
+        {{ $activity->targetable->category->name }}
+    </a>
 </div>
-<i class="fa fa-2x fa-play-circle text-info"></i>
-<a href="{{ route('users.show', $parser->owner($activity)) }}">
-    <strong>{{ $parser->owner($activity)->name }}</strong>
-</a>
-started
-<a href="{{ $parser->url($activity) }}">
-    <strong>a lesson</strong>
-</a>
-on category
-<a href="{{ route('categories.show', $parser->target($activity)->category) }}">
-    <strong>{{ $parser->target($activity)->category->name }}</strong>
-</a>
+<h5 class="activity--time">{{ humans_time($activity->created_at) }}</h5>
