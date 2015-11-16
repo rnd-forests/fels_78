@@ -3,7 +3,6 @@
 @endif
 {!! Form::open(['method' => 'PATCH', 'route' => ['users.name', $user]]) !!}
     <div class="form-group">
-        <label for="" class="control-label"></label>
         {!! Form::label('old_name', 'Current name', ['class' => 'control-label']) !!}
         {!! Form::text('old_name', null, ['class' => 'form-control']) !!}
         {!! error_text($errors, 'old_name') !!}
@@ -14,6 +13,8 @@
         {!! error_text($errors, 'new_name') !!}
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Update <i class="fa fa-arrow-right"></i></button>
+        <button type="submit" class="btn btn-primary">
+            Update <i class="fa fa-arrow-right"></i>
+        </button>
     </div>
 {!! Form::close() !!}

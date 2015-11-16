@@ -2,10 +2,8 @@
 @section('title', 'Current Accounts')
 @section('content')
     <div class="admin-wrapper">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <strong class="text-info">{{ plural2('ACCOUNT', 'ACTIVE', counting($users)) }}</strong>
-            </div>
+        <div class="well-w">
+            <strong class="text-info">{{ plural2('ACCOUNT', 'ACTIVE', counting($users)) }}</strong>
         </div>
         <table class="table table-bordered table-hover auto-pagination">
             <thead>

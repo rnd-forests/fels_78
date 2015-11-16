@@ -5,10 +5,8 @@
         @if (blank($users))
             @include('layouts.partials._empty')
         @else
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <strong class="text-info">{{ plural2('ACCOUNT', 'DISABLED', counting($users)) }}</strong>
-                </div>
+            <div class="well-w">
+                <strong class="text-info">{{ plural2('ACCOUNT', 'DISABLED', counting($users)) }}</strong>
             </div>
             <table class="table table-bordered table-hover auto-pagination">
                 <thead>

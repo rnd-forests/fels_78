@@ -1,61 +1,42 @@
 @extends('layouts.default')
-@section('title', 'Edit Profile')
+@section('title', 'Settings')
 @section('content')
-    <div class="col-md-10 col-md-offset-1">
-        <div class="col-md-4">
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" class="active">
-                    <a href="#update-name" role="tab" data-toggle="tab">Current Name</a>
-                </li>
-                <li role="presentation">
-                    <a href="#update-password" role="tab" data-toggle="tab">Current Password</a>
-                </li>
-                <li role="presentation">
-                    <a href="#update-avatar" role="tab" data-toggle="tab">Profile Picture</a>
-                </li>
-                <li role="presentation">
-                    <a href="#cancel-account" role="tab" data-toggle="tab">Cancel Account</a>
-                </li>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <ul class="nav nav-tabs">
+                <li><a href="#update-name" data-toggle="tab" class="active">Name</a></li>
+                <li><a href="#update-password" data-toggle="tab">Password</a></li>
+                <li><a href="#update-avatar" data-toggle="tab">Avatar</a></li>
+                <li><a href="#cancel-account" data-toggle="tab">Cancel Account</a></li>
             </ul>
-        </div>
-        <div class="col-md-8">
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="update-name">
-                    <div class="well-w">
-                        @include('users.profile.partials._update_name_form')
-                    </div>
+                <div class="tab-pane active" id="update-name">
+                    @include('users.profile.partials._update_name_form')
                 </div>
-                <div role="tabpanel" class="tab-pane" id="update-password">
-                    <div class="well-w">
-                        @include('users.profile.partials._update_password_form')
-                    </div>
+                <div class="tab-pane" id="update-password">
+                    @include('users.profile.partials._update_password_form')
                 </div>
-                <div role="tabpanel" class="tab-pane" id="update-avatar">
-                    <div class="well-w">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="alert alert-success form-helper">
-                                    {{ trans('user.avatar.helper') }}
-                                </div>
-                                @include('users.profile.partials._update_avatar_form')
-                            </div>
-                            <div class="col-sm-6">
-                                @include('users.profile.partials._avatar')
-                            </div>
+                <div class="tab-pane" id="update-avatar">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            @include('users.profile.partials._update_avatar_form')
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="{{ route('users.show', $user) }}">
+                                <img class="user--avatar" src="{{ $user->avatar }}" alt="{{ $user->name }}">
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="cancel-account">
-                    <div class="well-w">
-                        <div class="alert alert-danger" role="alert">
-                            {{ trans('user.account.warning') }}
-                        </div>
-                        {!! Form::open(['route' => ['users.destroy', $user], 'method' => 'DELETE']) !!}
-                            <button type="submit" class="btn btn-danger">
-                                Confirm <i class="fa fa-arrow-right"></i>
-                            </button>
-                        {!! Form::close() !!}
+                <div class="tab-pane" id="cancel-account">
+                    <div class="alert alert-danger" role="alert">
+                        {!! trans('user.account.warning') !!}
                     </div>
+                    {!! Form::open(['route' => ['users.destroy', $user], 'method' => 'DELETE']) !!}
+                        <button type="submit" class="btn btn-danger">
+                            Cancel Account <i class="fa fa-bomb"></i>
+                        </button>
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>
