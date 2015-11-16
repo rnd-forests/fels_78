@@ -2,8 +2,8 @@
 
 namespace FELS\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use FELS\Http\Controllers\Controller;
-use FELS\Http\Requests\RegistrationRequest;
 use FELS\Core\Repository\Contracts\UserRepository;
 
 class UsersController extends Controller
@@ -41,11 +41,12 @@ class UsersController extends Controller
     /**
      * Store new account.
      *
-     * @param RegistrationRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(RegistrationRequest $request)
+    public function store(Request $request)
     {
+        $this->validate($request, config('rules.registration'));
         $credentials = $request->only(['name', 'email', 'password']);
         $this->users->adminCreate($credentials);
         flash()->success(trans('admin.user.added'));

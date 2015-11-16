@@ -93,7 +93,7 @@ abstract class AbstractOAuth
     protected function parseProviderData(SocialiteUser $data)
     {
         return [
-            'name' => $data->getName(),
+            'name' => $data->getName() ?: $data->getEmail(),
             'email' => $data->getEmail(),
         ];
     }

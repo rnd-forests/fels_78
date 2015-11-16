@@ -16,7 +16,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
 Route::group(['namespace' => 'Pages'], function () {
     Route::get('/', ['as' => 'home', 'uses' => 'HomeController@home']);
-    Route::get('faq', ['as' => 'pages.faq', 'uses' => 'PagesController@faq']);
     Route::get('help', ['as' => 'pages.help', 'uses' => 'PagesController@help']);
     Route::get('about', ['as' => 'pages.about', 'uses' => 'PagesController@about']);
     Route::get('members', ['as' => 'pages.members', 'uses' => 'MembersController@index']);

@@ -2,7 +2,6 @@
 
 namespace FELS\Http\Controllers\User;
 
-use FELS\Helpers\Rules;
 use Illuminate\Http\Request;
 use FELS\Core\Uploader\Avatar\Avatar;
 use FELS\Http\Controllers\Controller;
@@ -68,7 +67,7 @@ class ProfilesController extends Controller
      */
     public function changeName(Request $request, $userSlug)
     {
-        $this->validate($request, Rules::$name);
+        $this->validate($request, config('rules.name'));
         list($oldName, $newName) = [$request->get('old_name'), $request->get('new_name')];
         $user = $this->users->findBySlug($userSlug);
         if ($this->isCorrectNames($oldName, $newName, $user)) {
@@ -118,7 +117,7 @@ class ProfilesController extends Controller
      */
     public function changePassword(Request $request, $userSlug)
     {
-        $this->validate($request, Rules::$password);
+        $this->validate($request, config('rules.password'));
         list($oldPassword, $newPassword) = [$request->get('old_pass'), $request->get('new_pass')];
         $user = $this->users->findBySlug($userSlug);
         if ($this->isValidPassword($oldPassword, $user)) {
@@ -165,7 +164,7 @@ class ProfilesController extends Controller
      */
     public function changeAvatar(Request $request, $userSlug)
     {
-        $this->validate($request, Rules::$avatar);
+        $this->validate($request, config('rules.avatar'));
         $user = $this->users->findBySlug($userSlug);
         (new Avatar($user, $request->file('avatar')))->make();
         flash()->success(trans('user.avatar.updated'));
