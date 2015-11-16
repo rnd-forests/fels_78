@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'The Leaderboard')
+@section('title', 'Leaderboard')
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2 leaderboard">
@@ -7,15 +7,13 @@
                 <strong><i class="fa fa-trophy"></i> Memorized Words Leaderboard</strong>
             </div>
             @if(blank($users))
-                <div class="well-w">Nothing yet.</div>
+                @include('layouts.partials._empty')
             @else
                 @foreach($users as $user)
-                    <article class="media leaderboard--user">
+                    <div class="media leaderboard--user">
                         <div class="media-left">
                             <a href="{{ route('users.show', $user) }}">
-                                <img class="user-avatar-picture leaderboard--user__avatar"
-                                     src="{{ $user->avatar }}"
-                                     alt="{{ $user->name }}">
+                                <img class="leaderboard--user__avatar" src="{{ $user->avatar }}" alt="{{ $user->name }}">
                             </a>
                             <span class="leaderboard--user__ranking">
                                 {{ preg_split('/\//', $user->ranking)[0] }}
@@ -29,14 +27,13 @@
                             <div class="pull-right leaderboard--user__meta">
                                 <span class="learned-words-counter">
                                     {{ counting($user->words) }}
-                                    <small>{{ str_plural('word', counting($user->words)) }}</small>
                                 </span>
                                 <span class="lesson-counter">
-                                    {{ plural('lesson', counting($user->lessons)) }}
+                                    {{ plural('lesson', $user->lessons()->finished()->count()) }}
                                 </span>
                             </div>
                         </div>
-                    </article>
+                    </div>
                 @endforeach
             @endif
         </div>

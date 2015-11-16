@@ -1,5 +1,5 @@
 @extends('layouts.default')
-@section('title', 'All Members')
+@section('title', 'Members')
 @section('content')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">

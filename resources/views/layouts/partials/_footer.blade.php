@@ -1,17 +1,15 @@
 <footer class="footer">
     <a href="#" id="scroll-top"></a>
     <div class="pull-left">
-        <h5>Framgia E-learning System</h5>
+        <h4>Framgia E-learning System</h4>
     </div>
     <div class="pull-right">
-        <ul class="footer-links text-muted">
+        <ul class="footer--links">
             <li><a href="{{ route('home') }}">Home</a></li>
             <li>&middot;</li>
             <li><a href="{{ route('pages.about') }}">About</a></li>
             <li>&middot;</li>
             <li><a href="{{ route('pages.help') }}">Help</a></li>
-            <li>&middot;</li>
-            <li><a href="{{ route('pages.faq') }}">FAQ</a></li>
             <li>&middot;</li>
             @if(auth()->check())
                 <li><a href="{{ route('auth.logout') }}">Sign Out</a></li>
