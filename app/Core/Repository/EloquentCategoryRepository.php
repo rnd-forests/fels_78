@@ -87,20 +87,31 @@ class EloquentCategoryRepository implements
      * @param $user
      * @param $category
      * @param $type
-     * @return null|\Illuminate\Database\Eloquent\Collection
+     * @param $level
+     * @return \Illuminate\Database\Eloquent\Collection|null
      */
-    public function filterWords($user, $category, $type)
+    public function filterWords($user, $category, $type, $level)
     {
+        $baseQuery = null;
         switch ($type) {
             case Word::LEARNED:
-                return $user->getLearnedWordsIn($category)->get();
+                $baseQuery = $user->getLearnedWordsIn($category);
+                break;
             case Word::UNLEARNED:
-                return $category->unlearnedWordsOf($user)->get();
+                $baseQuery = $category->unlearnedWordsOf($user);
+                break;
             case Word::ALPHABET:
-                return $category->words()->alphabetized()->get();
-            default:
-                return null;
+                $baseQuery = $category->words()->alphabetized();
+                break;
         }
+
+        if ($baseQuery) {
+            return $level == Word::COMBINED
+                ? $baseQuery->get()
+                : $baseQuery->ofLevel($level)->get();
+        }
+
+        return null;
     }
 
     /**

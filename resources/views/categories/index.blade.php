@@ -2,22 +2,22 @@
 @section('title', 'Categories')
 @section('content')
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">All Categories</div>
-                <div class="list-group auto-pagination">
-                    @foreach($categories->chunk(15) as $categoryList)
-                        @foreach($categoryList as $category)
-                            <div class="list-group-item item">
-                                <i class="fa fa-folder"></i> <strong>{{ $category->name }}</strong>
-                                <p>{{ $category->description }}</p>
-                                <a href="{{ route('categories.show', $category) }}" class="btn btn-primary">
-                                    Details <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        @endforeach
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well-w">
+                {{ trans('lesson.category.helper') }}
+            </div>
+            <div class="list-group auto-pagination">
+                @foreach($categories->chunk(15) as $categoryList)
+                    @foreach($categoryList as $category)
+                        <div class="list-group-item item">
+                            <h4 class="text-primary"><strong>{{ $category->name }}</strong></h4>
+                            <p>{{ $category->description }}</p>
+                            <a href="{{ route('categories.show', $category) }}" class="btn btn-default">
+                                Explore <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
                     @endforeach
-                </div>
+                @endforeach
             </div>
             @include('layouts.partials._loader')
             {!! paginate($categories) !!}

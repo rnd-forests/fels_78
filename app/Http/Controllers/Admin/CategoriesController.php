@@ -10,11 +10,6 @@ class CategoriesController extends Controller
 {
     protected $categories;
 
-    protected static $rules = [
-        'name' => 'required|between:4,500',
-        'description' => 'required|max:1500',
-    ];
-
     public function __construct(CategoryRepository $categories)
     {
         $this->categories = $categories;
@@ -41,7 +36,7 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, self::$rules);
+        $this->validate($request, config('rules.category'));
         $this->categories->create($request->only(['name', 'description']));
         flash()->success(trans('admin.category.created'));
 
@@ -70,7 +65,7 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $this->validate($request, self::$rules);
+        $this->validate($request, config('rules.category'));
         $this->categories->update($request->only(['name', 'description']), $slug);
         flash()->success(trans('admin.category.updated'));
 
