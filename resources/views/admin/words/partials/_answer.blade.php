@@ -3,7 +3,7 @@
         <div class="input-group">
             <div class="input-group-addon">
                 <a class="remove-button">
-                    <i class="fa fa-times text-muted"></i>
+                    <i class="fa fa-times text-danger"></i>
                 </a>
             </div>
             {!! Form::text('word[answers][0][solution]', null, ['class' => 'form-control', 'required']) !!}

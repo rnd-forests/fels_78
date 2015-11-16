@@ -1,13 +1,13 @@
 {!! Form::model($word, ['method' => 'PATCH',
     'route' => ['admin.words.update', $word],
-    'class' => 'word--form__update-word']) !!}
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="form-group">
-                {!! Form::text('content', null, ['class' => 'form-control']) !!}
-                {!! error_text($errors, 'content') !!}
-            </div>
-            <input type="submit" class="hidden">
-        </div>
+    'class' => 'word--form__update-word form-inline']) !!}
+    <div class="form-group">
+        {!! Form::text('content', $word->content, ['class' => 'form-control']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::select('level', \FELS\Entities\Word::getLevels(), $word->level, ['class' => 'form-control']) !!}
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Change</button>
     </div>
 {!! Form::close() !!}

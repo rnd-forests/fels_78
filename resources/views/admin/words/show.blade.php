@@ -7,11 +7,12 @@
                 <div class="pull-right">
                     {!! Form::delete('admin.words.destroy', $word) !!}
                 </div>
-                <h3 class="word--info pull-left">
-                    <span class="word-content">{{ $word->content }}</span>
-                </h3>
+                <div class="word--info pull-left">
+                    <span class="word--info__content">{{ $word->content }}</span>
+                    <span class="word--info__level">{{ $word->level }}</span>
+                </div>
                 <div class="clearfix"></div>
-                <h5><i class="fa fa-folder text-danger"></i> {{ $word->category->name }}</h5>
+                <h4><small>in category: </small> {{ $word->category->name }}</h4>
                 <h5><small>published at: </small> {{ humans_time($word->created_at) }}</h5>
                 @include('admin.words.partials._update_word_form')
                 <div class="list-group">
@@ -36,7 +37,7 @@
                                 <strong class="solution">{{ $answer->solution }}</strong>
                             </span>
                             @endif
-                            <h6><small>last edited: </small>{{ humans_time($answer->updated_at) }}</h6>
+                            <h5><small>last edited: </small>{{ humans_time($answer->updated_at) }}</h5>
                             @include('admin.words.answers._update_form')
                         </div>
                     @endforeach

@@ -2,6 +2,7 @@
 
 namespace FELS\Http\Controllers\User;
 
+use FELS\Entities\Word;
 use FELS\Http\Controllers\Controller;
 use FELS\Core\Excel\Export\WordExporter;
 use FELS\Core\Repository\Contracts\CategoryRepository;
@@ -23,10 +24,10 @@ class WordsController extends Controller
      */
     public function index()
     {
-        list($category, $type) = $this->parseRequest();
-        $words = $this->categories->filterWords(auth()->user(), $category, $type);
+        list($category, $type, $level) = $this->parseRequest();
+        $words = $this->categories->filterWords(auth()->user(), $category, $type, $level);
 
-        return view('users.words.index', compact('category', 'type', 'words'));
+        return view('users.words.index', compact('category', 'type', 'words', 'level'));
     }
 
     /**
@@ -62,10 +63,9 @@ class WordsController extends Controller
         $category = $request->has('in-category')
             ? $this->categories->findById($request->get('in-category'))
             : $this->categories->first();
-        $type = $request->has('filter-by')
-            ? $request->get('filter-by')
-            : 'learned';
+        $type = $request->has('filter-by') ? $request->get('filter-by') : Word::LEARNED;
+        $level = $request->has('with-level') ? $request->get('with-level') : Word::COMBINED;
 
-        return [$category, $type];
+        return [$category, $type, $level];
     }
 }

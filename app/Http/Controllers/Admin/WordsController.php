@@ -30,16 +30,6 @@ class WordsController extends Controller
     }
 
     /**
-     * Load form to create a new word.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
-        return view('admin.words.create');
-    }
-
-    /**
      * Display individual word.
      *
      * @param $id
@@ -50,6 +40,16 @@ class WordsController extends Controller
         $word = $this->words->findById($id);
 
         return view('admin.words.show', compact('word'));
+    }
+
+    /**
+     * Load form to create a new word.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('admin.words.create');
     }
 
     /**
@@ -74,9 +74,12 @@ class WordsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['content' => 'required']);
+        $this->validate($request, config('rules.word'));
         $word = $this->words->findById($id);
-        $word->update(['content' => $request->get('content')]);
+        $word->update([
+            'content' => $request->get('content'),
+            'level' => $request->get('level'),
+        ]);
 
         return $word->toJson();
     }

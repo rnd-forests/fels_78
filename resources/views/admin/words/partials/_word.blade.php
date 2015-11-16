@@ -1,19 +1,19 @@
 <div class="pull-right">
     {!! Form::delete('admin.words.destroy', $word, 'word--form__delete-word') !!}
 </div>
-<h3 class="word--info pull-left">
-    <span class="word-content">{{ $word->content }}</span>
-    <i class="fa fa-arrow-circle-down content-toggle"
-       data-toggle="collapse"
-       data-target="#{{ $word->id }}-word-answers"></i>
-</h3>
+<div class="word--info">
+    <span class="word--info__content" data-toggle="collapse" data-target="#{{ $word->id }}-word-answers">
+        {{ $word->content }}
+    </span>
+    <span class="word--info__level">{{ $word->level }}</span>
+</div>
 <div class="clearfix"></div>
-<h5><i class="fa fa-folder text-danger"></i> {{ $word->category->name }}</h5>
+<h4><small>in category: </small> {{ $word->category->name }}</h4>
 <h5><small>published at: </small> {{ humans_time($word->created_at) }}</h5>
 <div class="collapse" id="{{ $word->id }}-word-answers">
     <div class="collapse-content">
         @include('admin.words.partials._update_word_form')
-        <ul class="list-group">
+        <div class="list-group">
             @foreach($word->answers as $answer)
                 <div class="list-group-item">
                     <div class="pull-right">
@@ -35,10 +35,10 @@
                             <strong class="solution">{{ $answer->solution }}</strong>
                         </span>
                     @endif
-                    <h6><small>last edited: </small>{{ humans_time($answer->updated_at) }}</h6>
+                    <h5><small>last edited: </small>{{ humans_time($answer->updated_at) }}</h5>
                     @include('admin.words.answers._update_form')
                 </div>
             @endforeach
-        </ul>
+        </div>
     </div>
 </div>

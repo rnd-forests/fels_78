@@ -30,6 +30,7 @@ class CreateNewWord extends Job implements SelfHandling
         return app(CategoryRepository::class)
             ->findById(request()->get('category'))->words()->create([
                 'content' => $this->parseWordContent(),
+                'level' => $this->parseWordLevel(),
             ]);
     }
 
@@ -70,5 +71,15 @@ class CreateNewWord extends Job implements SelfHandling
     protected function parseWordContent()
     {
         return head(request()->only('word.content'))['content'];
+    }
+
+    /**
+     * Parse word difficulty level from the request.
+     *
+     * @return string
+     */
+    protected function parseWordLevel()
+    {
+        return head(request()->only('word.level'))['level'];
     }
 }
