@@ -20,7 +20,7 @@ class Lesson extends Model
     protected static $capturedEvents = [];
     protected $casts = ['finished' => 'boolean'];
     protected $presenter = LessonPresenter::class;
-    protected $fillable = ['user_id', 'category_id', 'name', 'finished', 'finished_at'];
+    protected $fillable = ['user_id', 'category_id', 'name', 'finished', 'finished_at', 'type', 'duration'];
 
     /**
      * A lesson belongs to a specific user.
@@ -76,7 +76,7 @@ class Lesson extends Model
      * Query scope for finished lessons.
      *
      * @param $query
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeFinished($query)
     {

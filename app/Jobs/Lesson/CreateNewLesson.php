@@ -3,6 +3,7 @@
 namespace FELS\Jobs\Lesson;
 
 use FELS\Jobs\Job;
+use FELS\Entities\Word;
 use FELS\Entities\Lesson;
 use Illuminate\Contracts\Bus\SelfHandling;
 use FELS\Core\Repository\Contracts\CategoryRepository;
@@ -11,11 +12,13 @@ class CreateNewLesson extends Job implements SelfHandling
 {
     protected $user;
     protected $category;
+    protected $lessonType;
 
-    public function __construct($user, $categoryId)
+    public function __construct($user, $categoryId, $lessonType)
     {
         $this->user = $user;
         $this->category = app(CategoryRepository::class)->findById($categoryId);
+        $this->lessonType = $lessonType;
     }
 
     /**
@@ -38,6 +41,7 @@ class CreateNewLesson extends Job implements SelfHandling
         return (new Lesson)->fill([
             'name' => uniqid("Lesson_{$this->category->name}_"),
             'finished' => false,
+            'type' => $this->lessonType,
         ]);
     }
 
@@ -52,6 +56,7 @@ class CreateNewLesson extends Job implements SelfHandling
         $this->associateMany($lesson, ['user', 'category']);
         $lesson->words()->attach($this->randomizeWords());
         $this->user->pushActivity('started', $lesson);
+        $this->calculateLessonDuration($lesson);
 
         return [$this->category, $lesson];
     }
@@ -63,8 +68,9 @@ class CreateNewLesson extends Job implements SelfHandling
      */
     protected function hasEnoughWords()
     {
-        return $this->category->unlearnedWordsOf(auth()->user())
-            ->count() >= config('lesson.min_words');
+        $baseQuery = $this->getUnlearnedWords();
+
+        return $baseQuery->count() >= config('lesson.min_words');
     }
 
     /**
@@ -74,8 +80,9 @@ class CreateNewLesson extends Job implements SelfHandling
      */
     protected function randomizeWords()
     {
-        return $this->category->unlearnedWordsOf(auth()->user())
-            ->lists('id')->shuffle()->take(config('lesson.max_words'))->toArray();
+        $baseQuery = $this->getUnlearnedWords();
+
+        return $baseQuery->lists('id')->shuffle()->take(config('lesson.max_words'))->toArray();
     }
 
     /**
@@ -92,5 +99,31 @@ class CreateNewLesson extends Job implements SelfHandling
         }
 
         return $lesson->save();
+    }
+
+    /**
+     * Get unlearned words of user in a category.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function getUnlearnedWords()
+    {
+        return $this->lessonType === Word::COMBINED
+            ? $this->category->unlearnedWordsOf(auth()->user())
+            : $this->category->unlearnedWordsOf(auth()->user())->ofLevel($this->lessonType);
+    }
+
+    /**
+     * Calculate the lesson duration based on the number
+     * of words in that lesson.
+     *
+     * @param $lesson
+     * @return bool|int
+     */
+    protected function calculateLessonDuration($lesson)
+    {
+        $duration = counting($lesson->words) * config('lesson.time_per_word');
+
+        return $lesson->update(['duration' => $duration]);
     }
 }

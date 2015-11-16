@@ -1,26 +1,19 @@
 <div class="lesson--helper">
     <div class="well-w">
-        <div class="text-success text-center lesson--helper__timer">
-            <i class="fa fa-clock-o"></i> 00:01:00
+        <div class="lesson--helper__timer">00:00</div>
+        <div class="lesson--helper__progress">
+            <span>0</span> • {{ counting($lesson->words) }}
         </div>
     </div>
-    <div class="well-w">
-        <div class="text-center lesson--helper__progress">
-            <i class="fa fa-spinner fa-spin"></i> <span>0</span> / {{ counting($lesson->words) }}
-        </div>
-    </div>
-    <div class="alert alert-success text-center hidden lesson--helper__completed">
+    <div class="alert alert-success hidden lesson--helper__completed">
         <i class="fa fa-2x fa-cog fa-spin"></i>
         <p>{{ trans('lesson.completed') }}</p>
     </div>
 </div>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <div class="alert alert-info form-helper">
-            <button type="button" class="close" data-dismiss="alert">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {{ trans('lesson.guide') }}
+        <div class="alert alert-success form-helper">
+            {!! trans('lesson.guide', ['time' => $lesson->duration / 1000, 'word' => counting($lesson->words)]) !!}
         </div>
         {!! Form::open(['method' => 'PATCH',
             'route' => ['categories.lessons.update', $lesson->category, $lesson],
@@ -38,8 +31,7 @@
                         @foreach($word->answers as $answer)
                             <div class="radio">
                                 <label>
-                                    {!! Form::radio("words[$word->id][choice]", $answer->id,
-                                        null, ['class' => 'choice']) !!}
+                                    {!! Form::radio("words[$word->id][choice]", $answer->id, null, ['class' => 'choice']) !!}
                                     {{ $answer->solution }}
                                 </label>
                             </div>

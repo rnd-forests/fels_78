@@ -1,21 +1,33 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="list-group">
-            <div class="list-group-item text-success">
-                <strong>{{ $lesson->present()->fullName }}</strong>
+            <div class="list-group-item">
+                Lesson name: <strong>{{ $lesson->present()->fullName }}</strong>
             </div>
             <div class="list-group-item">
-                Learned <strong>{{ plural('word', $lesson->learnedWords()->count()) }}</strong>
+                Lesson type: <strong>{{ $lesson->type }}</strong>
+            </div>
+            <div class="list-group-item">
+                Lesson size: <strong>{{ plural('word', counting($lesson->words)) }}</strong>
+            </div>
+            <div class="list-group-item">
+                Lesson duration: <strong>{{ plural('second', $lesson->duration / 1000) }}</strong>
+            </div>
+            <div class="list-group-item">
+                Learned: <strong>{{ plural('word', counting($lesson->learnedWords)) }}</strong>
+                ({{ percentage(counting($lesson->learnedWords), counting($lesson->words)) }})
+            </div>
+            <div class="list-group-item">
+                Time until completion: <strong>{{ plural('second', $lesson->length) }}</strong>
             </div>
             @foreach($lesson->words->load('answers') as $word)
                 <div class="list-group-item">
-                    @if($word->isLearned($lesson))
-                        <strong class="text-uppercase">
-                            {{ $word->content }} <span class="text-success">(LEARNED)</span>
-                        </strong>
-                    @else
-                        <strong class="text-uppercase">{{ $word->content }}</strong>
-                    @endif
+                    <strong class="text-uppercase">
+                        {{ $word->content }}
+                        @if($word->isLearned($lesson))
+                            (LEARNED)
+                        @endif
+                    </strong>
                     <ul class="list-unstyled">
                         @foreach($word->answers as $answer)
                             @if($answer->correct)
