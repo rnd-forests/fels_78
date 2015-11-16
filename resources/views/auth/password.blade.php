@@ -25,9 +25,7 @@
                 {!! Form::close() !!}
             </div>
             <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle"
-                        type="button"
-                        data-toggle="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                     <i class="fa fa-cog"></i>
                 </button>
                 <ul class="dropdown-menu">

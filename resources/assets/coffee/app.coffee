@@ -21,7 +21,7 @@ $.fn.infiniteScroll.defaults =
   item: '.item'
   loading: '.loading'
   paginator: '.pagination'
-  nextLink: '.pagination a[rel="next"]'
+  nextLink: '.pagination a[rel=next]'
 
 
 # Source: https://css-tricks.com/snippets/jquery/outerhtml-jquery-plugin/
@@ -39,14 +39,14 @@ createRelationship = (form, submit, inverse, stat) ->
   $.ajax
     data: form.serialize()
     url: form.prop('action')
-    type: form.find('input[name="_method"]').val() or 'post'
+    type: form.find('input[name=_method]').val() or 'post'
     beforeSend: ->
       submit.prop 'disabled', true
-      form.find('.fa').removeClass 'hidden'
+      form.find('.uf-loading').removeClass 'hidden'
     success: ->
       promise.resolve parseInt(stat.text().match(/\d+/).shift())
       submit.prop 'disabled', false
-      form.find('.fa').addClass 'hidden'
+      form.find('.uf-loading').addClass 'hidden'
       form.wrap '<div class="hidden"></div>'
       inverse.unwrap()
   promise
@@ -65,19 +65,16 @@ FELS = (($) ->
   init = ->
     _global()
     _lesson()
-    _searchForm()
-    _followForm()
-    _unfollowForm()
-    _filterWordForm()
-    _createWordForm()
-    _updateWordForm()
-    _deleteWordForm()
-    _storeTabPosition()
-    _deleteAnswerForm()
-    _updateAnswerForm()
+    _search()
+    _follow()
+    _unfollow()
+    _filterWords()
+    _createWord()
+    _updateWord()
+    _deleteWord()
+    _deleteAnswer()
+    _updateAnswer()
 
-
-  # Global configurations.
   _global = ->
     $.ajaxSetup headers:
       'X-CSRF-TOKEN': $('meta[name=csrf-token]').attr('content')
@@ -86,15 +83,11 @@ FELS = (($) ->
       e.preventDefault()
       $('body, html').animate {scrollTop: 0}, 800
 
-    $('.content-toggle').on 'click', ->
-      $(this).toggleClass 'fa-arrow-circle-up fa-arrow-circle-down'
-
-    $selector = $('.select2-selection')
-    $selector.select2 placeholder: $selector.data('description')
-
+    _storeTabPosition()
     $('[data-toggle=tooltip]').tooltip()
     $('.auto-pagination').infiniteScroll()
-    $('.alert').not('.alert-danger').not('.form-helper').delay(2500).fadeOut()
+    $('.alert').not('.alert-danger').not('.form-helper').delay(2500).slideUp()
+
 
   _storeTabPosition = ->
     $('a[data-toggle=tab]').on 'shown.bs.tab', ->
@@ -103,7 +96,7 @@ FELS = (($) ->
     if $last
       $('[href=' + $last + ']').tab 'show'
 
-  _followForm = ->
+  _follow = ->
     $form = $('.follow-form')
     $button = $form.find('.follow-button')
     $inverse = $('.unfollow-form')
@@ -111,11 +104,11 @@ FELS = (($) ->
     $form.on 'submit', (e) ->
       e.preventDefault()
       $promise = createRelationship($(this), $button, $inverse, $stat)
-      $promise.done (response) ->
-        result = if response == 0 then response + 1 + ' follower' else response + 1 + ' followers'
-        $stat.html result
+      $promise.done (res) ->
+        result = if res == 0 then res + 1 + ' follower' else res + 1 + ' followers'
+        $stat.html '<i class="fa fa-heart-o"></i> ' + result
 
-  _unfollowForm = ->
+  _unfollow = ->
     $form = $('.unfollow-form')
     $button = $form.find('.unfollow-button')
     $inverse = $('.follow-form')
@@ -123,11 +116,11 @@ FELS = (($) ->
     $form.on 'submit', (e) ->
       e.preventDefault()
       $promise = createRelationship($(this), $button, $inverse, $stat)
-      $promise.done (response) ->
-        result = if response == 2 then response - 1 + ' follower' else response - 1 + ' followers'
-        $stat.html result
+      $promise.done (res) ->
+        result = if res == 2 then res - 1 + ' follower' else res - 1 + ' followers'
+        $stat.html '<i class="fa fa-heart-o"></i> ' + result
 
-  _createWordForm = ->
+  _createWord = ->
     $minField = 4
     $maxField = 10
     $container = $('.word-answers')
@@ -136,8 +129,7 @@ FELS = (($) ->
     $fieldHtml = $field.outerHTML() + ''
     $field.remove()
     replaceFieldHtml = ->
-      $uuid = generateUUID()
-      $fieldHtml.replace /word\[answers]\[\d+]/g, 'word[answers][' + $uuid + ']'
+      $fieldHtml.replace /word\[answers]\[\d+]/g, 'word[answers][' + generateUUID() + ']'
     i = 0
     while i < $minField
       $container.append replaceFieldHtml()
@@ -171,51 +163,53 @@ FELS = (($) ->
           timer: 1500
           showConfirmButton: false
 
-  _deleteAnswerForm = ->
+  _deleteAnswer = ->
     $('.word--form__delete-answer').on 'submit', (e) ->
       e.preventDefault()
       form = $(this)
       $.ajax
         data: form.serialize()
         url: form.prop('action')
-        type: form.find('input[name="_method"]').val() or 'POST'
+        type: form.find('input[name=_method]').val() or 'post'
         success: ->
           form.closest('.list-group-item').remove()
 
-  _updateAnswerForm = ->
+  _updateAnswer = ->
     $('.word--form__update-answer').on 'submit', (e) ->
       e.preventDefault()
       form = $(this)
       $.ajax
         data: form.serialize()
         url: form.prop('action')
-        type: form.find('input[name="_method"]').val() or 'POST'
+        type: form.find('input[name=_method]').val() or 'post'
         success: ->
           form.closest('.list-group-item').find('.solution').text form.find('input[name=solution]').val()
 
-  _updateWordForm = ->
+  _updateWord = ->
     $('.word--form__update-word').on 'submit', (e) ->
       e.preventDefault()
       form = $(this)
+      word = form.closest('.word')
       $.ajax
         data: form.serialize()
         url: form.prop('action')
-        type: form.find('input[name="_method"]').val() or 'POST'
+        type: form.find('input[name=_method]').val() or 'post'
         success: ->
-          form.closest('.word').find('.word-content').text form.find('input[name=content]').val()
+          word.find('.word--info__content').text form.find('input[name=content]').val()
+          word.find('.word--info__level').text form.find('select').val()
 
-  _deleteWordForm = ->
+  _deleteWord = ->
     $('.word--form__delete-word').on 'submit', (e) ->
       e.preventDefault()
       form = $(this)
       $.ajax
         data: form.serialize()
         url: form.prop('action')
-        type: form.find('input[name="_method"]').val() or 'POST'
+        type: form.find('input[name=_method]').val() or 'post'
         success: ->
           form.closest('.word').slideUp()
 
-  _searchForm = ->
+  _search = ->
     $('#search-form').on('input', '#keyword', ->
       $keyword = $.trim($(this).val())
       if !$keyword or $keyword.length == 0
@@ -251,29 +245,29 @@ FELS = (($) ->
           $(this).closest('.list-group-item').find('.choice').not('.choice:checked').addClass 'chosen'
           $current = parseInt(progress.text().match(/\d+/).shift())
           progress.html $current + 1
-      time = (new Date).getTime() + 60000
+      time = (new Date).getTime() + parseInt _FELS.lessonDuration
       $timer.countdown(time).on('update.countdown', (e) ->
-        $(this).html '<i class="fa fa-clock-o"></i> ' + e.strftime('%H:%M:%S')
+        $(this).html e.strftime('%M:%S')
       ).on 'finish.countdown', ->
         $(this).parent().prop 'disabled', true
         $('.lesson--helper__completed').removeClass 'hidden'
         $form.find('.choice').not('.choice:checked').prop 'disabled', true
         $form.submit()
 
-  _filterWordForm = ->
-    $('#word-filter-form').on 'submit', (e) ->
+  _filterWords = ->
+    $('.word--filter__form').on 'submit', (e) ->
       e.preventDefault()
       form = $(this)
-      container = $('.filtered-words')
-      info = $('.filter-info')
+      results = $('.word--filter__results')
+      alert = $('.word--filter__info')
       url = form.prop('action') + '?' + form.serialize()
       $.get url, (data) ->
-        container.empty()
-        $(data).find('.item').each (index, element) ->
-          $(element).appendTo container
-        info.html $(data).find('.filter-info').html()
+        results.empty()
+        $(data).find('.word--filter__word').each (idx, el) ->
+          $(el).appendTo results
+        alert.html $(data).find('.word--filter__info').html()
 
-  {init: init})(jQuery)
+  {init: init})($)
 
 
 $ ->
