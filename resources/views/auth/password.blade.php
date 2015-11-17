@@ -17,11 +17,7 @@
                             'placeholder' => 'username@example.com']) !!}
                         {!! error_text($errors, 'email') !!}
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">
-                            Send Password Reset Link <i class="fa fa-arrow-right"></i>
-                        </button>
-                    </div>
+                    {!! Form::submitBtn('Send Password Reset Link') !!}
                 {!! Form::close() !!}
             </div>
             <div class="dropdown">

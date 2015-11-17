@@ -25,7 +25,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#" data-toggle="collapse" data-target="#admin-search-form">
+                    <a href="#" data-toggle="collapse" data-target="#admin-search">
                         <i class="fa fa-search"></i>
                     </a>
                 </li>

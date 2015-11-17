@@ -20,11 +20,7 @@
             'class' => 'lesson']) !!}
             {!! Form::hidden('lesson', $lesson->id) !!}
             <div class="list-group">
-                <div class="list-group-item">
-                    <button type="button" class="btn btn-primary lesson--start">
-                        {{ trans('lesson.start') }} <i class="fa fa-arrow-right"></i>
-                    </button>
-                </div>
+                {!! Form::normalBtn(trans('lesson.start'), 'btn-primary lesson--start', 'list-group-item') !!}
                 @foreach($lesson->words->load('answers') as $word)
                     <div class="list-group-item">
                         <strong class="text-uppercase">{{ $word->content }}</strong>
@@ -38,11 +34,7 @@
                         @endforeach
                     </div>
                 @endforeach
-                <div class="list-group-item">
-                    <button type="submit" class="btn btn-primary lesson--submit">
-                        {{ trans('lesson.submit') }} <i class="fa fa-arrow-right"></i>
-                    </button>
-                </div>
+                {!! Form::submitBtn(trans('lesson.submit'), 'btn-primary lesson--submit', 'list-group-item') !!}
             </div>
         {!! Form::close() !!}
     </div>

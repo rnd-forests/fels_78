@@ -6,9 +6,5 @@
         {!! Form::file('avatar') !!}
         {!! error_text($errors, 'avatar') !!}
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-default">
-            <i class="fa fa-upload"></i> Upload
-        </button>
-    </div>
+    {!! Form::submitBtn('Upload') !!}
 {!! Form::close() !!}

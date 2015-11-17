@@ -15,9 +15,5 @@
             {!! Form::radio('lessonType', \FELS\Entities\Word::COMBINED) !!} Random words
         </label>
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-success">
-            Start Lesson <i class="fa fa-arrow-right"></i>
-        </button>
-    </div>
+    {!! Form::submitBtn('Start Lesson', 'btn-success') !!}
 {!! Form::close() !!}
