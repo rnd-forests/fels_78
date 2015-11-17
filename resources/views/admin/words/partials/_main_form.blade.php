@@ -15,14 +15,25 @@
 </div>
 <div class="word-answers">
     <div class="form-group">
-        <button type="button" class="btn btn-default add-button">
+        <button type="button" class="btn btn-default answer--addition">
             <i class="fa fa-plus"></i>
         </button>
     </div>
-    @include('admin.words.partials._answer')
+    <div class="answer">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <a class="answer--removal">
+                        <i class="fa fa-times text-danger"></i>
+                    </a>
+                </div>
+                {!! Form::text('word[answers][0][solution]', null, ['class' => 'form-control', 'required']) !!}
+                <div class="input-group-addon answer--correctness">
+                    {!! Form::hidden('word[answers][0][correct]', 0) !!}
+                    {!! Form::checkbox('word[answers][0][correct]') !!}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="form-group">
-    <button type="submit" class="btn btn-primary">
-        Save <i class="fa fa-arrow-right"></i>
-    </button>
-</div>
+{!! Form::submitBtn('Save') !!}

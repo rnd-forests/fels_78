@@ -3,16 +3,14 @@
 @section('content')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <strong class="text-success">{{ plural($source, counting($results)) }}</strong> found for
-                    <strong class="text-danger">"{{ $pattern }}"</strong> keyword
-                </div>
+            <div class="well-w">
+                <strong class="text-success">{{ plural($source, counting($results)) }}</strong> found for
+                <strong class="text-danger">"{{ $pattern }}"</strong> keyword
             </div>
             @if(blank($results))
                 @include('layouts.partials._empty')
             @else
-                <div class="panel panel-default">
+                <div class="panel panel-success">
                     <div class="panel-heading">Searching Results</div>
                     <ul class="list-group auto-pagination">
                         @if($source === 'user')

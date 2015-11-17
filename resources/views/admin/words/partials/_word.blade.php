@@ -17,8 +17,7 @@
             @foreach($word->answers as $answer)
                 <div class="list-group-item">
                     <div class="pull-right">
-                        <button class="btn btn-default btn-xs"
-                                data-toggle="collapse"
+                        <button class="btn btn-default btn-xs" data-toggle="collapse"
                                 data-target="#{{ $answer->id }}-answer-update">
                             <i class="fa fa-pencil"></i>
                         </button>

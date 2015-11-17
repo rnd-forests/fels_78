@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('title', 'Categories')
-@section('categorySubmit', 'Create')
 @section('content')
     <div class="row">
         @if(blank($categories))
@@ -8,12 +7,10 @@
         @else
             <div class="admin-wrapper">
                 <div class="well-w">
-                    <strong class="text-info">{{ plural('CATEGORY', counting($categories)) }}</strong>
+                    <strong>{{ plural('CATEGORY', counting($categories)) }}</strong>
                     <div class="pull-right">
-                        <button type="button"
-                                class="btn btn-primary btn-xs"
-                                data-toggle="modal"
-                                data-target="#add-category">
+                        <button type="button" class="btn btn-primary btn-xs"
+                                data-toggle="modal" data-target="#add-category">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
@@ -40,8 +37,7 @@
                                     <td>{{ short_time($category->created_at) }}</td>
                                     <td>
                                         <a href="{{ route('admin.categories.edit', $category) }}"
-                                           class="btn btn-info btn-xs"
-                                           title="Update">
+                                           class="btn btn-info btn-xs" title="Update">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                         {!! Form::delete('admin.categories.destroy', $category) !!}
@@ -56,7 +52,17 @@
             </div>
         @endif
     </div>
-    @include('admin.categories.partials._add_category_modal')
+    <div class="modal" id="add-category">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    {!! Form::model($category = new \FELS\Entities\Category, ['route' => 'admin.categories.store']) !!}
+                        @include('admin.categories.partials._main_form', ['submit' => 'Create'])
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 @section('footer')
     @if($errors->all())
