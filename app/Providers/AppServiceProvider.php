@@ -40,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
                 break;
             case 'local':
                 $this->logDatabaseQueries();
+                $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
                 break;
             case 'testing':
                 config(['database.default' => 'sqlite']);

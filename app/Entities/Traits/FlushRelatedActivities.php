@@ -26,10 +26,8 @@ trait FlushRelatedActivities
      */
     public static function clearInvalidActivities()
     {
-        Activity::all()->filter(function ($activity) {
+        Activity::destroy(Activity::all()->filter(function ($activity) {
             return is_null($activity->targetable);
-        })->each(function ($activity) {
-            $activity->delete();
-        });
+        })->lists('id')->toArray());
     }
 }

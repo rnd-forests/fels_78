@@ -137,4 +137,12 @@ interface UserRepository
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getLeaderboard();
+
+    /**
+     * Fetch all activities for a user.
+     *
+     * @param $user
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function fetchActivitiesFor($user);
 }

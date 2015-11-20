@@ -232,7 +232,7 @@ class EloquentUserRepository implements
      */
     public function getActivityFeedFor($user)
     {
-        return Activity::whereIn('user_id', array_merge(
+        return Activity::with('user', 'targetable')->whereIn('user_id', array_merge(
             $user->following()->lists('followed_id')->toArray(),
             [$user->id]
         ))->latest()->paginate(20);
@@ -267,5 +267,16 @@ class EloquentUserRepository implements
     {
         return $this->model->with('lessons', 'words')->where('learned_words', '>', 0)
             ->orderBy('learned_words', 'desc')->take(15)->get();
+    }
+
+    /**
+     * Fetch all activities for a user.
+     *
+     * @param $user
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function fetchActivitiesFor($user)
+    {
+        return $user->activities()->with('user', 'targetable')->latest()->paginate(20);
     }
 }
