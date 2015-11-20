@@ -16,6 +16,7 @@ class Lesson extends Model
         FlushRelatedActivities;
 
     protected $table = 'lessons';
+    protected $with = ['category'];
     protected $dates = ['finished_at'];
     protected static $capturedEvents = [];
     protected $casts = ['finished' => 'boolean'];
@@ -84,6 +85,17 @@ class Lesson extends Model
     }
 
     /**
+     * Query scope for unfinished lessons.
+     *
+     * @param $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUnfinished($query)
+    {
+        return $query->where('finished', false);
+    }
+
+    /**
      * Check if a lesson is finished or not.
      *
      * @return bool
@@ -114,5 +126,15 @@ class Lesson extends Model
             ? Carbon::parse($this->created_at)
                 ->diffInSeconds(Carbon::parse($this->finished_at), true)
             : 0;
+    }
+
+    /**
+     * Get the lifetime of a lesson.
+     *
+     * @return int
+     */
+    public function getLifetimeAttribute()
+    {
+        return Carbon::parse($this->created_at)->diffInDays(Carbon::now(), true);
     }
 }
