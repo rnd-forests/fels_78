@@ -24,16 +24,38 @@ class Avatar
      */
     public function make()
     {
-        $directory = $this->getPhotoDirectory();
+        $directory = $this->generateAvatarDirectory();
         File::exists($directory) || File::makeDirectory($directory);
 
-        $path = $this->getPhotoDirectory() . $this->getPhotoName();
+        $path = "{$directory}{$this->constructAvatarName()}";
+        $this->updateAvatarAttribute($path);
+
+        return $this->saveNewAvatar($path);
+    }
+
+    /**
+     * Change the value of avatar attribute for the user.
+     *
+     * @param $path
+     * @return bool|int
+     */
+    protected function updateAvatarAttribute($path)
+    {
         $relativePath = clear_pattern(public_path(), $path);
 
-        $this->user->update(['avatar' => $relativePath]);
+        return $this->user->update(['avatar' => $relativePath]);
+    }
 
-        return Image::cache(function ($imageCache) use ($path) {
-            $imageCache->make($this->getUploadedFilePath())
+    /**
+     * Apply avatar filter and save new avatar for user.
+     *
+     * @param $path
+     * @return \Intervention\Image\Image
+     */
+    protected function saveNewAvatar($path)
+    {
+        return Image::cache(function ($cache) use ($path) {
+            $cache->make($this->getUploadedFilePath())
                 ->filter(new AvatarFilter)
                 ->save($path);
         }, config('avatar.cache_time'), true);
@@ -44,7 +66,7 @@ class Avatar
      *
      * @return string
      */
-    protected function getPhotoDirectory()
+    protected function generateAvatarDirectory()
     {
         return config('avatar.base_directory') . $this->user->slug . '/';
     }
@@ -55,7 +77,7 @@ class Avatar
      *
      * @return string
      */
-    protected function getPhotoName()
+    protected function constructAvatarName()
     {
         $name = md5($this->user->email);
         $extension = $this->file->getClientOriginalExtension();

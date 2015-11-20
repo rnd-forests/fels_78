@@ -24,7 +24,7 @@ class CategoryWordController extends Controller
     public function index($categorySlug)
     {
         $category = $this->categories->findBySlug($categorySlug);
-        $words = $category->words()->alphabetized()->paginate(10);
+        $words = $this->categories->fetchWordsIn($category);
 
         return view('admin.categories.words', compact('category', 'words'));
     }

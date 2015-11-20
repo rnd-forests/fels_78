@@ -125,4 +125,15 @@ class EloquentCategoryRepository implements
     {
         return $this->model->with('words')->latest()->paginate($limit);
     }
+
+    /**
+     * Fetch all words in a category.
+     *
+     * @param $category
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function fetchWordsIn($category)
+    {
+        return $category->words()->with('category', 'answers')->alphabetized()->paginate(10);
+    }
 }

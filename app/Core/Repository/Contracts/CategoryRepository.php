@@ -53,4 +53,12 @@ interface CategoryRepository
      * @return \Illuminate\Database\Eloquent\Collection|null
      */
     public function filterWords($user, $category, $type, $level);
+
+    /**
+     * Fetch all words in a category.
+     *
+     * @param $category
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function fetchWordsIn($category);
 }

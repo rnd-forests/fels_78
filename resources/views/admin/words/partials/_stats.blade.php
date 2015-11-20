@@ -16,21 +16,30 @@
         </div>
     </div>
     @inject('counter', 'FELS\Services\WordCounter')
+    {{--*/
+        $hard = $counter->percentageOfHardWords();
+        $medium = $counter->percentageOfMediumWords();
+        $easy = $counter->percentageOfEasyWords();
+    /*--}}
+    <h5 class="text-danger">HARD</h5>
     <div class="progress">
         <div class="progress-bar progress-bar-danger progress-bar-striped"
-             style="width: {{ $counter->percentageOfHardWords() }}%">
-            <span>{{ $counter->percentageOfHardWords() }}%</span>
-        </div>
-        <div class="progress-bar progress-bar-warning progress-bar-striped"
-             style="width: {{ $counter->percentageOfMediumWords() }}%">
-            <span>{{ $counter->percentageOfMediumWords() }}%</span>
-        </div>
-        <div class="progress-bar progress-bar-success progress-bar-striped"
-             style="width: {{ $counter->percentageOfEasyWords() }}%">
-            <span>{{ $counter->percentageOfEasyWords() }}%</span>
+             style="width: {{ $hard[1] }}%">
+            <span>{{ $hard[1] }}% ({{ $hard[0] }})</span>
         </div>
     </div>
-    <h4 class="text-danger">{{ plural2('Word', 'Hard', $counter->countHardWords()) }}</h4>
-    <h4 class="text-warning">{{ plural2('Word', 'Medium', $counter->countMediumWords()) }}</h4>
-    <h4 class="text-success">{{ plural2('Word', 'Easy', $counter->countEasyWords()) }}</h4>
+    <h5 class="text-warning">MEDIUM</h5>
+    <div class="progress">
+        <div class="progress-bar progress-bar-warning progress-bar-striped"
+             style="width: {{ $medium[1] }}%">
+            <span>{{ $medium[1] }}% ({{ $medium[0] }})</span>
+        </div>
+    </div>
+    <h5 class="text-success">EASY</h5>
+    <div class="progress">
+        <div class="progress-bar progress-bar-success progress-bar-striped"
+             style="width: {{ $easy[1] }}%">
+            <span>{{ $easy[1] }}% ({{ $easy[0] }})</span>
+        </div>
+    </div>
 </div>

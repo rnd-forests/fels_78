@@ -26,7 +26,7 @@ class ProfilesController extends Controller
     public function show($slug)
     {
         $user = $this->users->findBySlugWithRelations($slug);
-        $activityList = $user->activities()->latest()->paginate(20);
+        $activityList = $this->users->fetchActivitiesFor($user);
 
         return view('users.profile.show', compact('user', 'activityList'));
     }

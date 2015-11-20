@@ -28,7 +28,7 @@ abstract class AbstractOAuth
      * Authorize user with given authentication provider.
      *
      * @param $code
-     * @param $listener
+     * @param \FELS\Core\OAuth\Contracts\OAuthUserListener $listener
      * @return \Illuminate\Http\RedirectResponse
      */
     public function authorize($code, $listener)
