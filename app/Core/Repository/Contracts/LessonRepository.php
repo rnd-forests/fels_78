@@ -21,4 +21,12 @@ interface LessonRepository
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function fetchLessons($user, $category);
+
+    /**
+     * Fetch unprocessed lessons that have lifetime greater than
+     * a predefined time interval (the default is 7 days).
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function fetchUnprocessedLessons();
 }

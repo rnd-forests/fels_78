@@ -4,6 +4,7 @@ namespace FELS\Core\Repository;
 
 use FELS\Entities\Lesson;
 use FELS\Entities\Category;
+use FELS\Core\Repository\Traits\Globally;
 use FELS\Core\Repository\Traits\Findable;
 use FELS\Core\Repository\Contracts\LessonRepository;
 use FELS\Core\Repository\Contracts\Findable as FindableContract;
@@ -12,7 +13,8 @@ class EloquentLessonRepository implements
     FindableContract,
     LessonRepository
 {
-    use Findable;
+    use Findable,
+        Globally;
 
     protected $model;
 
@@ -44,5 +46,18 @@ class EloquentLessonRepository implements
     public function fetchLessons($user, $category)
     {
         return $user->lessons()->where('category_id', $category->id)->paginate(15);
+    }
+
+    /**
+     * Fetch unprocessed lessons that have lifetime greater than
+     * a predefined time interval (the default is 7 days).
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function fetchUnprocessedLessons()
+    {
+        return $this->model->unfinished()->get()->filter(function ($lesson) {
+            return $lesson->lifetime > config('lesson.max_unprocessed_time');
+        });
     }
 }

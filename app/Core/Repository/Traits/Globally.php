@@ -23,4 +23,15 @@ trait Globally
     {
         return $this->model->count();
     }
+
+    /**
+     * Delete model instances using their IDs.
+     *
+     * @param array $ids
+     * @return int
+     */
+    public function destroyAll(array $ids)
+    {
+        return $this->model->destroy($ids);
+    }
 }
