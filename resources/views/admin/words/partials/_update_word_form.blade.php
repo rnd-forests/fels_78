@@ -7,7 +7,5 @@
     <div class="form-group">
         {!! Form::select('level', \FELS\Entities\Word::getLevels(), $word->level, ['class' => 'form-control']) !!}
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Change</button>
-    </div>
+    {!! Form::submitBtn('Change') !!}
 {!! Form::close() !!}

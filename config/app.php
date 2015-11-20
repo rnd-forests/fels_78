@@ -155,7 +155,7 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        FELS\Providers\FormMacroServiceProvider::class,
+        FELS\Providers\HtmlServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
