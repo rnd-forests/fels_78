@@ -32,10 +32,8 @@
                     <div class="alert alert-danger" role="alert">
                         {!! trans('user.account.warning') !!}
                     </div>
-                    {!! Form::open(['route' => ['users.destroy', $user], 'method' => 'DELETE']) !!}
-                        <button type="submit" class="btn btn-danger">
-                            Cancel Account <i class="fa fa-bomb"></i>
-                        </button>
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['users.destroy', $user]]) !!}
+                        {!! Form::submitBtn('Cancel Account', 'btn-danger') !!}
                     {!! Form::close() !!}
                 </div>
             </div>

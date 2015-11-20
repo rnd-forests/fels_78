@@ -22,11 +22,7 @@
                         {!! Form::label('password_confirmation', 'Password Confirmation', ['class' => 'control-label']) !!}
                         {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">
-                            Reset Password <i class="fa fa-arrow-right"></i>
-                        </button>
-                    </div>
+                    {!! Form::submitBtn('Reset Password') !!}
                 {!! Form::close() !!}
             </div>
         </div>

@@ -26,9 +26,5 @@
             {!! Form::radio('filter-by', \FELS\Entities\Word::ALPHABET) !!} All words (alphabetical order)
         </label>
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">
-            Filter <i class="fa fa-arrow-right"></i>
-        </button>
-    </div>
+    {!! Form::submitBtn('Filter') !!}
 {!! Form::close() !!}

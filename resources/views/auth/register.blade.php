@@ -34,9 +34,7 @@
                         {!! Form::label('password_confirmation', 'Password Confirmation', ['class' => 'control-label']) !!}
                         {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Sign Up <i class="fa fa-arrow-right"></i></button>
-                    </div>
+                    {!! Form::submitBtn('Sign Up') !!}
                 {!! Form::close() !!}
             </div>
         </div>

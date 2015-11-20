@@ -35,9 +35,7 @@
                             <label><input type="checkbox" name="remember"> Remember me</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Sign In <i class="fa fa-arrow-right"></i></button>
-                    </div>
+                    {!! Form::submitBtn('Sign In') !!}
                 {!! Form::close() !!}
             </div>
         </div>

@@ -12,9 +12,5 @@
         {!! Form::text('new_name', null, ['class' => 'form-control']) !!}
         {!! error_text($errors, 'new_name') !!}
     </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">
-            Update <i class="fa fa-arrow-right"></i>
-        </button>
-    </div>
+    {!! Form::submitBtn('Update') !!}
 {!! Form::close() !!}
