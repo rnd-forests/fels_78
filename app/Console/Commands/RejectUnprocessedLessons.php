@@ -2,6 +2,7 @@
 
 namespace FELS\Console\Commands;
 
+use DB;
 use Illuminate\Console\Command;
 use FELS\Core\Repository\Contracts\LessonRepository;
 
@@ -24,9 +25,11 @@ class RejectUnprocessedLessons extends Command
      */
     public function handle()
     {
-        $this->lessons->destroyAll(
-            $this->lessons->fetchUnprocessedLessons()->lists('id')->toArray()
-        );
+        DB::transaction(function () {
+            $this->lessons->destroyAll(
+                $this->lessons->fetchUnprocessedLessons()->lists('id')->toArray()
+            );
+        });
 
         $this->info('All unprocessed lessons have been rejected!');
     }

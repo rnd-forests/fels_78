@@ -3,5 +3,4 @@
     <button type="submit" class="btn btn-danger unfollow-button">
         <i class="fa fa-user-times"></i> Unfollow
     </button>
-    <i class="fa fa-cog fa-spin fa-lg uf-loading hidden"></i>
 {!! Form::close() !!}

@@ -32,12 +32,9 @@ class RedirectIfNotCorrectUser
             return redirect()->guest('auth/login');
         }
 
-        $routeKey = $request->route('users');
-        if ($routeKey) {
-            $user = $this->users->findBySlug($routeKey);
-            if (!$user || !$user->is(auth()->user())) {
-                abort(403);
-            }
+        $user = $request->route('users');
+        if (!$user || !$user->is(auth()->user())) {
+            abort(403);
         }
 
         return $next($request);

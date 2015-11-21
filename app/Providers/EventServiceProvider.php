@@ -6,10 +6,10 @@ use FELS\Entities\User;
 use FELS\Entities\Word;
 use FELS\Entities\Lesson;
 use FELS\Entities\Category;
-use FELS\Listeners\UserEventListener;
 use FELS\Entities\Observers\UserObserver;
 use FELS\Entities\Observers\WordObserver;
 use FELS\Entities\Observers\LessonObserver;
+use FELS\Listeners\User\UserEventSubscriber;
 use FELS\Entities\Observers\CategoryObserver;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -31,7 +31,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $subscribe = [
-        UserEventListener::class,
+        UserEventSubscriber::class,
     ];
 
     /**

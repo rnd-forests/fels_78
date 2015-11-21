@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
         foreach ($this->seeders as $seeder) {
             $this->call($seeder);
         }
+        Model::reguard();
     }
 
     /**
