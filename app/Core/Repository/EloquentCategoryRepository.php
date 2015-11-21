@@ -4,17 +4,14 @@ namespace FELS\Core\Repository;
 
 use FELS\Entities\Word;
 use FELS\Entities\Category;
-use FELS\Core\Repository\Traits\Findable;
+use FELS\Core\Repository\Contracts\Findable;
 use FELS\Core\Repository\Contracts\Paginatable;
 use FELS\Core\Repository\Contracts\CategoryRepository;
-use FELS\Core\Repository\Contracts\Findable as FindableContract;
+use FELS\Core\Repository\Traits\Findable as FindableTrait;
 
-class EloquentCategoryRepository implements
-    Paginatable,
-    FindableContract,
-    CategoryRepository
+class EloquentCategoryRepository implements Findable, Paginatable, CategoryRepository
 {
-    use Findable;
+    use FindableTrait;
 
     protected $model;
 
@@ -24,7 +21,7 @@ class EloquentCategoryRepository implements
     }
 
     /**
-     * Create a new model instance.
+     * Create a new category.
      *
      * @param array $data
      * @return \FELS\Entities\Category
@@ -35,29 +32,25 @@ class EloquentCategoryRepository implements
     }
 
     /**
-     * Update a model instance.
+     * Update a category.
      *
      * @param array $data
-     * @param $slug
+     * @param $category
      * @return bool|int
      */
-    public function update(array $data, $slug)
+    public function update(array $data, $category)
     {
-        $category = $this->findBySlug($slug);
-
         return $category->update($data);
     }
 
     /**
      * Delete a category.
      *
-     * @param $slug
+     * @param $category
      * @return bool|null
      */
-    public function delete($slug)
+    public function delete($category)
     {
-        $category = $this->findBySlug($slug);
-
         return $category->delete();
     }
 
@@ -74,11 +67,14 @@ class EloquentCategoryRepository implements
     /**
      * Get the first match category.
      *
-     * @return \FELS\Entities\Category
+     * @param $key
+     * @return Category
      */
-    public function first()
+    public function findOrFirst($key)
     {
-        return $this->model->orderBy('name', 'asc')->firstOrFail();
+        return is_null($key)
+            ? $this->model->orderBy('name', 'asc')->firstOrFail()
+            : $this->model->findOrFail($key);
     }
 
     /**
@@ -93,6 +89,7 @@ class EloquentCategoryRepository implements
     public function filterWords($user, $category, $type, $level)
     {
         $baseQuery = null;
+
         switch ($type) {
             case Word::LEARNED:
                 $baseQuery = $user->getLearnedWordsIn($category);
@@ -105,13 +102,20 @@ class EloquentCategoryRepository implements
                 break;
         }
 
-        if ($baseQuery) {
-            return $level == Word::COMBINED
-                ? $baseQuery->get()
-                : $baseQuery->ofLevel($level)->get();
-        }
+        return is_null($baseQuery) ? null : $level == Word::COMBINED
+            ? $baseQuery->get()
+            : $baseQuery->ofLevel($level)->get();
+    }
 
-        return null;
+    /**
+     * Fetch all words in a category.
+     *
+     * @param $category
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function fetchWordsFor($category)
+    {
+        return $category->words()->with('category', 'answers')->alphabetized()->paginate(10);
     }
 
     /**
@@ -124,16 +128,5 @@ class EloquentCategoryRepository implements
     public function paginate($limit, array $params = null)
     {
         return $this->model->with('words')->latest()->paginate($limit);
-    }
-
-    /**
-     * Fetch all words in a category.
-     *
-     * @param $category
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function fetchWordsIn($category)
-    {
-        return $category->words()->with('category', 'answers')->alphabetized()->paginate(10);
     }
 }

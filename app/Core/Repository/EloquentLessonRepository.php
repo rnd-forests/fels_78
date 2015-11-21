@@ -3,18 +3,14 @@
 namespace FELS\Core\Repository;
 
 use FELS\Entities\Lesson;
-use FELS\Entities\Category;
 use FELS\Core\Repository\Traits\Globally;
-use FELS\Core\Repository\Traits\Findable;
+use FELS\Core\Repository\Contracts\Findable;
 use FELS\Core\Repository\Contracts\LessonRepository;
-use FELS\Core\Repository\Contracts\Findable as FindableContract;
+use FELS\Core\Repository\Traits\Findable as FindableTrait;
 
-class EloquentLessonRepository implements
-    FindableContract,
-    LessonRepository
+class EloquentLessonRepository implements Findable, LessonRepository
 {
-    use Findable,
-        Globally;
+    use Globally, FindableTrait;
 
     protected $model;
 
@@ -26,14 +22,13 @@ class EloquentLessonRepository implements
     /**
      * Find a lesson that belongs to a category.
      *
-     * @param $categorySlug
+     * @param $category
      * @param $lessonId
      * @return \FELS\Entities\Lesson
      */
-    public function findLesson($categorySlug, $lessonId)
+    public function findLesson($category, $lessonId)
     {
-        return Category::where('slug', $categorySlug)
-            ->firstOrFail()->lessons()->firstOrNew(['id' => $lessonId]);
+        return $category->lessons()->firstOrNew(['id' => $lessonId]);
     }
 
     /**

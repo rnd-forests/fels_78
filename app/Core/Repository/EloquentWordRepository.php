@@ -3,17 +3,14 @@
 namespace FELS\Core\Repository;
 
 use FELS\Entities\Word;
-use FELS\Core\Repository\Traits\Findable;
+use FELS\Core\Repository\Contracts\Findable;
 use FELS\Core\Repository\Contracts\Paginatable;
 use FELS\Core\Repository\Contracts\WordRepository;
-use FELS\Core\Repository\Contracts\Findable as FindableContract;
+use FELS\Core\Repository\Traits\Findable as FindableTrait;
 
-class EloquentWordRepository implements
-    Paginatable,
-    WordRepository,
-    FindableContract
+class EloquentWordRepository implements Findable, Paginatable, WordRepository
 {
-    use Findable;
+    use FindableTrait;
 
     protected $model;
 
@@ -33,6 +30,29 @@ class EloquentWordRepository implements
     {
         return $this->model->with('category', 'answers')
             ->oldest('content')->paginate($limit);
+    }
+
+    /**
+     * Update a word.
+     *
+     * @param array $data
+     * @param $word
+     * @return bool|int
+     */
+    public function update(array $data, $word)
+    {
+        return $word->update($data);
+    }
+
+    /**
+     * Delete a word.
+     *
+     * @param $word
+     * @return bool|null
+     */
+    public function delete($word)
+    {
+        return $word->delete();
     }
 
     /**
