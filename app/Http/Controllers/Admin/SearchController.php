@@ -13,6 +13,7 @@ class SearchController extends Controller
     public function __construct(Searchable $search)
     {
         $this->search = $search;
+
         $this->middleware('admin');
     }
 
@@ -25,7 +26,7 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         list($source, $pattern) = [$request->get('type'), $request->get('q')];
-        $results = $this->search->adminSearch($source, $pattern);
+        $results = $this->search->byAdministrator($source, $pattern);
 
         return view('admin.search.results', compact('source', 'pattern', 'results'));
     }

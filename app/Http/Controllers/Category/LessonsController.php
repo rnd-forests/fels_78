@@ -3,6 +3,7 @@
 namespace FELS\Http\Controllers\Category;
 
 use JavaScript;
+use FELS\Entities\Category;
 use Illuminate\Http\Request;
 use FELS\Jobs\Lesson\CreateNewLesson;
 use FELS\Http\Controllers\Controller;
@@ -16,6 +17,7 @@ class LessonsController extends Controller
     public function __construct(LessonRepository $lessons)
     {
         $this->lessons = $lessons;
+
         $this->middleware('auth');
     }
 
@@ -27,7 +29,9 @@ class LessonsController extends Controller
      */
     public function store(Request $request)
     {
-        $flag = $this->dispatchFrom(CreateNewLesson::class, $request, ['user' => auth()->user()]);
+        $flag = $this->dispatchFrom(
+            CreateNewLesson::class, $request, ['user' => auth()->user()]
+        );
         if (!$flag) {
             flash()->warning(trans('lesson.not.enough.words'));
 
@@ -42,13 +46,13 @@ class LessonsController extends Controller
      * Display a lesson (can be processing lesson
      * or completed lesson).
      *
-     * @param $categorySlug
+     * @param Category $category
      * @param $lessonId
      * @return \Illuminate\View\View
      */
-    public function show($categorySlug, $lessonId)
+    public function show(Category $category, $lessonId)
     {
-        $lesson = $this->lessons->findLesson($categorySlug, $lessonId);
+        $lesson = $this->lessons->findLesson($category, $lessonId);
         JavaScript::put(['lessonDuration' => $lesson->duration]);
         $this->authorize('showLesson', $lesson);
 
@@ -56,14 +60,16 @@ class LessonsController extends Controller
     }
 
     /**
-     * Store results of the lesson.
+     * Store and process results of the lesson.
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
-        $flag = $this->dispatchFrom(StoreLessonResults::class, $request, ['user' => auth()->user()]);
+        $flag = $this->dispatchFrom(
+            StoreLessonResults::class, $request, ['user' => auth()->user()]
+        );
 
         return redirect()->route('categories.lessons.show', $flag);
     }
