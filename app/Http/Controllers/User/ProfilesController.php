@@ -2,6 +2,7 @@
 
 namespace FELS\Http\Controllers\User;
 
+use FELS\Entities\User;
 use Illuminate\Http\Request;
 use FELS\Core\Uploader\Avatar\Avatar;
 use FELS\Http\Controllers\Controller;
@@ -14,18 +15,19 @@ class ProfilesController extends Controller
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
+
         $this->middleware('auth.user', ['except' => ['show']]);
     }
 
     /**
      * Show profile of a user.
      *
-     * @param $slug
+     * @param User $user
      * @return \Illuminate\View\View
      */
-    public function show($slug)
+    public function show(User $user)
     {
-        $user = $this->users->findBySlugWithRelations($slug);
+        $user = $this->users->loadRelations($user);
         $activityList = $this->users->fetchActivitiesFor($user);
 
         return view('users.profile.show', compact('user', 'activityList'));
@@ -34,25 +36,23 @@ class ProfilesController extends Controller
     /**
      * Load form to edit user's profile.
      *
-     * @param $slug
+     * @param User $user
      * @return \Illuminate\View\View
      */
-    public function edit($slug)
+    public function edit(User $user)
     {
-        $user = $this->users->findBySlug($slug);
-
         return view('users.profile.edit', compact('user'));
     }
 
     /**
-     * Cancel account.
+     * Cancel user's account.
      *
-     * @param $userSlug
+     * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($userSlug)
+    public function destroy(User $user)
     {
-        $this->users->softDelete($userSlug);
+        $this->users->softDelete($user);
         flash()->success(trans('user.account.canceled'));
 
         return redirect()->home();
@@ -61,15 +61,14 @@ class ProfilesController extends Controller
     /**
      * Perform the process of changing user name.
      *
-     * @param $userSlug
      * @param Request $request
+     * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changeName(Request $request, $userSlug)
+    public function changeName(Request $request, User $user)
     {
         $this->validate($request, config('rules.name'));
         list($oldName, $newName) = [$request->get('old_name'), $request->get('new_name')];
-        $user = $this->users->findBySlug($userSlug);
         if ($this->isCorrectNames($oldName, $newName, $user)) {
             return $this->handleUpdateName($user, $newName);
         }
@@ -111,15 +110,14 @@ class ProfilesController extends Controller
     /**
      * Perform the process of changing user password.
      *
-     * @param $userSlug
      * @param Request $request
+     * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changePassword(Request $request, $userSlug)
+    public function changePassword(Request $request, User $user)
     {
         $this->validate($request, config('rules.password'));
         list($oldPassword, $newPassword) = [$request->get('old_pass'), $request->get('new_pass')];
-        $user = $this->users->findBySlug($userSlug);
         if ($this->isValidPassword($oldPassword, $user)) {
             return $this->handleUpdatePassword($user, $newPassword);
         }
@@ -159,13 +157,12 @@ class ProfilesController extends Controller
      * Handle the process of updating user avatar.
      *
      * @param Request $request
-     * @param $userSlug
+     * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function changeAvatar(Request $request, $userSlug)
+    public function changeAvatar(Request $request, User $user)
     {
         $this->validate($request, config('rules.avatar'));
-        $user = $this->users->findBySlug($userSlug);
         (new Avatar($user, $request->file('avatar')))->make();
         flash()->success(trans('user.avatar.updated'));
 

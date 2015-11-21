@@ -14,6 +14,7 @@ class WordsController extends Controller
     public function __construct(CategoryRepository $categories)
     {
         $this->categories = $categories;
+
         $this->middleware('auth');
     }
 
@@ -59,12 +60,9 @@ class WordsController extends Controller
      */
     protected function parseRequest()
     {
-        $request = app('request');
-        $category = $request->has('in-category')
-            ? $this->categories->findById($request->get('in-category'))
-            : $this->categories->first();
-        $type = $request->has('filter-by') ? $request->get('filter-by') : Word::LEARNED;
-        $level = $request->has('with-level') ? $request->get('with-level') : Word::COMBINED;
+        $category = $this->categories->findOrFirst(request()->get('in-category'));
+        $type = request()->input('filter-by', Word::LEARNED);
+        $level = request()->input('with-level', Word::COMBINED);
 
         return [$category, $type, $level];
     }

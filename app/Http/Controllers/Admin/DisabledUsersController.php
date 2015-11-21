@@ -2,6 +2,7 @@
 
 namespace FELS\Http\Controllers\Admin;
 
+use FELS\Entities\User;
 use FELS\Http\Controllers\Controller;
 use FELS\Core\Repository\Contracts\UserRepository;
 
@@ -12,6 +13,7 @@ class DisabledUsersController extends Controller
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
+
         $this->middleware('admin');
     }
 
@@ -28,14 +30,14 @@ class DisabledUsersController extends Controller
     }
 
     /**
-     * Restore a disabled account.
+     * Restore a disabled user.
      *
-     * @param $slug
+     * @param $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore($slug)
+    public function restore(User $user)
     {
-        $this->users->restore($slug);
+        $this->users->restore($user);
         flash()->success(trans('admin.user.restored'));
 
         return back();
@@ -44,12 +46,12 @@ class DisabledUsersController extends Controller
     /**
      * Permanently delete a user.
      *
-     * @param $slug
+     * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($slug)
+    public function destroy(User $user)
     {
-        $this->users->forceDelete($slug);
+        $this->users->forceDelete($user);
         flash()->success(trans('admin.user.destroyed'));
 
         return back();

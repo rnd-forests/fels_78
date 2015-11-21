@@ -2,6 +2,7 @@
 
 namespace FELS\Http\Controllers\Admin;
 
+use FELS\Entities\User;
 use Illuminate\Http\Request;
 use FELS\Http\Controllers\Controller;
 use FELS\Core\Repository\Contracts\UserRepository;
@@ -13,6 +14,7 @@ class UsersController extends Controller
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
+
         $this->middleware('admin');
     }
 
@@ -29,7 +31,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Load form to create new account.
+     * Load form to create new user.
      *
      * @return \Illuminate\View\View
      */
@@ -39,7 +41,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Store new account.
+     * Store new user.
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -57,12 +59,12 @@ class UsersController extends Controller
     /**
      * Soft delete a user.
      *
-     * @param $slug
+     * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($slug)
+    public function destroy(User $user)
     {
-        $this->users->softDelete($slug);
+        $this->users->softDelete($user);
         flash()->success(trans('admin.user.deleted'));
 
         return back();
