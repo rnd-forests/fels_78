@@ -7,11 +7,11 @@ interface LessonRepository
     /**
      * Find a lesson that belongs to a category.
      *
-     * @param $categorySlug
+     * @param $category
      * @param $lessonId
      * @return \FELS\Entities\Lesson
      */
-    public function findLesson($categorySlug, $lessonId);
+    public function findLesson($category, $lessonId);
 
     /**
      * Fetch lessons of a category that belong to a user.

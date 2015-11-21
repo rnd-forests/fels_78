@@ -4,19 +4,15 @@ namespace FELS\Core\Repository;
 
 use FELS\Entities\User;
 use FELS\Entities\Activity;
-use FELS\Core\Repository\Traits\Findable;
 use FELS\Core\Repository\Traits\Globally;
+use FELS\Core\Repository\Contracts\Findable;
 use FELS\Core\Repository\Contracts\Paginatable;
 use FELS\Core\Repository\Contracts\UserRepository;
-use FELS\Core\Repository\Contracts\Findable as FindableContract;
+use FELS\Core\Repository\Traits\Findable as FindableTrait;
 
-class EloquentUserRepository implements
-    Paginatable,
-    UserRepository,
-    FindableContract
+class EloquentUserRepository implements Findable, Paginatable, UserRepository
 {
-    use Globally,
-        Findable;
+    use Globally, FindableTrait;
 
     protected $model;
 
@@ -26,7 +22,7 @@ class EloquentUserRepository implements
     }
 
     /**
-     * Create a new model instance.
+     * Create a new user.
      *
      * @param array $data
      * @return \FELS\Entities\User
@@ -42,69 +38,48 @@ class EloquentUserRepository implements
     }
 
     /**
-     * Update a model instance.
+     * Restore a soft deleted user.
      *
-     * @param array $data
-     * @param $slug
-     * @return bool|int
-     */
-    public function update(array $data, $slug)
-    {
-        $user = $this->findBySlug($slug);
-
-        return $user->update($data);
-    }
-
-    /**
-     * Restore a soft deleted model instance.
-     *
-     * @param $slug
+     * @param $user
      * @return bool|null
      */
-    public function restore($slug)
+    public function restore($user)
     {
-        $user = $this->findSoftDeletedUser($slug);
-
         return $user->restore();
     }
 
     /**
-     * Soft delete a model instance.
+     * Soft delete a user.
      *
-     * @param $slug
+     * @param $user
      * @return bool|null
      */
-    public function softDelete($slug)
+    public function softDelete($user)
     {
-        $user = $this->findBySlug($slug);
-
         return $user->delete();
     }
 
     /**
-     * Permanently delete a soft deleted model instance.
+     * Permanently delete a soft deleted user.
      *
-     * @param $slug
+     * @param $user
      * @return bool|null
      */
-    public function forceDelete($slug)
+    public function forceDelete($user)
     {
-        $user = $this->findSoftDeletedUser($slug);
-
         return $user->forceDelete();
     }
 
     /**
      * Find a user by slug with eager loaded relationships.
      *
-     * @param $slug
+     * @param $user
      * @return mixed
      * @return \FELS\Entities\User
      */
-    public function findBySlugWithRelations($slug)
+    public function loadRelations($user)
     {
-        return $this->model->with('words', 'following', 'followers')
-            ->where('slug', $slug)->firstOrFail();
+        return $user->load('words', 'following', 'followers');
     }
 
     /**
@@ -120,7 +95,7 @@ class EloquentUserRepository implements
     }
 
     /**
-     * Add new user by administrator.
+     * Create a new user by administrator.
      *
      * @param array $data
      * @return \FELS\Entities\User
@@ -138,12 +113,12 @@ class EloquentUserRepository implements
     /**
      * Finding a user or creating a new user if the user does not exist.
      *
-     * @param array $userData
+     * @param array $data
      * @return \FELS\Entities\User
      */
-    public function findOrCreate(array $userData)
+    public function findOrCreate(array $data)
     {
-        return $this->model->firstOrCreate($userData);
+        return $this->model->firstOrCreate($data);
     }
 
     /**
@@ -168,30 +143,6 @@ class EloquentUserRepository implements
     public function clearActivationCode($user)
     {
         return $user->update(['confirmation_code' => '', 'confirmed' => true]);
-    }
-
-    /**
-     * Finding a soft deleted user.
-     *
-     * @param $slug
-     * @return \FELS\Entities\User
-     */
-    public function findSoftDeletedUser($slug)
-    {
-        return $this->model->onlyTrashed()->where('slug', $slug)->firstOrFail();
-    }
-
-    /**
-     * Paginate a collection of models.
-     *
-     * @param $limit
-     * @param array|null $params
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function paginate($limit, array $params = null)
-    {
-        return $this->model->with('following', 'followers')
-            ->normal()->paginate($limit);
     }
 
     /**
@@ -278,5 +229,18 @@ class EloquentUserRepository implements
     public function fetchActivitiesFor($user)
     {
         return $user->activities()->with('user', 'targetable')->latest()->paginate(20);
+    }
+
+    /**
+     * Paginate a collection of models.
+     *
+     * @param $limit
+     * @param array|null $params
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function paginate($limit, array $params = null)
+    {
+        return $this->model->with('following', 'followers')
+            ->normal()->paginate($limit);
     }
 }

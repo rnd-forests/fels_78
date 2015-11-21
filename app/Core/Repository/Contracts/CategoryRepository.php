@@ -5,7 +5,7 @@ namespace FELS\Core\Repository\Contracts;
 interface CategoryRepository
 {
     /**
-     * Create a new model instance.
+     * Create a new category.
      *
      * @param array $data
      * @return \FELS\Entities\Category
@@ -13,21 +13,21 @@ interface CategoryRepository
     public function create(array $data);
 
     /**
-     * Update a model instance.
+     * Update a category.
      *
      * @param array $data
-     * @param $slug
+     * @param $category
      * @return bool|int
      */
-    public function update(array $data, $slug);
+    public function update(array $data, $category);
 
     /**
      * Delete a category.
      *
-     * @param $slug
+     * @param $category
      * @return bool|null
      */
-    public function delete($slug);
+    public function delete($category);
 
     /**
      * Lists all categories by name and id.
@@ -39,9 +39,10 @@ interface CategoryRepository
     /**
      * Get the first match category.
      *
+     * @param $key
      * @return \FELS\Entities\Category
      */
-    public function first();
+    public function findOrFirst($key);
 
     /**
      * Filter words in a category.
@@ -60,5 +61,5 @@ interface CategoryRepository
      * @param $category
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function fetchWordsIn($category);
+    public function fetchWordsFor($category);
 }
