@@ -31,13 +31,11 @@ class EloquentSearch implements Searchable
      * @param $pattern
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function adminSearch($source, $pattern)
+    public function byAdministrator($source, $pattern)
     {
         $model = static::$namespace . ucfirst($source);
 
-        return call_user_func_array(
-            "{$model}::search",
-            [static::$attributes[$source], $pattern]
-        )->latest()->paginate(15);
+        return call_user_func_array("{$model}::search", [static::$attributes[$source], $pattern])
+            ->latest()->paginate(15);
     }
 }

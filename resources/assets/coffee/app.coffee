@@ -62,11 +62,9 @@ FELS = (($) ->
       type: form.find('input[name=_method]').val() or 'post'
       beforeSend: ->
         submit.prop 'disabled', true
-        form.find('.uf-loading').removeClass 'hidden'
       success: ->
         promise.resolve parseInt(stat.text().match(/\d+/).shift())
         submit.prop 'disabled', false
-        form.find('.uf-loading').addClass 'hidden'
         form.wrap '<div class="hidden"></div>'
         inverse.unwrap()
     promise
