@@ -40,7 +40,7 @@ class GithubAuthentication extends AbstractOAuth implements
     public function extractAndUpdate($user, $data)
     {
         $name = clear_pattern(parent::GITHUB_URL, $data->user['html_url']);
-        
+
         return $user->update(['github' => $name]);
     }
 }
