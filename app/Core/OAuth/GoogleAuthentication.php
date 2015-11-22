@@ -5,9 +5,7 @@ namespace FELS\Core\OAuth;
 use FELS\Core\OAuth\Contracts\Extractable;
 use FELS\Core\OAuth\Contracts\OAuthenticatable;
 
-class GoogleAuthentication extends AbstractOAuth implements
-    Extractable,
-    OAuthenticatable
+class GoogleAuthentication extends AbstractOAuth implements Extractable, OAuthenticatable
 {
     /**
      * Get the open authentication provider.

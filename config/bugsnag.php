@@ -72,6 +72,6 @@ return [
     |     )
     |
     */
-    'proxy' => null
+    'proxy' => null,
 
 ];
