@@ -5,7 +5,7 @@ namespace FELS\Core\Repository\Contracts;
 interface UserRepository
 {
     /**
-     * Create a new model instance.
+     * Create a new user.
      *
      * @param array $data
      * @return \FELS\Entities\User
@@ -13,46 +13,37 @@ interface UserRepository
     public function create(array $data);
 
     /**
-     * Update a model instance.
+     * Restore a soft deleted user.
      *
-     * @param array $data
-     * @param $slug
-     * @return bool|int
-     */
-    public function update(array $data, $slug);
-
-    /**
-     * Restore a soft deleted model instance.
-     *
-     * @param $slug
+     * @param $user
      * @return bool|null
      */
-    public function restore($slug);
+    public function restore($user);
 
     /**
-     * Soft delete a model instance.
+     * Soft delete a user.
      *
-     * @param $slug
+     * @param $user
      * @return bool|null
      */
-    public function softDelete($slug);
+    public function softDelete($user);
 
     /**
-     * Permanently delete a soft deleted model instance.
+     * Permanently delete a soft deleted user.
      *
-     * @param $slug
+     * @param $user
      * @return bool|null
      */
-    public function forceDelete($slug);
+    public function forceDelete($user);
 
     /**
      * Find a user by slug with eager loaded relationships.
      *
-     * @param $slug
+     * @param $user
      * @return mixed
      * @return \FELS\Entities\User
      */
-    public function findBySlugWithRelations($slug);
+    public function loadRelations($user);
 
     /**
      * Fetch paginated list of disabled users.
@@ -63,7 +54,7 @@ interface UserRepository
     public function disabled($limit);
 
     /**
-     * Add new user by administrator.
+     * Create a new user by administrator.
      *
      * @param array $data
      * @return \FELS\Entities\User
@@ -73,10 +64,10 @@ interface UserRepository
     /**
      * Finding a user or creating a new user if the user does not exist.
      *
-     * @param array $userData
+     * @param array $data
      * @return \FELS\Entities\User
      */
-    public function findOrCreate(array $userData);
+    public function findOrCreate(array $data);
 
     /**
      * Find a user by activation code.
