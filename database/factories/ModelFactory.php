@@ -30,6 +30,7 @@ $factory->define(Category::class, function (Faker $faker) {
 
 $factory->define(Word::class, function (Faker $faker) {
     $levels = [Word::HARD, Word::MEDIUM, Word::EASY];
+
     return [
         'content' => $faker->word,
         'level' => array_random_val($levels),

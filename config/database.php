@@ -122,7 +122,7 @@ return [
         ],
 
         'options' => [
-            'prefix'  => 'fels:'
+            'prefix'  => 'fels:',
         ],
 
     ],

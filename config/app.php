@@ -149,7 +149,7 @@ return [
         FELS\Providers\ComposerServiceProvider::class,
         FELS\Providers\SearchServiceProvider::class,
 
-        /**
+        /*
          * Third-party service providers...
          */
         Laracasts\Flash\FlashServiceProvider::class,
