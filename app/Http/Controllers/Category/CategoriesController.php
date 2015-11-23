@@ -2,6 +2,7 @@
 
 namespace FELS\Http\Controllers\Category;
 
+use FELS\Entities\Category;
 use FELS\Http\Controllers\Controller;
 use FELS\Core\Repository\Contracts\WordRepository;
 use FELS\Core\Repository\Contracts\LessonRepository;
@@ -20,6 +21,7 @@ class CategoriesController extends Controller
         $this->words = $words;
         $this->lessons = $lessons;
         $this->categories = $categories;
+
         $this->middleware('auth');
     }
 
@@ -38,12 +40,11 @@ class CategoriesController extends Controller
     /**
      * Display a single category.
      *
-     * @param $slug
+     * @param Category $category
      * @return \Illuminate\View\View
      */
-    public function show($slug)
+    public function show(Category $category)
     {
-        $category = $this->categories->findBySlug($slug);
         $lessons = $this->lessons->fetchLessons(auth()->user(), $category);
         $words = $this->words->fetchLearnedWords(auth()->user(), $category);
 

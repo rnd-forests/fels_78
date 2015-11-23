@@ -2,6 +2,7 @@
 
 namespace FELS\Http\Controllers\Admin;
 
+use FELS\Entities\Category;
 use Illuminate\Http\Request;
 use FELS\Http\Controllers\Controller;
 use FELS\Core\Repository\Contracts\CategoryRepository;
@@ -13,6 +14,7 @@ class CategoriesController extends Controller
     public function __construct(CategoryRepository $categories)
     {
         $this->categories = $categories;
+
         $this->middleware('admin');
     }
 
@@ -46,13 +48,11 @@ class CategoriesController extends Controller
     /**
      * Load form to edit category.
      *
-     * @param $slug
+     * @param Category $category
      * @return \Illuminate\View\View
      */
-    public function edit($slug)
+    public function edit(Category $category)
     {
-        $category = $this->categories->findBySlug($slug);
-
         return view('admin.categories.edit', compact('category'));
     }
 
@@ -60,13 +60,13 @@ class CategoriesController extends Controller
      * Update a category.
      *
      * @param Request $request
-     * @param $slug
+     * @param Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $slug)
+    public function update(Request $request, Category $category)
     {
         $this->validate($request, config('rules.category'));
-        $this->categories->update($request->only(['name', 'description']), $slug);
+        $this->categories->update($request->only(['name', 'description']), $category);
         flash()->success(trans('admin.category.updated'));
 
         return redirect()->route('admin.categories.index');
@@ -75,12 +75,12 @@ class CategoriesController extends Controller
     /**
      * Delete a category.
      *
-     * @param $slug
+     * @param Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($slug)
+    public function destroy(Category $category)
     {
-        $this->categories->delete($slug);
+        $this->categories->delete($category);
         flash()->success(trans('admin.category.deleted'));
 
         return back();

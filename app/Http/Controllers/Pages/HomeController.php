@@ -23,7 +23,7 @@ class HomeController extends Controller
     {
         if (auth()->check()) {
             $activityList = $this->users->getActivityFeedFor(
-                auth()->user()->load('words', 'following', 'followers')
+                $this->users->loadRelations(auth()->user())
             );
 
             return view('pages.home', compact('activityList'));

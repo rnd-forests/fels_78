@@ -2,6 +2,7 @@
 
 namespace FELS\Http\Controllers\Admin;
 
+use FELS\Entities\Word;
 use Illuminate\Http\Request;
 use FELS\Jobs\Word\CreateNewWord;
 use FELS\Http\Controllers\Controller;
@@ -14,6 +15,7 @@ class WordsController extends Controller
     public function __construct(WordRepository $words)
     {
         $this->words = $words;
+
         $this->middleware('admin');
     }
 
@@ -32,13 +34,11 @@ class WordsController extends Controller
     /**
      * Display individual word.
      *
-     * @param $id
+     * @param Word $word
      * @return \Illuminate\View\View
      */
-    public function show($id)
+    public function show(Word $word)
     {
-        $word = $this->words->findById($id);
-
         return view('admin.words.show', compact('word'));
     }
 
@@ -69,17 +69,16 @@ class WordsController extends Controller
      * Update the content of a word.
      *
      * @param Request $request
-     * @param $id
+     * @param Word $word
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Word $word)
     {
         $this->validate($request, config('rules.word'));
-        $word = $this->words->findById($id);
-        $word->update([
+        $this->words->update([
             'content' => $request->get('content'),
             'level' => $request->get('level'),
-        ]);
+        ], $word);
 
         return $word->toJson();
     }
@@ -87,16 +86,14 @@ class WordsController extends Controller
     /**
      * Delete a word.
      *
-     * @param Request $request
-     * @param $id
+     * @param Word $word
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Word $word)
     {
-        $word = $this->words->findById($id);
-        $word->delete();
+        $this->words->delete($word);
 
-        if (!$request->ajax()) {
+        if (!request()->ajax()) {
             flash()->success(trans('admin.word.deleted'));
 
             return redirect()->route('admin.words.index');
