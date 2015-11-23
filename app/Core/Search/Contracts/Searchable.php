@@ -11,5 +11,5 @@ interface Searchable
      * @param $pattern
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function adminSearch($source, $pattern);
+    public function byAdministrator($source, $pattern);
 }

@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->configureAppEnvironments();
+        $this->configureEnvironments();
     }
 
     /**
@@ -25,22 +25,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerMailer();
+        $this->bindMailerContract();
     }
 
     /**
      * Set different configurations for different
      * application environments.
      */
-    protected function configureAppEnvironments()
+    protected function configureEnvironments()
     {
         switch ($this->app->environment()) {
             case 'production':
-                $this->configurePgSQL();
+                $this->configurePostgreSQL();
                 break;
             case 'local':
                 $this->logDatabaseQueries();
-                $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+                if (class_exists('Barryvdh\Debugbar\ServiceProvider')) {
+                    $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+                }
                 break;
             case 'testing':
                 config(['database.default' => 'sqlite']);
@@ -62,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register mailer interfaces.
      */
-    protected function registerMailer()
+    protected function bindMailerContract()
     {
         $this->app->singleton(UserMailerContract::class, UserMailer::class);
     }
@@ -71,7 +73,7 @@ class AppServiceProvider extends ServiceProvider
      * Configure PostgreSQL for production.
      * Heroku deployment.
      */
-    protected function configurePgSQL()
+    protected function configurePostgreSQL()
     {
         $url = env('DATABASE_URL');
         config(['database.connections.pgsql.host' => parse_url($url)['host']]);
