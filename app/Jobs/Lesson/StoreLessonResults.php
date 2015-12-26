@@ -3,11 +3,10 @@
 namespace FELS\Jobs\Lesson;
 
 use FELS\Jobs\Job;
-use Illuminate\Contracts\Bus\SelfHandling;
 use FELS\Core\Repository\Contracts\WordRepository;
 use FELS\Core\Repository\Contracts\LessonRepository;
 
-class StoreLessonResults extends Job implements SelfHandling
+class StoreLessonResults extends Job
 {
     protected $user;
     protected $words;
@@ -70,7 +69,7 @@ class StoreLessonResults extends Job implements SelfHandling
     protected function validateChoice($word, $choice)
     {
         $validChoices = app(WordRepository::class)->findById($word)
-            ->answers()->lists('correct', 'id')->toArray();
+            ->answers()->pluck('correct', 'id')->toArray();
 
         return $validChoices[$choice] === true;
     }

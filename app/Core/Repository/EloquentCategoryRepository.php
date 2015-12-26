@@ -61,7 +61,7 @@ class EloquentCategoryRepository implements Findable, Paginatable, CategoryRepos
      */
     public function lists()
     {
-        return $this->model->oldest('name')->lists('name', 'id');
+        return $this->model->oldest('name')->pluck('name', 'id');
     }
 
     /**

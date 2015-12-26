@@ -1,14 +1,17 @@
 <div class="form-group">
     {!! Form::label('word[content]', 'Content', ['class' => 'control-label']) !!}
-    {!! Form::text('word[content]', null, ['class' => 'form-control', 'required']) !!}
+    {!! Form::text('word[content]', null, ['class' => 'form-control']) !!}
+    {!! error_text($errors, 'word.content') !!}
 </div>
 <div class="form-group">
     {!! Form::label('category', 'Category', ['class' => 'control-label']) !!}
     {!! Form::select('category', $categories, null, ['class' => 'form-control']) !!}
+    {!! error_text($errors, 'category') !!}
 </div>
 <div class="form-group">
     {!! Form::label('word[level]', 'Difficulty Level', ['class' => 'control-label']) !!}
     {!! Form::select('word[level]', \FELS\Entities\Word::getLevels(), null, ['class' => 'form-control']) !!}
+    {!! error_text($errors, 'word.level') !!}
 </div>
 <div class="alert alert-info form-helper">
     {{ trans('word.form.helper') }}

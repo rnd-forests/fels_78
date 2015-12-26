@@ -27,7 +27,7 @@ class RejectUnprocessedLessons extends Command
     {
         DB::transaction(function () {
             $this->lessons->destroyAll(
-                $this->lessons->fetchUnprocessedLessons()->lists('id')->toArray()
+                $this->lessons->fetchUnprocessedLessons()->pluck('id')->toArray()
             );
         });
 

@@ -12,7 +12,7 @@ return [
     | syntax for each one. Here you may set the default queue driver.
     |
     | Supported: "null", "sync", "database", "beanstalkd",
-    |            "sqs", "iron", "redis"
+    |            "sqs", "redis"
     |
     */
 
@@ -44,32 +44,23 @@ return [
 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
-            'host'   => 'localhost',
-            'queue'  => 'default',
-            'ttr'    => 60,
+            'host' => 'localhost',
+            'queue' => 'default',
+            'ttr' => 60,
         ],
 
         'sqs' => [
             'driver' => 'sqs',
-            'key'    => 'your-public-key',
+            'key' => 'your-public-key',
             'secret' => 'your-secret-key',
-            'queue'  => 'your-queue-url',
+            'queue' => 'your-queue-url',
             'region' => 'us-east-1',
-        ],
-
-        'iron' => [
-            'driver'  => 'iron',
-            'host'    => 'mq-aws-us-east-1.iron.io',
-            'token'   => env('IRON_TOKEN'),
-            'project' => env('IRON_PROJECT_ID'),
-            'queue'   => 'fels',
-            'encrypt' => true,
         ],
 
         'redis' => [
             'driver' => 'redis',
             'connection' => 'default',
-            'queue'  => 'default',
+            'queue' => 'default',
             'expire' => 60,
         ],
 
@@ -87,7 +78,8 @@ return [
     */
 
     'failed' => [
-        'database' => 'mysql', 'table' => 'failed_jobs',
+        'database' => env('DB_CONNECTION', 'mysql'),
+        'table' => 'failed_jobs',
     ],
 
 ];

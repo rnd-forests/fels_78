@@ -5,10 +5,9 @@ namespace FELS\Jobs\Lesson;
 use FELS\Jobs\Job;
 use FELS\Entities\Word;
 use FELS\Entities\Lesson;
-use Illuminate\Contracts\Bus\SelfHandling;
 use FELS\Core\Repository\Contracts\CategoryRepository;
 
-class CreateNewLesson extends Job implements SelfHandling
+class CreateNewLesson extends Job
 {
     protected $user;
     protected $category;
@@ -82,7 +81,7 @@ class CreateNewLesson extends Job implements SelfHandling
     {
         $baseQuery = $this->getUnlearnedWords();
 
-        return $baseQuery->lists('id')->shuffle()->take(config('lesson.max_words'))->toArray();
+        return $baseQuery->pluck('id')->shuffle()->take(config('lesson.max_words'))->toArray();
     }
 
     /**

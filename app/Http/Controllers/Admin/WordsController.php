@@ -55,10 +55,12 @@ class WordsController extends Controller
     /**
      * Store new word.
      *
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store()
+    public function store(Request $request)
     {
+        $this->validate($request, config('rules.word.create'));
         $this->dispatch(new CreateNewWord);
         flash()->success(trans('admin.word.created'));
 
@@ -74,7 +76,7 @@ class WordsController extends Controller
      */
     public function update(Request $request, Word $word)
     {
-        $this->validate($request, config('rules.word'));
+        $this->validate($request, config('rules.word.update'));
         $this->words->update([
             'content' => $request->get('content'),
             'level' => $request->get('level'),

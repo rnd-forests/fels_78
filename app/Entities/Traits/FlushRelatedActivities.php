@@ -28,6 +28,6 @@ trait FlushRelatedActivities
     {
         Activity::destroy(Activity::all()->filter(function ($activity) {
             return is_null($activity->targetable);
-        })->lists('id')->toArray());
+        })->pluck('id')->toArray());
     }
 }

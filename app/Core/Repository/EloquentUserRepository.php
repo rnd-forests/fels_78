@@ -184,7 +184,7 @@ class EloquentUserRepository implements Findable, Paginatable, UserRepository
     public function getActivityFeedFor($user)
     {
         return Activity::with('user', 'targetable')->whereIn('user_id', array_merge(
-            $user->following()->lists('followed_id')->toArray(),
+            $user->following()->pluck('followed_id')->toArray(),
             [$user->id]
         ))->latest()->paginate(20);
     }

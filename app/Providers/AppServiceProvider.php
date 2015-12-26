@@ -56,8 +56,8 @@ class AppServiceProvider extends ServiceProvider
     protected function logDatabaseQueries()
     {
         $logger = $this->app->make('log');
-        $this->app->make('db')->listen(function ($sql) use ($logger) {
-            $logger->info($sql);
+        $this->app->make('db')->listen(function ($event) use ($logger) {
+            $logger->info($event->sql);
         });
     }
 

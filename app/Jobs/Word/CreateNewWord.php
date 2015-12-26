@@ -5,10 +5,9 @@ namespace FELS\Jobs\Word;
 use FELS\Jobs\Job;
 use FELS\Entities\Word;
 use FELS\Entities\Answer;
-use Illuminate\Contracts\Bus\SelfHandling;
 use FELS\Core\Repository\Contracts\CategoryRepository;
 
-class CreateNewWord extends Job implements SelfHandling
+class CreateNewWord extends Job
 {
     /**
      * Create a new word.
@@ -29,8 +28,8 @@ class CreateNewWord extends Job implements SelfHandling
     {
         return app(CategoryRepository::class)
             ->findById(request()->get('category'))->words()->create([
-                'content' => $this->parseWordContent(),
-                'level' => $this->parseWordLevel(),
+                'content' => request()->input('word.content'),
+                'level' => request()->input('word.level'),
             ]);
     }
 
@@ -60,26 +59,6 @@ class CreateNewWord extends Job implements SelfHandling
      */
     protected function parseAnswers()
     {
-        return collect(array_values(head(request()->only('word.answers'))['answers']));
-    }
-
-    /**
-     * Parse word content returned from the request.
-     *
-     * @return string
-     */
-    protected function parseWordContent()
-    {
-        return head(request()->only('word.content'))['content'];
-    }
-
-    /**
-     * Parse word difficulty level from the request.
-     *
-     * @return string
-     */
-    protected function parseWordLevel()
-    {
-        return head(request()->only('word.level'))['level'];
+        return collect(array_values(request()->input('word.answers')));
     }
 }
