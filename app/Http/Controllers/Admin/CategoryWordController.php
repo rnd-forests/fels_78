@@ -14,7 +14,7 @@ class CategoryWordController extends Controller
     {
         $this->categories = $categories;
 
-        $this->middleware('admin');
+        $this->middleware('auth:admin');
     }
 
     /**

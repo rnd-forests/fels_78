@@ -15,7 +15,7 @@ class CategoriesController extends Controller
     {
         $this->categories = $categories;
 
-        $this->middleware('admin');
+        $this->middleware('auth:admin');
     }
 
     /**

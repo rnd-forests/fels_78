@@ -15,7 +15,7 @@ class UsersController extends Controller
     {
         $this->users = $users;
 
-        $this->middleware('admin');
+        $this->middleware('auth:admin');
     }
 
     /**

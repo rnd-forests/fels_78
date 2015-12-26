@@ -13,6 +13,11 @@ return [
         'password' => 'required',
     ],
 
+    'admin-session' => [
+        'email' => 'required|email',
+        'password' => 'required',
+    ],
+
     'name' => [
         'old_name' => 'required',
         'new_name' => 'required|different:old_name|alpha_spaces|max:255',

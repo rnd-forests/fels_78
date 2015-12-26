@@ -12,18 +12,23 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-        Route::group(['prefix' => 'users/disabled', 'as' => 'admin.users.'], function () {
-            Route::get('', 'DisabledUsersController@index')->name('disabled');
-            Route::put('{users}', 'DisabledUsersController@restore')->name('disabled.restore');
-            Route::delete('{users}', 'DisabledUsersController@destroy')->name('disabled.delete');
+    Route::group(['domain' => 'admin.' . env('DOMAIN')], function () {
+        Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+            Route::get('login', 'AuthController@create')->name('admin.login');
+            Route::post('login', 'AuthController@store')->name('admin.login');
+            Route::get('logout', 'AuthController@logout')->name('admin.logout');
+            Route::group(['prefix' => 'users/disabled', 'as' => 'admin.users.'], function () {
+                Route::get('', 'DisabledUsersController@index')->name('disabled');
+                Route::put('{users}', 'DisabledUsersController@restore')->name('disabled.restore');
+                Route::delete('{users}', 'DisabledUsersController@destroy')->name('disabled.delete');
+            });
+            Route::resource('users', 'UsersController', ['except' => ['show', 'edit', 'update']]);
+            Route::resource('categories', 'CategoriesController', ['except' => ['create', 'show']]);
+            Route::resource('categories.words', 'CategoryWordController', ['only' => ['index']]);
+            Route::resource('words', 'WordsController', ['except' => ['edit']]);
+            Route::resource('answers', 'AnswersController', ['only' => ['update', 'destroy']]);
+            Route::get('search', 'SearchController@search')->name('admin.search');
         });
-        Route::resource('users', 'UsersController', ['except' => ['show', 'edit', 'update']]);
-        Route::resource('categories', 'CategoriesController', ['except' => ['create', 'show']]);
-        Route::resource('categories.words', 'CategoryWordController', ['only' => ['index']]);
-        Route::resource('words', 'WordsController', ['except' => ['edit']]);
-        Route::resource('answers', 'AnswersController', ['only' => ['update', 'destroy']]);
-        Route::get('search', 'SearchController@search')->name('admin.search');
     });
 
     Route::group(['namespace' => 'Pages'], function () {

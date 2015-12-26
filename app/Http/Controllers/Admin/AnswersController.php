@@ -15,7 +15,7 @@ class AnswersController extends Controller
     {
         $this->answers = $answers;
 
-        $this->middleware('admin');
+        $this->middleware('auth:admin');
     }
 
     /**

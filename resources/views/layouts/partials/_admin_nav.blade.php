@@ -29,7 +29,7 @@
                         <i class="fa fa-search"></i>
                     </a>
                 </li>
-                <li><a href="{{ route('auth.logout') }}">Sign Out</a></li>
+                <li><a href="{{ route('admin.logout') }}">Sign Out</a></li>
             </ul>
         </div>
     </div>

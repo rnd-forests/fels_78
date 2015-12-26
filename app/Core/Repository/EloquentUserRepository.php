@@ -90,7 +90,7 @@ class EloquentUserRepository implements Findable, Paginatable, UserRepository
      */
     public function disabled($limit)
     {
-        return $this->model->normal()->onlyTrashed()
+        return $this->model->onlyTrashed()
             ->latest('deleted_at')->paginate($limit);
     }
 
@@ -240,7 +240,6 @@ class EloquentUserRepository implements Findable, Paginatable, UserRepository
      */
     public function paginate($limit, array $params = null)
     {
-        return $this->model->with('following', 'followers')
-            ->normal()->paginate($limit);
+        return $this->model->with('following', 'followers')->paginate($limit);
     }
 }

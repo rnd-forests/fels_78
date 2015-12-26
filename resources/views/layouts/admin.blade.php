@@ -1,10 +1,11 @@
 @extends('layouts.root')
 @section('content-layout')
     <div class="container">
-        @include('layouts.partials._admin_nav')
+        @if (auth()->guard('admin')->check())
+            @include('layouts.partials._admin_nav')
+        @endif
         @include('admin.search.search')
         @include('flash::message')
         @yield('content')
-        @include('layouts.partials._footer')
     </div>
 @stop

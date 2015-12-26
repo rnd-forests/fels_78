@@ -1,6 +1,7 @@
 <?php
 
 use FELS\Entities\User;
+use FELS\Entities\Admin;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -12,7 +13,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 'admin')->create([
+        factory(Admin::class)->create([
             'name' => 'FELS Administrator',
             'email' => 'administrator@fels.com',
         ]);

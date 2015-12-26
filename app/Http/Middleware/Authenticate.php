@@ -20,7 +20,9 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('auth/login');
+                return $guard == 'admin'
+                    ? redirect()->route('admin.login')
+                    : redirect()->guest('auth/login');
             }
         }
 

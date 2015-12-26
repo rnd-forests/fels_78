@@ -3,47 +3,33 @@
 namespace FELS\Entities;
 
 use BadMethodCallException;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use FELS\Entities\Traits\FollowableTrait;
 use Laracasts\Presenter\PresentableTrait;
 use FELS\Entities\Traits\SearchableTrait;
 use FELS\Entities\Presenters\UserPresenter;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Auth\Passwords\CanResetPassword;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use FELS\Entities\Traits\FlushRelatedActivities;
 use Cviebrock\EloquentSluggable\SluggableInterface;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Model implements
-    SluggableInterface,
-    AuthorizableContract,
-    AuthenticatableContract,
-    CanResetPasswordContract
+class User extends \Illuminate\Foundation\Auth\User implements SluggableInterface
 {
     use SoftDeletes,
-        Authorizable,
         SluggableTrait,
         FollowableTrait,
-        Authenticatable,
         SearchableTrait,
-        CanResetPassword,
         PresentableTrait,
         FlushRelatedActivities;
 
     protected $table = 'users';
     protected $dates = ['deleted_at'];
     protected $presenter = UserPresenter::class;
-    protected $casts = ['admin' => 'boolean', 'confirmed' => 'boolean'];
+    protected $casts = ['confirmed' => 'boolean'];
     protected $sluggable = ['build_from' => 'name', 'save_to' => 'slug'];
     protected $hidden = ['password', 'remember_token', 'confirmation_code'];
     protected $fillable = [
         'name', 'slug', 'email', 'password', 'learned_words',
-        'admin', 'confirmed', 'confirmation_code', 'avatar',
+        'confirmed', 'confirmation_code', 'avatar',
         'auth_provider', 'facebook', 'github', 'google',
     ];
 
@@ -78,16 +64,6 @@ class User extends Model implements
     }
 
     /**
-     * Check if a user is administrator or not.
-     *
-     * @return bool
-     */
-    public function isAdmin()
-    {
-        return $this->admin;
-    }
-
-    /**
      * Check if a user's account has been activated or not.
      *
      * @return bool
@@ -95,17 +71,6 @@ class User extends Model implements
     public function isConfirmed()
     {
         return $this->confirmed;
-    }
-
-    /**
-     * Scope for fetching normal users.
-     *
-     * @param $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeNormal($query)
-    {
-        return $query->where('admin', 0);
     }
 
     /**

@@ -16,7 +16,7 @@ class WordsController extends Controller
     {
         $this->words = $words;
 
-        $this->middleware('admin');
+        $this->middleware('auth:admin');
     }
 
     /**

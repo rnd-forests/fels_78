@@ -74,10 +74,6 @@ class SessionsController extends Controller
         session()->flash('app_status', 'login_success');
         $this->clearLoginAttempts($request);
 
-        if (auth()->user()->isAdmin()) {
-            return redirect()->route('admin.users.index');
-        }
-
         return redirect()->intended('/');
     }
 
