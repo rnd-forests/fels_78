@@ -184,8 +184,8 @@ class User extends Model implements
      *
      * @return string
      */
-    public function getRouteKey()
+    public function getRouteKeyName()
     {
-        return $this->slug;
+        return 'slug';
     }
 }

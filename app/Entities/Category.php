@@ -54,8 +54,8 @@ class Category extends Model implements SluggableInterface
      *
      * @return string
      */
-    public function getRouteKey()
+    public function getRouteKeyName()
     {
-        return $this->slug;
+        return 'slug';
     }
 }
