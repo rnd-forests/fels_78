@@ -1,26 +1,28 @@
 @extends('layouts.default')
 @section('title', 'Categories')
 @section('content')
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="well-w">
-                {{ trans('lesson.category.helper') }}
-            </div>
-            <div class="list-group auto-pagination">
-                @foreach($categories->chunk(15) as $categoryList)
-                    @foreach($categoryList as $category)
-                        <div class="list-group-item item">
-                            <h4 class="text-primary"><strong>{{ $category->name }}</strong></h4>
-                            <p>{{ $category->description }}</p>
-                            <a href="{{ route('categories.show', $category) }}" class="btn btn-default">
-                                Explore <i class="fa fa-arrow-right"></i>
-                            </a>
+    <div class="well-w">
+        {{ trans('lesson.category.helper') }}
+    </div>
+    <div class="auto-pagination">
+        @foreach($categories->chunk(4) as $categoryList)
+            <div class="row item">
+                @foreach($categoryList as $category)
+                    <div class="col-md-3">
+                        <div class="category">
+                            <h4 class="category--title">{{ $category->name }}</h4>
+                            <div class="category--details">{{ $category->description }}</div>
+                            <div class="text-center">
+                                <a href="{{ route('categories.show', $category) }}" class="btn btn-default">
+                                    Explore <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
-                    @endforeach
+                    </div>
                 @endforeach
             </div>
-            @include('layouts.partials._loader')
-            {!! paginate($categories) !!}
-        </div>
+        @endforeach
     </div>
+    @include('layouts.partials._loader')
+    {!! paginate($categories) !!}
 @stop

@@ -2,6 +2,7 @@
 
 namespace FELS\Jobs\Lesson;
 
+use Carbon\Carbon;
 use FELS\Jobs\Job;
 use FELS\Core\Repository\Contracts\WordRepository;
 use FELS\Core\Repository\Contracts\LessonRepository;
@@ -41,7 +42,7 @@ class StoreLessonResults extends Job
     protected function markLessonAsFinished()
     {
         $lesson = app(LessonRepository::class)->findById($this->lesson);
-        $lesson->update(['finished' => true, 'finished_at' => now()]);
+        $lesson->update(['finished' => true, 'finished_at' => Carbon::now()]);
         $this->user->pushActivity('finished', $lesson);
 
         return $lesson;

@@ -170,13 +170,6 @@ if (!function_exists('clear_pattern')) {
     }
 }
 
-if (!function_exists('now')) {
-    function now()
-    {
-        return Carbon::now();
-    }
-}
-
 if (!function_exists('percentage')) {
     function percentage($completed, $total)
     {
