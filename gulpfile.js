@@ -9,7 +9,7 @@ var Elixir    = require('laravel-elixir');
 var Task      = Elixir.Task;
 
 var paths = {
-    "bowerPath": './vendor/bower-components/'
+    'bowerPath': './vendor/bower-components/'
 };
 
 var bowerCssDir = [
@@ -51,4 +51,8 @@ Elixir(function (mix) {
     mix.scripts(['bower-all.js', 'app.js'], null, 'public/js');
 
     mix.version(['public/css/all.css', 'public/js/all.js']);
+
+    mix.browserSync({
+        proxy: 'fels.app'
+    });
 });

@@ -22,12 +22,12 @@
 </head>
 <body>
     @yield('content-layout')
+    <script src="{{ elixir('js/all.js') }}"></script>
     @if(session('app_status'))
         <script>
             @if(session('app_status') == 'login_success')
                 swal({
                     title: 'Hi, Again!',
-                    text: 'You are now logged in!',
                     type: 'success',
                     timer: 1500,
                     showConfirmButton: false
@@ -35,7 +35,7 @@
             @endif
         </script>
     @endif
-    <script src="{{ elixir('js/all.js') }}"></script>
     @yield('footer')
+    @include('flash::message')
 </body>
 </html>

@@ -5,7 +5,6 @@
             @include('layouts.partials._admin_nav')
         @endif
         @include('admin.search.search')
-        @include('flash::message')
         @yield('content')
     </div>
 @stop
