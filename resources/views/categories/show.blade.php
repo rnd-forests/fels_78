@@ -1,13 +1,17 @@
 @extends('layouts.default')
 @section('title', $category->name)
+@section('banner-content')
+    <div class="banner">
+        <div class="container">
+            <span class="banner--content">{{ trans('lesson.lesson.types') }}</span>
+        </div>
+    </div>
+@stop
 @section('content')
     <div class="row">
         <div class="col-md-6">
             <div class="well-w">
                 @include('categories.partials._start_form')
-            </div>
-            <div class="well-w text-muted">
-                {{ trans('lesson.lesson.types') }}
             </div>
             <div class="well-w">
                 Your previous lessons

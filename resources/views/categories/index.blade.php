@@ -1,9 +1,13 @@
 @extends('layouts.default')
 @section('title', 'Categories')
-@section('content')
-    <div class="well-w">
-        {{ trans('lesson.category.helper') }}
+@section('banner-content')
+    <div class="banner">
+        <div class="container">
+            <span class="banner--content">{{ trans('lesson.category.helper') }}</span>
+        </div>
     </div>
+@stop
+@section('content')
     <div class="auto-pagination">
         @foreach($categories->chunk(4) as $categoryList)
             <div class="row item">

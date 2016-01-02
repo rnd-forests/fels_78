@@ -1,8 +1,11 @@
 @extends('layouts.root')
 @section('content-layout')
-    <div class="container">
+    <header>
         @include('layouts.partials._main_nav')
+        @yield('banner-content')
+    </header>
+    <div class="container">
         @yield('content')
-        @include('layouts.partials._footer')
     </div>
+    @include('layouts.partials._footer')
 @stop

@@ -1,16 +1,20 @@
 @extends('layouts.default')
 @section('title', 'Learned Words')
+@section('banner-content')
+    <div class="banner">
+        <div class="container">
+            <div class="banner--content">
+                {{ trans('word.learned', [
+                    'wordCount' => plural('word', counting($words)),
+                    'rank' => $currentUser->ranking
+                ]) }}
+            </div>
+        </div>
+    </div>
+@stop
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="well-w">
-                <strong>
-                    {{ trans('word.learned', [
-                        'wordCount' => plural('word', counting($words)),
-                        'rank' => $currentUser->ranking
-                    ]) }}
-                </strong>
-            </div>
             @if(blank($words))
                 @include('layouts.partials._empty')
             @else

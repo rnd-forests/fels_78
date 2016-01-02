@@ -11,7 +11,7 @@
                 </div>
                 <div class="users auto-pagination">
                     @foreach($followers as $follower)
-                        <div class="users--user item">
+                        <div class="users--user-2 item">
                             <div class="media">
                                 <div class="media-left">
                                     <a href="{{ route('users.show', $follower) }}">

@@ -12,9 +12,6 @@
 </div>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <div class="alert alert-success form-helper">
-            {!! trans('lesson.guide', ['time' => $lesson->duration / 1000, 'word' => counting($lesson->words)]) !!}
-        </div>
         {!! Form::open(['method' => 'PATCH',
             'route' => ['categories.lessons.update', $lesson->category, $lesson],
             'class' => 'lesson']) !!}

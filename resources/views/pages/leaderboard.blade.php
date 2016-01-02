@@ -1,11 +1,17 @@
 @extends('layouts.default')
 @section('title', 'Leaderboard')
+@section('banner-content')
+    <div class="banner">
+        <div class="container">
+            <span class="banner--content">
+                <i class="fa fa-trophy"></i> Memorized Words Leaderboard
+            </span>
+        </div>
+    </div>
+@stop
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2 leaderboard">
-            <div class="well-w">
-                <strong><i class="fa fa-trophy"></i> Memorized Words Leaderboard</strong>
-            </div>
             @if(blank($users))
                 @include('layouts.partials._empty')
             @else

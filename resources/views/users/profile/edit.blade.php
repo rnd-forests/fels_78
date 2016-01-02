@@ -1,5 +1,12 @@
 @extends('layouts.default')
 @section('title', 'Settings')
+@section('banner-content')
+    <div class="banner">
+        <div class="container">
+            <span class="banner--content">Update your current profile</span>
+        </div>
+    </div>
+@stop
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
