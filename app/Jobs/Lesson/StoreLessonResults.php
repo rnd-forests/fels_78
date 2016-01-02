@@ -28,7 +28,7 @@ class StoreLessonResults extends Job
     public function handle()
     {
         $lesson = $this->markLessonAsFinished();
-        $this->updatePivots($this->parseUserChoices(), $lesson);
+        $this->updatePivots($this->parseChoices(), $lesson);
         $this->user->update(['learned_words' => counting($this->user->words)]);
 
         return [$lesson->category, $lesson];
@@ -53,7 +53,7 @@ class StoreLessonResults extends Job
      *
      * @return array
      */
-    protected function parseUserChoices()
+    protected function parseChoices()
     {
         return collect($this->words)->map(function ($item) {
             return $item = $item['choice'];

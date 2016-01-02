@@ -41,24 +41,15 @@ class CreateNewWord extends Job
      */
     protected function saveAnswersFor(Word $word)
     {
+        $answerCollection = collect(request()->input('word.answers'))->reverse()->values();
+
         return $word->answers()->createMany(
-            $this->parseAnswers()->map(function ($answer) {
+            $answerCollection->map(function ($data) {
                 return (new Answer)->fill([
-                    'solution' => $answer['solution'],
-                    'correct' => $answer['correct'],
+                    'solution' => $data['solution'],
+                    'correct' => $data['correct'],
                 ]);
             })->toArray()
         );
-    }
-
-    /**
-     * Parse the list of answers returned from the request.
-     * Store these answers in a collection.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    protected function parseAnswers()
-    {
-        return collect(array_values(request()->input('word.answers')));
     }
 }

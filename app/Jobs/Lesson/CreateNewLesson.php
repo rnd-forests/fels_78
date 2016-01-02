@@ -16,8 +16,8 @@ class CreateNewLesson extends Job
     public function __construct($user, $categoryId, $lessonType)
     {
         $this->user = $user;
-        $this->category = app(CategoryRepository::class)->findById($categoryId);
         $this->lessonType = $lessonType;
+        $this->category = app(CategoryRepository::class)->findById($categoryId);
     }
 
     /**
@@ -39,7 +39,6 @@ class CreateNewLesson extends Job
     {
         return (new Lesson)->fill([
             'name' => uniqid("Lesson_{$this->category->name}_"),
-            'finished' => false,
             'type' => $this->lessonType,
         ]);
     }
